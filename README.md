@@ -1,14 +1,70 @@
 # preferences
 
-A new Flutter package project.
+Create Preference Screens easily
 
-## Getting Started
+## Features
 
-This project is a starting point for a Dart
-[package](https://flutter.io/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+- Easy addition of preferences
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+- Subpages
+
+- Customization options
+
+- Hide preferences dynamically
+
+- Reset state on Exception
+
+## Installing
+
+You should ensure that you add the `preferences` as a dependency in your flutter project.
+
+```yaml
+dependencies:
+  preferences: '^1.0.0'
+```
+
+Then run `flutter packages get` to get the package.
+
+## Usage
+
+Change yout main method to
+```dart
+import 'package:preferences/preferences.dart';
+
+main() async {
+  await PrefService.init(prefix: 'pref_');
+  runApp(MyApp());
+}
+```
+
+And then you can use the widgets
+```dart
+return Scaffold(
+      appBar: AppBar(
+        title: Text('Preferences Demo'),
+      ),
+      body: PreferencePage([
+        PreferenceTitle('General'),
+        DropdownPreference(
+          'Start Page',
+          'start_page',
+          defaultVal: 'Timeline',
+          values: ['Posts', 'Timeline', 'Private Messages'],
+        ),
+        PreferenceTitle('Personalization'),
+        RadioPreference(
+          'Light Theme',
+          'light',
+          'ui_theme',
+          isDefault: true,
+        ),
+        RadioPreference(
+          'Dark Theme',
+          'dark',
+          'ui_theme',
+        ),
+      ]),
+    );
+```
+
+Look at the example for more information.

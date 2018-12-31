@@ -4,7 +4,6 @@ import 'package:dynamic_theme/dynamic_theme.dart'; // Just for theme example
 
 main() async {
   await PrefService.init(prefix: 'pref_');
-
   runApp(MyApp());
 }
 

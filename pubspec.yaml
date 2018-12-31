@@ -1,8 +1,8 @@
 name: preferences
-description: A new Flutter package project.
-version: 0.0.1
-author:
-homepage:
+description: Create Preference Screens easily
+version: 1.0.0
+author: redsolver <info@redsolver.net>
+homepage: https://gitlab.com/redsolver/preferences
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
