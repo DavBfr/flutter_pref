@@ -16,7 +16,7 @@ Create Preference Screens easily
 
 ## Installing
 
-You should ensure that you add the `preferences` as a dependency in your flutter project.
+You should ensure that you add `preferences` as a dependency in your flutter project.
 
 ```yaml
 dependencies:
@@ -27,7 +27,7 @@ Then run `flutter packages get` to get the package.
 
 ## Usage
 
-Change yout main method to
+Change your main method to
 ```dart
 import 'package:preferences/preferences.dart';
 
