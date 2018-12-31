@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
 
-class SwitchPreference extends StatefulWidget {
+class CheckboxPreference extends StatefulWidget {
   final String title;
   final String desc;
   final String localKey;
@@ -11,23 +11,23 @@ class SwitchPreference extends StatefulWidget {
   final Function onEnable;
   final Function onDisable;
 
-  SwitchPreference(this.title, this.localKey,
+  CheckboxPreference(this.title, this.localKey,
       {this.desc,
       this.defaultVal = false,
       this.ignoreTileTap = false,
       this.onEnable,
       this.onDisable});
 
-  _SwitchPreferenceState createState() => _SwitchPreferenceState();
+  _CheckboxPreferenceState createState() => _CheckboxPreferenceState();
 }
 
-class _SwitchPreferenceState extends State<SwitchPreference> {
+class _CheckboxPreferenceState extends State<CheckboxPreference> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(widget.title),
       subtitle: widget.desc == null ? null : Text(widget.desc),
-      trailing: Switch(
+      trailing: Checkbox(
         value: PrefService.getBool(widget.localKey) ?? widget.defaultVal,
         onChanged: (val) => val ? onEnable() : onDisable(),
       ),
@@ -41,11 +41,11 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
 
   onEnable() {
     if (widget.onEnable != null) widget.onEnable();
-    setState(() => PrefService.setBool(widget.localKey, true));
+    this.setState(() => PrefService.setBool(widget.localKey, true));
   }
 
   onDisable() {
     if (widget.onDisable != null) widget.onDisable();
-    setState(() => PrefService.setBool(widget.localKey, false));
+    this.setState(() => PrefService.setBool(widget.localKey, false));
   }
 }

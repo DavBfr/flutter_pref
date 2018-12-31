@@ -3,8 +3,12 @@ import 'preference_page.dart';
 
 class PreferencePageLink extends StatelessWidget {
   final String title;
+  final String desc;
   final PreferencePage page;
-  PreferencePageLink(this.title, this.page);
+  final Widget leading;
+  final Widget trailing;
+  PreferencePageLink(this.title,
+      {@required this.page, this.desc, this.leading, this.trailing});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +21,9 @@ class PreferencePageLink extends StatelessWidget {
                 body: page,
               ))),
       title: Text(title),
+      subtitle: desc == null ? null : Text(desc),
+      leading: leading,
+      trailing: trailing,
     );
   }
 }
