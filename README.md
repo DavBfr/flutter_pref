@@ -1,6 +1,6 @@
 # preferences
 
-Create Preference Screens easily
+Create Preference Screens easily with advanced features and subpages
 
 ## Features
 
