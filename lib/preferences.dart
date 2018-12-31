@@ -1,6 +1,7 @@
 library preferences;
 
 export 'preference_page.dart';
+export 'preference_service.dart';
 export 'preference_text.dart';
 export 'switch_preference.dart';
 export 'checkbox_preference.dart';

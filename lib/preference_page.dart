@@ -11,7 +11,6 @@ class PreferencePage extends StatefulWidget {
 class PreferencePageState extends State<PreferencePage> {
   @override
   Widget build(BuildContext context) {
-    print('Building PreferencePage...');
     return FutureBuilder(
       future: PrefService.init(),
       builder: (contenxt, snapshot) {

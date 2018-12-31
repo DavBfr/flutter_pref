@@ -8,15 +8,20 @@ class CheckboxPreference extends StatefulWidget {
   final bool defaultVal;
   final bool ignoreTileTap;
 
+  final bool resetOnException;
+
   final Function onEnable;
   final Function onDisable;
+  final Function onChange;
 
   CheckboxPreference(this.title, this.localKey,
       {this.desc,
       this.defaultVal = false,
       this.ignoreTileTap = false,
+      this.resetOnException = true,
       this.onEnable,
-      this.onDisable});
+      this.onDisable,
+      this.onChange});
 
   _CheckboxPreferenceState createState() => _CheckboxPreferenceState();
 }
@@ -39,13 +44,29 @@ class _CheckboxPreferenceState extends State<CheckboxPreference> {
     );
   }
 
-  onEnable() {
-    if (widget.onEnable != null) widget.onEnable();
-    this.setState(() => PrefService.setBool(widget.localKey, true));
+  onEnable() async {
+    setState(() => PrefService.setBool(widget.localKey, true));
+    if (widget.onChange != null) widget.onChange();
+    if (widget.onEnable != null)
+      try {
+        await widget.onEnable();
+      } catch (e) {
+        if (widget.resetOnException)
+          setState(() => PrefService.setBool(widget.localKey, false));
+        PrefService.showError(context, e.message);
+      }
   }
 
-  onDisable() {
-    if (widget.onDisable != null) widget.onDisable();
-    this.setState(() => PrefService.setBool(widget.localKey, false));
+  onDisable() async {
+    setState(() => PrefService.setBool(widget.localKey, false));
+    if (widget.onChange != null) widget.onChange();
+    if (widget.onDisable != null)
+      try {
+        await widget.onDisable();
+      } catch (e) {
+        if (widget.resetOnException)
+          setState(() => PrefService.setBool(widget.localKey, true));
+        PrefService.showError(context, e.message);
+      }
   }
 }

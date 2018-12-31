@@ -5,10 +5,10 @@ class PrefService {
   static SharedPreferences sharedPreferences;
   static String prefix = '';
 
-  static Future<bool> init() async {
-    print('Init Preferences Plugin');
-    if (sharedPreferences == null)
-      sharedPreferences = await SharedPreferences.getInstance();
+  static Future<bool> init({String prefix = ''}) async {
+    if (sharedPreferences != null) return false;
+    sharedPreferences = await SharedPreferences.getInstance();
+    PrefService.prefix = prefix;
     return true;
   }
 
@@ -67,20 +67,22 @@ class PrefService {
 
   static Map subs = {};
   static void notify(String key) {
-    print('notify bef $key');
     if (subs[key] == null) return;
-    print('notify $key');
 
     for (Function f in subs[key]) {
-      /* s.setState(() {}); */
       f();
     }
   }
 
   static void onNotify(String key, Function f) {
-    print('onNotify');
     if (subs[key] == null) subs[key] = [];
     subs[key].add(f);
+  }
+
+  static void showError(BuildContext context, String message) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+    ));
   }
 
   static checkInit() {
