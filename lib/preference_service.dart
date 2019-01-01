@@ -6,9 +6,9 @@ class PrefService {
   static String prefix = '';
 
   static Future<bool> init({String prefix = ''}) async {
+    PrefService.prefix = prefix;
     if (sharedPreferences != null) return false;
     sharedPreferences = await SharedPreferences.getInstance();
-    PrefService.prefix = prefix;
     return true;
   }
 
