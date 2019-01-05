@@ -1,3 +1,7 @@
+## [1.0.8] - 05.01.2019
+
+* Fixed Issue with PreferenceHider
+
 ## [1.0.7] - 05.01.2019
 
 * Fixed Issue with RadioPreference widgets on subpage

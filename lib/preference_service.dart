@@ -15,7 +15,9 @@ class PrefService {
   static bool getBool(String key) {
     checkInit();
     if (key.startsWith('!')) {
-      return !sharedPreferences.getBool('$prefix${key.substring(1)}');
+      bool val = sharedPreferences.getBool('$prefix${key.substring(1)}');
+      if (val == null) return null;
+      return !val;
     }
     return sharedPreferences.getBool('$prefix$key');
   }
