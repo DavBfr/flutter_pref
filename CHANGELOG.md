@@ -1,3 +1,7 @@
+## [1.0.7] - 05.01.2019
+
+* Fixed Issue with RadioPreference widgets on subpage
+
 ## [1.0.5] - 05.01.2019
 
 * DropdownPreference Displayed Values can now be different from saved values

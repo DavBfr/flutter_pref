@@ -4,7 +4,7 @@ import 'package:preferences/preference_service.dart';
 class RadioPreference extends StatefulWidget {
   final String title;
   final String desc;
-  final String val;
+  final dynamic val;
   final String localGroupKey;
   final bool selected;
   final bool isDefault;
@@ -37,6 +37,12 @@ class _RadioPreferenceState extends State<RadioPreference> {
     PrefService.onNotify(widget.localGroupKey, () {
       setState(() {});
     });
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    PrefService.onNotifyRemove(widget.localGroupKey);
   }
 
   @override

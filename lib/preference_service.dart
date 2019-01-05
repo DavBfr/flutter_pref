@@ -79,6 +79,10 @@ class PrefService {
     subs[key].add(f);
   }
 
+  static void onNotifyRemove(String key) {
+    subs[key] = null;
+  }
+
   static void showError(BuildContext context, String message) {
     Scaffold.of(context).showSnackBar(SnackBar(
       content: Text(message),
