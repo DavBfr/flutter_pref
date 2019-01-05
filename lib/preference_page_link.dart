@@ -3,12 +3,17 @@ import 'preference_page.dart';
 
 class PreferencePageLink extends StatelessWidget {
   final String title;
+  final String pageTitle;
   final String desc;
   final PreferencePage page;
   final Widget leading;
   final Widget trailing;
   PreferencePageLink(this.title,
-      {@required this.page, this.desc, this.leading, this.trailing});
+      {@required this.page,
+      this.desc,
+      this.pageTitle,
+      this.leading,
+      this.trailing});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,7 @@ class PreferencePageLink extends StatelessWidget {
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => Scaffold(
                 appBar: AppBar(
-                  title: Text(title),
+                  title: Text(pageTitle ?? title),
                 ),
                 body: page,
               ))),

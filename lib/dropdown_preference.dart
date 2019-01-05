@@ -8,6 +8,7 @@ class DropdownPreference extends StatefulWidget {
   final dynamic defaultVal;
 
   final List values;
+  final List displayValues;
 
   final Function onChange;
 
@@ -17,6 +18,7 @@ class DropdownPreference extends StatefulWidget {
     this.desc,
     @required this.defaultVal,
     @required this.values,
+    this.displayValues,
     this.onChange,
   });
 
@@ -34,7 +36,9 @@ class _DropdownPreferenceState extends State<DropdownPreference> {
           return DropdownMenuItem(
             value: val,
             child: Text(
-              val,
+              widget.displayValues == null
+                  ? val
+                  : widget.displayValues[widget.values.indexOf(val)],
               textAlign: TextAlign.end,
             ),
           );
