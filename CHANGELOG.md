@@ -1,3 +1,7 @@
+## [1.1.0] - 17.01.2019
+
+* Fixed Issue with default RadioPreference being not first
+
 ## [1.0.8] - 05.01.2019
 
 * Fixed Issue with PreferenceHider
