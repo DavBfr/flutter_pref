@@ -70,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
         PreferencePageLink(
           'Notifications',
           leading: Icon(Icons.message),
+          trailing: Icon(Icons.keyboard_arrow_right),
           page: PreferencePage([
             PreferenceTitle('New Posts'),
             SwitchPreference(
@@ -103,6 +104,67 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
           ]),
+        ),
+        PreferenceTitle('Content'),
+        PreferenceDialogLink(
+          'Content Types',
+          dialog: PreferenceDialog(
+            [
+              CheckboxPreference('Text', 'content_show_text'),
+              CheckboxPreference('Images', 'content_show_image'),
+              CheckboxPreference('Music', 'content_show_audio')
+            ],
+            title: 'Enabled Content Types',
+            cancelText: 'Cancel',
+            submitText: 'Save',
+            onlySaveOnSubmit: true,
+          ),
+        ),
+        PreferenceTitle('More Dialogs'),
+        PreferenceDialogLink(
+          'Android\'s "ListPreference"',
+          dialog: PreferenceDialog(
+            [
+              RadioPreference(
+                  'Select me!', 'select_1', 'android_listpref_selected'),
+              RadioPreference(
+                  'Hello World!', 'select_2', 'android_listpref_selected'),
+              RadioPreference('Test', 'select_3', 'android_listpref_selected'),
+            ],
+            title: 'Select an option',
+            cancelText: 'Cancel',
+            submitText: 'Save',
+            onlySaveOnSubmit: true,
+          ),
+        ),
+        PreferenceDialogLink(
+          'Android\'s "ListPreference" with autosave',
+          dialog: PreferenceDialog(
+            [
+              RadioPreference(
+                  'Select me!', 'select_1', 'android_listpref_auto_selected'),
+              RadioPreference(
+                  'Hello World!', 'select_2', 'android_listpref_auto_selected'),
+              RadioPreference(
+                  'Test', 'select_3', 'android_listpref_auto_selected'),
+            ],
+            title: 'Select an option',
+            cancelText: 'Close',
+          ),
+        ),
+        PreferenceDialogLink(
+          'Android\'s "MultiSelectListPreference"',
+          dialog: PreferenceDialog(
+            [
+              CheckboxPreference('A enabled', 'android_multilistpref_a'),
+              CheckboxPreference('B enabled', 'android_multilistpref_b'),
+              CheckboxPreference('C enabled', 'android_multilistpref_c'),
+            ],
+            title: 'Select multiple options',
+            cancelText: 'Cancel',
+            submitText: 'Save',
+            onlySaveOnSubmit: true,
+          ),
         ),
         PreferenceHider([
           PreferenceTitle('Experimental'),

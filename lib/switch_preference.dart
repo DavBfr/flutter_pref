@@ -51,9 +51,11 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
       try {
         await widget.onEnable();
       } catch (e) {
-        if (widget.resetOnException)
-          setState(() => PrefService.setBool(widget.localKey, false));
-        PrefService.showError(context, e.message);
+        if (widget.resetOnException) {
+          PrefService.setBool(widget.localKey, false);
+          if (mounted) setState(() {});
+        }
+        if (mounted) PrefService.showError(context, e.message);
       }
   }
 
@@ -64,9 +66,11 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
       try {
         await widget.onDisable();
       } catch (e) {
-        if (widget.resetOnException)
-          setState(() => PrefService.setBool(widget.localKey, true));
-        PrefService.showError(context, e.message);
+        if (widget.resetOnException) {
+          PrefService.setBool(widget.localKey, true);
+          if (mounted) setState(() {});
+        }
+        if (mounted) PrefService.showError(context, e.message);
       }
   }
 }

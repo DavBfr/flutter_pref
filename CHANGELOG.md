@@ -1,3 +1,10 @@
+## [1.2.0] - 20.01.2019
+
+* Added PreferenceDialog and PreferenceDialogLink
+* Added cache for PrefService to cache values and only apply them when submitting a dialog or confirming a change
+* Added StringList Getter and Setter to PrefService
+* Fixed some issues
+
 ## [1.1.0] - 17.01.2019
 
 * Fixed Issue with default RadioPreference being not first

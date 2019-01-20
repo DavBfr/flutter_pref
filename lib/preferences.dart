@@ -10,3 +10,5 @@ export 'preference_page_link.dart';
 export 'preference_hider.dart';
 export 'dropdown_preference.dart';
 export 'radio_preference.dart';
+export 'preference_dialog_link.dart';
+export 'preference_dialog.dart';

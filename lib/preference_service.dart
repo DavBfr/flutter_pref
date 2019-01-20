@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,61 +8,113 @@ class PrefService {
   static SharedPreferences sharedPreferences;
   static String prefix = '';
 
+  static bool _justCache = false;
+
+  static Map cache;
+
   static Future<bool> init({String prefix = ''}) async {
     PrefService.prefix = prefix;
     if (sharedPreferences != null) return false;
     sharedPreferences = await SharedPreferences.getInstance();
+    clearCache();
     return true;
   }
 
   static bool getBool(String key) {
     checkInit();
     if (key.startsWith('!')) {
-      bool val = sharedPreferences.getBool('$prefix${key.substring(1)}');
+      bool val;
+      if (_justCache)
+        val = cache[key.substring(1)];
+      else
+        val = sharedPreferences.getBool('$prefix${key.substring(1)}');
       if (val == null) return null;
       return !val;
     }
-    return sharedPreferences.getBool('$prefix$key');
+    if (_justCache)
+      return cache[key];
+    else
+      return sharedPreferences.getBool('$prefix$key');
   }
 
   static setBool(String key, bool val) {
     checkInit();
-    sharedPreferences.setBool('$prefix$key', val);
+    if (_justCache)
+      cache[key] = val;
+    else
+      sharedPreferences.setBool('$prefix$key', val);
   }
 
   static String getString(String key) {
     checkInit();
-    return sharedPreferences.getString('$prefix$key');
+    if (_justCache)
+      return cache[key];
+    else
+      return sharedPreferences.getString('$prefix$key');
   }
 
   static setString(String key, String val) {
     checkInit();
-    sharedPreferences.setString('$prefix$key', val);
+    if (_justCache)
+      cache[key] = val;
+    else
+      sharedPreferences.setString('$prefix$key', val);
   }
 
   static int getInt(String key) {
     checkInit();
-    return sharedPreferences.getInt('$prefix$key');
+    if (_justCache)
+      return cache[key];
+    else
+      return sharedPreferences.getInt('$prefix$key');
   }
 
   static setInt(String key, int val) {
     checkInit();
-    sharedPreferences.setInt('$prefix$key', val);
+    if (_justCache)
+      cache[key] = val;
+    else
+      sharedPreferences.setInt('$prefix$key', val);
   }
 
   static double getDouble(String key) {
     checkInit();
-    return sharedPreferences.getDouble('$prefix$key');
+    if (_justCache)
+      return cache[key];
+    else
+      return sharedPreferences.getDouble('$prefix$key');
   }
 
   static setDouble(String key, double val) {
     checkInit();
-    sharedPreferences.setDouble('$prefix$key', val);
+    if (_justCache)
+      cache[key] = val;
+    else
+      sharedPreferences.setDouble('$prefix$key', val);
+  }
+
+  static List<String> getStringList(String key) {
+    checkInit();
+    if (_justCache)
+      return cache[key];
+    else
+      return sharedPreferences.getStringList('$prefix$key');
+  }
+
+  static setStringList(String key, List<String> val) {
+    checkInit();
+    if (_justCache)
+      cache[key] = val;
+    else
+      sharedPreferences.setStringList('$prefix$key', val);
   }
 
   static get(String key) {
     checkInit();
-    return sharedPreferences.get('$prefix$key');
+    if (_justCache)
+      return cache[key];
+    else
+      return sharedPreferences.get('$prefix$key');
   }
 
   static Set<String> getKeys() {
@@ -103,5 +156,37 @@ class PrefService {
     runApp(MyApp());
   }
       ''');
+  }
+
+  static void clearCache() {
+    cache = {};
+
+    for (String key in sharedPreferences.getKeys())
+      cache[key] = sharedPreferences.get(key);
+  }
+
+  static void enableCaching() {
+    _justCache = true;
+  }
+
+  static void disableCaching() {
+    _justCache = false;
+  }
+
+  static void applyCache() {
+    disableCaching();
+    for (String key in cache.keys) {
+      var val = cache[key];
+      if (val is bool)
+        sharedPreferences.setBool(key, val);
+      else if (val is double)
+        sharedPreferences.setDouble(key, val);
+      else if (val is int)
+        sharedPreferences.setInt(key, val);
+      else if (val is String)
+        sharedPreferences.setString(key, val);
+      else if (val is List<String>) sharedPreferences.setStringList(key, val);
+    }
+    clearCache();
   }
 }

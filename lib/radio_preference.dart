@@ -9,7 +9,6 @@ class RadioPreference extends StatefulWidget {
   final bool selected;
   final bool isDefault;
 
-  // final Function onChange;
   final Function onSelect;
   final bool ignoreTileTap;
 
@@ -21,7 +20,6 @@ class RadioPreference extends StatefulWidget {
     this.selected = false,
     this.ignoreTileTap = false,
     this.isDefault = false,
-    // this.onChange,
     this.onSelect,
   });
 
@@ -67,8 +65,6 @@ class _RadioPreferenceState extends State<RadioPreference> {
   }
 
   onChange(var val) {
-    //if (widget.onChange != null) widget.onChange(val);
-
     if (val is String) {
       setState(() => PrefService.setString(widget.localGroupKey, val));
     } else if (val is int) {
@@ -79,10 +75,7 @@ class _RadioPreferenceState extends State<RadioPreference> {
       setState(() => PrefService.setBool(widget.localGroupKey, val));
     }
     PrefService.notify(widget.localGroupKey);
-    onSelect();
-  }
 
-  onSelect() {
     if (widget.onSelect != null) widget.onSelect();
   }
 }
