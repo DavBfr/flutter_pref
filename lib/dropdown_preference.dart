@@ -61,7 +61,6 @@ class _DropdownPreferenceState extends State<DropdownPreference> {
     } else if (val is bool) {
       this.setState(() => PrefService.setBool(widget.localKey, val));
     }
-    PrefService.notify(widget.localKey);
     if (widget.onChange != null) widget.onChange(val);
   }
 }
