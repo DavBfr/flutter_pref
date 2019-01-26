@@ -13,8 +13,8 @@ class PrefService {
   static Map cache;
 
   static Future<bool> init({String prefix = ''}) async {
-    PrefService.prefix = prefix;
     if (sharedPreferences != null) return false;
+    PrefService.prefix = prefix;
     sharedPreferences = await SharedPreferences.getInstance();
     clearCache();
     return true;

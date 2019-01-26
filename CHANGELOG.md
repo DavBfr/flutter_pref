@@ -1,3 +1,7 @@
+## [1.3.0] - 26.01.2019
+
+* Fixed Issue with PrefService prefix not applying
+
 ## [1.2.0] - 20.01.2019
 
 * Added PreferenceDialog and PreferenceDialogLink
