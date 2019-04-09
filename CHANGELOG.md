@@ -1,3 +1,7 @@
+## [2.0.0] - 30.01.2019
+
+* Upgraded shared_preferences to 0.5.2
+
 ## [1.3.0] - 26.01.2019
 
 * Fixed Issue with PrefService prefix not applying

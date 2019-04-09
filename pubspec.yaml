@@ -1,6 +1,6 @@
 name: preferences
 description: Create Preference Screens easily with advanced features and subpages
-version: 1.3.0
+version: 2.0.0
 author: redsolver <info@redsolver.net>
 homepage: https://gitlab.com/redsolver/preferences
 
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: ^0.4.3
+  shared_preferences: ^0.5.2
 
 dev_dependencies:
   flutter_test:
