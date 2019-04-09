@@ -32,7 +32,7 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
     return ListTile(
       title: Text(widget.title),
       subtitle: widget.desc == null ? null : Text(widget.desc),
-      trailing: Switch(
+      trailing: Switch.adaptive(
         value: PrefService.getBool(widget.localKey) ?? widget.defaultVal,
         onChanged: (val) => val ? onEnable() : onDisable(),
       ),
