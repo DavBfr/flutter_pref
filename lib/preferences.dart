@@ -12,3 +12,4 @@ export 'dropdown_preference.dart';
 export 'radio_preference.dart';
 export 'preference_dialog_link.dart';
 export 'preference_dialog.dart';
+export 'text_field_preference.dart';

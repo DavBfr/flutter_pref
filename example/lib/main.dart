@@ -105,6 +105,16 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ]),
         ),
+        PreferenceTitle('User'),
+        TextFieldPreference(
+          'Display Name',
+          'user_display_name',
+        ),
+        TextFieldPreference(
+          'E-Mail',
+          'user_email',
+          defaultVal: 'email@example.com',
+        ),
         PreferenceTitle('Content'),
         PreferenceDialogLink(
           'Content Types',
