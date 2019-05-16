@@ -4,11 +4,9 @@ Create Preference Screens easily with advanced features and subpages
 
 ## Screenshots
 
-<p float="left">
- ![Screenshot1](https://gitlab.com/redsolver/preferences/raw/assets/Screenshot1.png)
- ![Screenshot2](https://gitlab.com/redsolver/preferences/raw/assets/Screenshot2.png)
- ![Screenshot3](https://gitlab.com/redsolver/preferences/raw/assets/Screenshot3.png)
-</p>
+<img src="https://gitlab.com/redsolver/preferences/raw/assets/Screenshot1.png"  width="120">
+<img src="https://gitlab.com/redsolver/preferences/raw/assets/Screenshot2.png"  width="120">
+<img src="https://gitlab.com/redsolver/preferences/raw/assets/Screenshot3.png"  width="120">
 
 ## Features
 
