@@ -25,14 +25,14 @@ class PrefService {
     if (key.startsWith('!')) {
       bool val;
       if (_justCache)
-        val = cache[key.substring(1)];
+        val = cache[prefix + key.substring(1)];
       else
         val = sharedPreferences.getBool('$prefix${key.substring(1)}');
       if (val == null) return null;
       return !val;
     }
     if (_justCache)
-      return cache[key];
+      return cache['$prefix$key'];
     else
       return sharedPreferences.getBool('$prefix$key');
   }
@@ -40,7 +40,7 @@ class PrefService {
   static setBool(String key, bool val) {
     checkInit();
     if (_justCache)
-      cache[key] = val;
+      cache['$prefix$key'] = val;
     else
       sharedPreferences.setBool('$prefix$key', val);
   }
@@ -48,7 +48,7 @@ class PrefService {
   static String getString(String key) {
     checkInit();
     if (_justCache)
-      return cache[key];
+      return cache['$prefix$key'];
     else
       return sharedPreferences.getString('$prefix$key');
   }
@@ -56,7 +56,7 @@ class PrefService {
   static setString(String key, String val) {
     checkInit();
     if (_justCache)
-      cache[key] = val;
+      cache['$prefix$key'] = val;
     else
       sharedPreferences.setString('$prefix$key', val);
   }
@@ -64,7 +64,7 @@ class PrefService {
   static int getInt(String key) {
     checkInit();
     if (_justCache)
-      return cache[key];
+      return cache['$prefix$key'];
     else
       return sharedPreferences.getInt('$prefix$key');
   }
@@ -72,7 +72,7 @@ class PrefService {
   static setInt(String key, int val) {
     checkInit();
     if (_justCache)
-      cache[key] = val;
+      cache['$prefix$key'] = val;
     else
       sharedPreferences.setInt('$prefix$key', val);
   }
@@ -80,7 +80,7 @@ class PrefService {
   static double getDouble(String key) {
     checkInit();
     if (_justCache)
-      return cache[key];
+      return cache['$prefix$key'];
     else
       return sharedPreferences.getDouble('$prefix$key');
   }
@@ -88,7 +88,7 @@ class PrefService {
   static setDouble(String key, double val) {
     checkInit();
     if (_justCache)
-      cache[key] = val;
+      cache['$prefix$key'] = val;
     else
       sharedPreferences.setDouble('$prefix$key', val);
   }
@@ -96,7 +96,7 @@ class PrefService {
   static List<String> getStringList(String key) {
     checkInit();
     if (_justCache)
-      return cache[key];
+      return cache['$prefix$key'];
     else
       return sharedPreferences.getStringList('$prefix$key');
   }
@@ -104,7 +104,7 @@ class PrefService {
   static setStringList(String key, List<String> val) {
     checkInit();
     if (_justCache)
-      cache[key] = val;
+      cache['$prefix$key'] = val;
     else
       sharedPreferences.setStringList('$prefix$key', val);
   }
@@ -112,7 +112,7 @@ class PrefService {
   static get(String key) {
     checkInit();
     if (_justCache)
-      return cache[key];
+      return cache['$prefix$key'];
     else
       return sharedPreferences.get('$prefix$key');
   }
