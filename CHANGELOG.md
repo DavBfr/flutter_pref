@@ -1,3 +1,10 @@
+## [3.0.0] - 06.05.2019
+
+* Added TextField preference
+* PreferenceTitle: Added Option to override left padding
+* PreferenceDialogLink: Added onPop callback
+* Fixed Prefix not applying when caching
+
 ## [2.0.0] - 30.01.2019
 
 * Upgraded shared_preferences to 0.5.2

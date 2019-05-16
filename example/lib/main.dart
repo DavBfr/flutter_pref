@@ -115,6 +115,29 @@ class _MyHomePageState extends State<MyHomePage> {
           'user_email',
           defaultVal: 'email@example.com',
         ),
+        PreferenceText(
+          PrefService.getString('user_description'),
+          style: TextStyle(color: Colors.grey),
+        ),
+        PreferenceDialogLink(
+          'Edit description',
+          dialog: PreferenceDialog(
+            [
+              TextFieldPreference(
+                'Description',
+                'user_description',
+                padding: const EdgeInsets.only(top: 8.0),
+                autofocus: true,
+                maxLines: 2,
+              )
+            ],
+            title: 'Edit description',
+            cancelText: 'Cancel',
+            submitText: 'Save',
+            onlySaveOnSubmit: true,
+          ),
+          onPop: () => setState(() {}),
+        ),
         PreferenceTitle('Content'),
         PreferenceDialogLink(
           'Content Types',
