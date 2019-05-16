@@ -6,16 +6,17 @@ class TextFieldPreference extends StatefulWidget {
   final String localKey;
   final String defaultVal;
   final EdgeInsets padding;
+  final bool autofocus;
+  final int maxLines;
 
   final Function onChange;
 
-  TextFieldPreference(
-    this.label,
-    this.localKey, {
-    this.defaultVal,
-    this.onChange,
-    this.padding,
-  });
+  TextFieldPreference(this.label, this.localKey,
+      {this.defaultVal,
+      this.onChange,
+      this.padding,
+      this.autofocus = false,
+      this.maxLines = 1});
 
   _DropdownPreferenceState createState() => _DropdownPreferenceState();
 }
@@ -42,6 +43,8 @@ class _DropdownPreferenceState extends State<TextFieldPreference> {
           PrefService.setString(widget.localKey, val);
           if (widget.onChange != null) widget.onChange();
         },
+        autofocus: widget.autofocus,
+        maxLines: widget.maxLines,
       ),
     );
   }
