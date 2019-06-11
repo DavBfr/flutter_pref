@@ -40,8 +40,8 @@ class _DropdownPreferenceState extends State<TextFieldPreference> {
             labelText: widget.label, border: OutlineInputBorder()),
         controller: controller,
         onChanged: (val) {
+          if (widget.onChange != null) val = widget.onChange(val);
           PrefService.setString(widget.localKey, val);
-          if (widget.onChange != null) widget.onChange();
         },
         autofocus: widget.autofocus,
         maxLines: widget.maxLines,
