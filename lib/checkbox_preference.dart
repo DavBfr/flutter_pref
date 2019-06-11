@@ -28,6 +28,13 @@ class CheckboxPreference extends StatefulWidget {
 
 class _CheckboxPreferenceState extends State<CheckboxPreference> {
   @override
+  void initState() {
+    super.initState();
+    if (PrefService.getBool(widget.localKey) == null)
+      PrefService.setBool(widget.localKey, widget.defaultVal);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(widget.title),

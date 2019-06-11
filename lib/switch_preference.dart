@@ -28,6 +28,13 @@ class SwitchPreference extends StatefulWidget {
 
 class _SwitchPreferenceState extends State<SwitchPreference> {
   @override
+  void initState() {
+    super.initState();
+    if (PrefService.getBool(widget.localKey) == null)
+      PrefService.setBool(widget.localKey, widget.defaultVal);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(widget.title),

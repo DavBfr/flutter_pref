@@ -27,6 +27,13 @@ class DropdownPreference extends StatefulWidget {
 
 class _DropdownPreferenceState extends State<DropdownPreference> {
   @override
+  void initState() {
+    super.initState();
+    if (PrefService.get(widget.localKey) == null)
+      PrefService.setDefaultValues({widget.localKey: widget.defaultVal});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(widget.title),

@@ -25,6 +25,9 @@ class _DropdownPreferenceState extends State<TextFieldPreference> {
   TextEditingController controller = TextEditingController();
   @override
   void initState() {
+    if (PrefService.getString(widget.localKey) == null &&
+        widget.defaultVal != null)
+      PrefService.setString(widget.localKey, widget.defaultVal);
     controller.text =
         PrefService.getString(widget.localKey) ?? widget.defaultVal ?? '';
     super.initState();
@@ -40,7 +43,7 @@ class _DropdownPreferenceState extends State<TextFieldPreference> {
             labelText: widget.label, border: OutlineInputBorder()),
         controller: controller,
         onChanged: (val) {
-          if (widget.onChange != null) val = widget.onChange(val);
+          if (widget.onChange != null) val = widget.onChange(val) ?? val;
           PrefService.setString(widget.localKey, val);
         },
         autofocus: widget.autofocus,
