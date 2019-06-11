@@ -1,3 +1,9 @@
+## [4.0.0] - 11.06.2019
+
+* Added setDefaultValues function to PrefService
+* CheckboxPreference, DropdownPreference, SwitchPreference, TextFieldPreference: Default value of the widget is now set and saved when first rendered
+* Added possibility to modify saved text in TextFieldPreference by returning custom string in the onChange Method
+
 ## [3.0.0] - 06.05.2019
 
 * Added TextField preference
