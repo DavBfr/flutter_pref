@@ -4,6 +4,9 @@ import 'package:dynamic_theme/dynamic_theme.dart'; // Just for theme example
 
 main() async {
   await PrefService.init(prefix: 'pref_');
+
+  PrefService.setDefaultValues({'user_description': 'This is my description!'});
+
   runApp(MyApp());
 }
 
@@ -116,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
           defaultVal: 'email@example.com',
         ),
         PreferenceText(
-          PrefService.getString('user_description'),
+          PrefService.getString('user_description') ?? '',
           style: TextStyle(color: Colors.grey),
         ),
         PreferenceDialogLink(

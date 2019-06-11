@@ -20,6 +20,23 @@ class PrefService {
     return true;
   }
 
+  static void setDefaultValues(Map values) {
+    print(values);
+    for (String key in values.keys) {
+      if (sharedPreferences.containsKey(prefix+key)) continue;
+      var val = values[key];
+      if (val is bool)
+        sharedPreferences.setBool(prefix+key, val);
+      else if (val is double)
+        sharedPreferences.setDouble(prefix+key, val);
+      else if (val is int)
+        sharedPreferences.setInt(prefix+key, val);
+      else if (val is String)
+        sharedPreferences.setString(prefix+key, val);
+      else if (val is List<String>) sharedPreferences.setStringList(key, val);
+    }
+  }
+
   static bool getBool(String key) {
     checkInit();
     if (key.startsWith('!')) {
