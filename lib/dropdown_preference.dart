@@ -12,6 +12,8 @@ class DropdownPreference extends StatefulWidget {
 
   final Function onChange;
 
+  final bool disabled;
+
   DropdownPreference(
     this.title,
     this.localKey, {
@@ -20,6 +22,7 @@ class DropdownPreference extends StatefulWidget {
     @required this.values,
     this.displayValues,
     this.onChange,
+    this.disabled = false,
   });
 
   _DropdownPreferenceState createState() => _DropdownPreferenceState();
@@ -50,9 +53,11 @@ class _DropdownPreferenceState extends State<DropdownPreference> {
             ),
           );
         }).toList(),
-        onChanged: (newVal) async {
-          onChange(newVal);
-        },
+        onChanged: widget.disabled
+            ? null
+            : (newVal) async {
+                onChange(newVal);
+              },
         value: PrefService.get(widget.localKey) ?? widget.defaultVal,
       ),
     );

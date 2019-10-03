@@ -8,6 +8,8 @@ class CheckboxPreference extends StatefulWidget {
   final bool defaultVal;
   final bool ignoreTileTap;
 
+  final bool disabled;
+
   final bool resetOnException;
 
   final Function onEnable;
@@ -21,7 +23,8 @@ class CheckboxPreference extends StatefulWidget {
       this.resetOnException = true,
       this.onEnable,
       this.onDisable,
-      this.onChange});
+      this.onChange,
+      this.disabled = false});
 
   _CheckboxPreferenceState createState() => _CheckboxPreferenceState();
 }
@@ -41,9 +44,10 @@ class _CheckboxPreferenceState extends State<CheckboxPreference> {
       subtitle: widget.desc == null ? null : Text(widget.desc),
       trailing: Checkbox(
         value: PrefService.getBool(widget.localKey) ?? widget.defaultVal,
-        onChanged: (val) => val ? onEnable() : onDisable(),
+        onChanged:
+            widget.disabled ? null : (val) => val ? onEnable() : onDisable(),
       ),
-      onTap: widget.ignoreTileTap
+      onTap: (widget.ignoreTileTap || widget.disabled)
           ? null
           : () => (PrefService.getBool(widget.localKey) ?? widget.defaultVal)
               ? onDisable()

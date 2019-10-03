@@ -14,14 +14,20 @@ class SwitchPreference extends StatefulWidget {
   final Function onDisable;
   final Function onChange;
 
-  SwitchPreference(this.title, this.localKey,
-      {this.desc,
-      this.defaultVal = false,
-      this.ignoreTileTap = false,
-      this.resetOnException = true,
-      this.onEnable,
-      this.onDisable,
-      this.onChange});
+  final bool disabled;
+
+  SwitchPreference(
+    this.title,
+    this.localKey, {
+    this.desc,
+    this.defaultVal = false,
+    this.ignoreTileTap = false,
+    this.resetOnException = true,
+    this.onEnable,
+    this.onDisable,
+    this.onChange,
+    this.disabled = false,
+  });
 
   _SwitchPreferenceState createState() => _SwitchPreferenceState();
 }
@@ -41,9 +47,10 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
       subtitle: widget.desc == null ? null : Text(widget.desc),
       trailing: Switch.adaptive(
         value: PrefService.getBool(widget.localKey) ?? widget.defaultVal,
-        onChanged: (val) => val ? onEnable() : onDisable(),
+        onChanged:
+            widget.disabled ? null : (val) => val ? onEnable() : onDisable(),
       ),
-      onTap: widget.ignoreTileTap
+      onTap: (widget.disabled || widget.ignoreTileTap)
           ? null
           : () => (PrefService.getBool(widget.localKey) ?? widget.defaultVal)
               ? onDisable()

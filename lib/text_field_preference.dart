@@ -8,21 +8,43 @@ class TextFieldPreference extends StatefulWidget {
   final EdgeInsets padding;
   final bool autofocus;
   final int maxLines;
+  final bool obscureText;
+  final String hintText;
+  final TextStyle style;
+  final TextInputType keyboardType;
+  final TextStyle labelStyle;
+  final InputDecoration decoration;
 
   final Function onChange;
+  final Function validator;
 
-  TextFieldPreference(this.label, this.localKey,
-      {this.defaultVal,
-      this.onChange,
-      this.padding,
-      this.autofocus = false,
-      this.maxLines = 1});
+  final bool disabled;
 
-  _DropdownPreferenceState createState() => _DropdownPreferenceState();
+  TextFieldPreference(
+    this.label,
+    this.localKey, {
+    this.defaultVal,
+    this.onChange,
+    this.validator,
+    this.padding,
+    this.obscureText = false,
+    this.autofocus = false,
+    this.hintText = '',
+    this.maxLines = 1,
+    this.style,
+    this.keyboardType,
+    this.labelStyle,
+    this.decoration,
+    this.disabled = false,
+  });
+
+  _TextFieldPreferenceState createState() => _TextFieldPreferenceState();
 }
 
-class _DropdownPreferenceState extends State<TextFieldPreference> {
+class _TextFieldPreferenceState extends State<TextFieldPreference> {
   TextEditingController controller = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     if (PrefService.getString(widget.localKey) == null &&
@@ -38,16 +60,31 @@ class _DropdownPreferenceState extends State<TextFieldPreference> {
     return Padding(
       padding: widget.padding ??
           const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-      child: TextField(
-        decoration: InputDecoration(
-            labelText: widget.label, border: OutlineInputBorder()),
-        controller: controller,
-        onChanged: (val) {
-          if (widget.onChange != null) val = widget.onChange(val) ?? val;
-          PrefService.setString(widget.localKey, val);
-        },
-        autofocus: widget.autofocus,
-        maxLines: widget.maxLines,
+      child: Form(
+        key: _formKey,
+        child: TextFormField(
+          decoration: widget.decoration ??
+              InputDecoration(
+                hintText: widget.hintText,
+                labelText: widget.label,
+                labelStyle: widget.labelStyle,
+                border: OutlineInputBorder(),
+              ),
+          controller: controller,
+          onChanged: (val) {
+            if (_formKey.currentState.validate()) {
+              if (widget.onChange != null) val = widget.onChange(val) ?? val;
+              PrefService.setString(widget.localKey, val);
+            }
+          },
+          autofocus: widget.autofocus,
+          maxLines: widget.maxLines,
+          style: widget.style,
+          keyboardType: widget.keyboardType,
+          obscureText: widget.obscureText,
+          validator: widget.validator ?? null,
+          enabled: !widget.disabled,
+        ),
       ),
     );
   }

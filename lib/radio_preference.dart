@@ -12,6 +12,8 @@ class RadioPreference extends StatefulWidget {
   final Function onSelect;
   final bool ignoreTileTap;
 
+  final bool disabled;
+
   RadioPreference(
     this.title,
     this.val,
@@ -21,6 +23,7 @@ class RadioPreference extends StatefulWidget {
     this.ignoreTileTap = false,
     this.isDefault = false,
     this.onSelect,
+    this.disabled = false,
   });
 
   _RadioPreferenceState createState() => _RadioPreferenceState();
@@ -58,9 +61,11 @@ class _RadioPreferenceState extends State<RadioPreference> {
       trailing: Radio(
         value: widget.val,
         groupValue: PrefService.get(widget.localGroupKey),
-        onChanged: (var val) => onChange(widget.val),
+        onChanged: widget.disabled ? null : (var val) => onChange(widget.val),
       ),
-      onTap: widget.ignoreTileTap ? null : () => onChange(widget.val),
+      onTap: (widget.ignoreTileTap || widget.disabled)
+          ? null
+          : () => onChange(widget.val),
     );
   }
 

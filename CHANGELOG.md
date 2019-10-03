@@ -1,3 +1,10 @@
+## [5.0.0] - 03.10.2019
+
+* Added validation for `TextFieldPreference`
+* Added `obscureText`, `hintText`, `style`, `keyboardType`, `labelStyle` and `decoration` for `TextFieldPreference`
+* Added `disabled` option for every widget
+* Added `leading` and `subtitle` for `PreferenceText`
+
 ## [4.0.0] - 11.06.2019
 
 * Added setDefaultValues function to PrefService

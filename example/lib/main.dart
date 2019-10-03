@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:preferences/preferences.dart';
 import 'package:dynamic_theme/dynamic_theme.dart'; // Just for theme example
+import 'package:validators/validators.dart';
 
 main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await PrefService.init(prefix: 'pref_');
 
   PrefService.setDefaultValues({'user_description': 'This is my description!'});
@@ -113,11 +116,13 @@ class _MyHomePageState extends State<MyHomePage> {
           'Display Name',
           'user_display_name',
         ),
-        TextFieldPreference(
-          'E-Mail',
-          'user_email',
-          defaultVal: 'email@example.com',
-        ),
+        TextFieldPreference('E-Mail', 'user_email',
+            defaultVal: 'email@example.com', validator: (str) {
+          if (!isEmail(str)) {
+            return "Invalid email";
+          }
+          return null;
+        }),
         PreferenceText(
           PrefService.getString('user_description') ?? '',
           style: TextStyle(color: Colors.grey),
