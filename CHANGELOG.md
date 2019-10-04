@@ -1,3 +1,7 @@
+## [5.0.1] - 04.10.2019
+
+* You can now use `PrefService` without `init()` if you use caching.
+
 ## [5.0.0] - 03.10.2019
 
 * Added validation for `TextFieldPreference`

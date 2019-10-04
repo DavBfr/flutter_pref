@@ -23,16 +23,16 @@ class PrefService {
   static void setDefaultValues(Map values) {
     print(values);
     for (String key in values.keys) {
-      if (sharedPreferences.containsKey(prefix+key)) continue;
+      if (sharedPreferences.containsKey(prefix + key)) continue;
       var val = values[key];
       if (val is bool)
-        sharedPreferences.setBool(prefix+key, val);
+        sharedPreferences.setBool(prefix + key, val);
       else if (val is double)
-        sharedPreferences.setDouble(prefix+key, val);
+        sharedPreferences.setDouble(prefix + key, val);
       else if (val is int)
-        sharedPreferences.setInt(prefix+key, val);
+        sharedPreferences.setInt(prefix + key, val);
       else if (val is String)
-        sharedPreferences.setString(prefix+key, val);
+        sharedPreferences.setString(prefix + key, val);
       else if (val is List<String>) sharedPreferences.setStringList(key, val);
     }
   }
@@ -164,7 +164,7 @@ class PrefService {
   }
 
   static checkInit() {
-    if (sharedPreferences == null) throw Exception('''\n
+    if (sharedPreferences == null && !_justCache) throw Exception('''\n
   PrefService not initialized.
   Call await PrefService.init() before any other PrefService call.
           
