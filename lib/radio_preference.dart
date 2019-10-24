@@ -14,9 +14,12 @@ class RadioPreference extends StatefulWidget {
 
   final bool disabled;
 
+  final leading;
+
   RadioPreference(
     this.title,
     this.val,
+    this.leading,
     this.localGroupKey, {
     this.desc,
     this.selected = false,
@@ -57,6 +60,7 @@ class _RadioPreferenceState extends State<RadioPreference> {
     this.context = context;
     return ListTile(
       title: Text(widget.title),
+      leading: widget.leading,
       subtitle: widget.desc == null ? null : Text(widget.desc),
       trailing: Radio(
         value: widget.val,
