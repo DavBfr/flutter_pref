@@ -8,6 +8,8 @@ class PreferenceText extends StatelessWidget {
 
   final Widget leading;
   final Text subtitle;
+  
+  final Function onTap;
 
   PreferenceText(
     this.text, {
@@ -15,6 +17,7 @@ class PreferenceText extends StatelessWidget {
     this.decoration,
     this.leading,
     this.subtitle,
+    this.onTap,
   });
 
   @override
@@ -23,6 +26,7 @@ class PreferenceText extends StatelessWidget {
       decoration: decoration,
       child: ListTile(
         leading: leading,
+        onTap: onTap,
         title: Text(
           text,
           style: style,
