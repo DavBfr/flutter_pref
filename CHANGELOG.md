@@ -1,3 +1,9 @@
+## master
+
+- Added `sharedPreferences.clear()`
+- Added `onTap` callback to `PreferenceText`
+- Added `leading` to `RadioPreference`
+
 ## [5.0.1] - 04.10.2019
 
 * You can now use `PrefService` without `init()` if you use caching.
