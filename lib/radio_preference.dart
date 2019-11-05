@@ -19,7 +19,6 @@ class RadioPreference extends StatefulWidget {
   RadioPreference(
     this.title,
     this.val,
-    this.leading,
     this.localGroupKey, {
     this.desc,
     this.selected = false,
@@ -27,6 +26,7 @@ class RadioPreference extends StatefulWidget {
     this.isDefault = false,
     this.onSelect,
     this.disabled = false,
+    this.leading,
   });
 
   _RadioPreferenceState createState() => _RadioPreferenceState();
