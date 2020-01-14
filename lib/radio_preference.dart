@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
 
-class RadioPreference extends StatefulWidget {
+class RadioPreference<T> extends StatefulWidget {
   final String title;
   final String desc;
-  final dynamic val;
+  final T val;
   final String localGroupKey;
   final bool selected;
   final bool isDefault;
@@ -32,7 +32,7 @@ class RadioPreference extends StatefulWidget {
   _RadioPreferenceState createState() => _RadioPreferenceState();
 }
 
-class _RadioPreferenceState extends State<RadioPreference> {
+class _RadioPreferenceState<T> extends State<RadioPreference<T>> {
   BuildContext context;
 
   @override
@@ -73,7 +73,7 @@ class _RadioPreferenceState extends State<RadioPreference> {
     );
   }
 
-  onChange(var val) {
+  onChange(T val) {
     if (val is String) {
       setState(() => PrefService.setString(widget.localGroupKey, val));
     } else if (val is int) {
