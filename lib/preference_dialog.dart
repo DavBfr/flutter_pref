@@ -19,7 +19,6 @@ class PreferenceDialog extends StatefulWidget {
 }
 
 class PreferenceDialogState extends State<PreferenceDialog> {
-
   @override
   void initState() {
     super.initState();

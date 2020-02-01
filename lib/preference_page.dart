@@ -15,7 +15,7 @@ class PreferencePageState extends State<PreferencePage> {
     return FutureBuilder(
       future: PrefService.init(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData){
+        if (!snapshot.hasData) {
           return Container();
         }
         return ListView(children: widget.preferences);

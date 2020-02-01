@@ -15,7 +15,7 @@ class SwitchPreference extends StatefulWidget {
   final Function onChange;
 
   final bool disabled;
-  
+
   final Color switchActiveColor;
 
   SwitchPreference(
@@ -29,7 +29,7 @@ class SwitchPreference extends StatefulWidget {
     this.onDisable,
     this.onChange,
     this.disabled = false,
-    this.switchActiveColor
+    this.switchActiveColor,
   });
 
   _SwitchPreferenceState createState() => _SwitchPreferenceState();
@@ -50,7 +50,7 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
       subtitle: widget.desc == null ? null : Text(widget.desc),
       trailing: Switch.adaptive(
         value: PrefService.getBool(widget.localKey) ?? widget.defaultVal,
-        activeColor: widget.switchActiveColor
+        activeColor: widget.switchActiveColor,
         onChanged:
             widget.disabled ? null : (val) => val ? onEnable() : onDisable(),
       ),

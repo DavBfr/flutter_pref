@@ -206,8 +206,8 @@ class PrefService {
     }
     rebuildCache();
   }
-  
+
   static void clear() {
-      sharedPreferences.clear();
+    sharedPreferences.clear();
   }
 }

@@ -8,7 +8,7 @@ class PreferenceText extends StatelessWidget {
 
   final Widget leading;
   final Text subtitle;
-  
+
   final Function onTap;
 
   PreferenceText(
