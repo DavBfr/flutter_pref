@@ -19,11 +19,13 @@ class PreferenceDialog extends StatefulWidget {
 }
 
 class PreferenceDialogState extends State<PreferenceDialog> {
+
+  @override
   void initState() {
     super.initState();
 
     if (widget.onlySaveOnSubmit) {
-      PrefService.clearCache();
+      PrefService.rebuildCache();
       PrefService.enableCaching();
     }
   }
@@ -31,7 +33,7 @@ class PreferenceDialogState extends State<PreferenceDialog> {
   @override
   void dispose() {
     PrefService.disableCaching();
-    PrefService.clearCache();
+    PrefService.rebuildCache();
     super.dispose();
   }
 

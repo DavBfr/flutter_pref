@@ -10,17 +10,17 @@ class PrefService {
 
   static bool _justCache = false;
 
-  static Map cache;
+  static Map<String, dynamic> cache;
 
   static Future<bool> init({String prefix = ''}) async {
     if (sharedPreferences != null) return false;
     PrefService.prefix = prefix;
     sharedPreferences = await SharedPreferences.getInstance();
-    clearCache();
+    rebuildCache();
     return true;
   }
 
-  static void setDefaultValues(Map values) {
+  static void setDefaultValues(Map<String, dynamic> values) {
     print(values);
     for (String key in values.keys) {
       if (sharedPreferences.containsKey(prefix + key)) continue;
@@ -175,7 +175,7 @@ class PrefService {
       ''');
   }
 
-  static void clearCache() {
+  static void rebuildCache() {
     cache = {};
 
     for (String key in sharedPreferences.getKeys())
@@ -204,7 +204,7 @@ class PrefService {
         sharedPreferences.setString(key, val);
       else if (val is List<String>) sharedPreferences.setStringList(key, val);
     }
-    clearCache();
+    rebuildCache();
   }
   
   static void clear() {

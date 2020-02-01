@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
 
-class DropdownPreference extends StatefulWidget {
+class DropdownPreference<T> extends StatefulWidget {
   final String title;
   final String desc;
   final String localKey;
-  final dynamic defaultVal;
+  final T defaultVal;
 
-  final List values;
-  final List displayValues;
+  final List<T> values;
+  final List<String> displayValues;
 
   final Function onChange;
 
@@ -28,7 +28,7 @@ class DropdownPreference extends StatefulWidget {
   _DropdownPreferenceState createState() => _DropdownPreferenceState();
 }
 
-class _DropdownPreferenceState extends State<DropdownPreference> {
+class _DropdownPreferenceState<T> extends State<DropdownPreference<T>> {
   @override
   void initState() {
     super.initState();
@@ -47,7 +47,7 @@ class _DropdownPreferenceState extends State<DropdownPreference> {
             value: val,
             child: Text(
               widget.displayValues == null
-                  ? val
+                  ? val.toString()
                   : widget.displayValues[widget.values.indexOf(val)],
               textAlign: TextAlign.end,
             ),
@@ -63,7 +63,7 @@ class _DropdownPreferenceState extends State<DropdownPreference> {
     );
   }
 
-  onChange(var val) {
+  onChange(T val) {
     if (val is String) {
       this.setState(() => PrefService.setString(widget.localKey, val));
     } else if (val is int) {

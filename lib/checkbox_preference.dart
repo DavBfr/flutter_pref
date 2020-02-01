@@ -30,6 +30,7 @@ class CheckboxPreference extends StatefulWidget {
 }
 
 class _CheckboxPreferenceState extends State<CheckboxPreference> {
+
   @override
   void initState() {
     super.initState();
