@@ -1,4 +1,4 @@
-## master
+## [5.1.0] - 01.02.2020
 
 - Added `sharedPreferences.clear()`
 - Added more type-safety on fields (thx to @bartektartanus)
