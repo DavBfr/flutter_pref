@@ -1,6 +1,8 @@
 ## master
 
 - Added `sharedPreferences.clear()`
+- Added more type-safety on fields (thx to @bartektartanus)
+- Added `switchActiveColor` option to `SwitchPreference` (thx to @E.Gallina)
 - Added `onTap` callback to `PreferenceText`
 - Added `leading` to `RadioPreference`
 
