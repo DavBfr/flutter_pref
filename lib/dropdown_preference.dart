@@ -25,7 +25,7 @@ class DropdownPreference<T> extends StatefulWidget {
     this.disabled = false,
   });
 
-  _DropdownPreferenceState createState() => _DropdownPreferenceState();
+  _DropdownPreferenceState<T> createState() => _DropdownPreferenceState<T>();
 }
 
 class _DropdownPreferenceState<T> extends State<DropdownPreference<T>> {
@@ -38,12 +38,25 @@ class _DropdownPreferenceState<T> extends State<DropdownPreference<T>> {
 
   @override
   Widget build(BuildContext context) {
+    T value;
+    try {
+      value = PrefService.get(widget.localKey) ?? widget.defaultVal;
+    } on TypeError catch (e) {
+      value = widget.defaultVal;
+      assert(() {
+        throw FlutterError('''$e
+The PrefService value for "${widget.localKey}" is not the right type (${PrefService.get(widget.localKey)}).
+In release mode, the default value ($value) will silently be used.
+''');
+      }());
+    }
+
     return ListTile(
       title: Text(widget.title),
       subtitle: widget.desc == null ? null : Text(widget.desc),
-      trailing: DropdownButton(
+      trailing: DropdownButton<T>(
         items: widget.values.map((var val) {
-          return DropdownMenuItem(
+          return DropdownMenuItem<T>(
             value: val,
             child: Text(
               widget.displayValues == null
@@ -58,7 +71,7 @@ class _DropdownPreferenceState<T> extends State<DropdownPreference<T>> {
             : (newVal) async {
                 onChange(newVal);
               },
-        value: PrefService.get(widget.localKey) ?? widget.defaultVal,
+        value: value,
       ),
     );
   }

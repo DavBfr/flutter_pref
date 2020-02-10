@@ -54,6 +54,13 @@ class _MyHomePageState extends State<MyHomePage> {
           defaultVal: 'Timeline',
           values: ['Posts', 'Timeline', 'Private Messages'],
         ),
+        DropdownPreference<int>(
+          'Number of items',
+          'items_count',
+          defaultVal: 2,
+          displayValues: ['One', 'Two', 'Three', 'Four'],
+          values: [1, 2, 3, 4],
+        ),
         PreferenceTitle('Personalization'),
         RadioPreference(
           'Light Theme',
