@@ -4,7 +4,7 @@ import 'package:preferences/preferences.dart';
 import 'package:dynamic_theme/dynamic_theme.dart'; // Just for theme example
 import 'package:validators/validators.dart';
 
-main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final service = await SharedPrefService.init(prefix: 'pref_');
@@ -14,7 +14,7 @@ main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp(this.service);
+  const MyApp(this.service);
 
   final BasePrefService service;
 
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -133,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
         TextFieldPreference('E-Mail', 'user_email',
             defaultVal: 'email@example.com', validator: (str) {
           if (!isEmail(str)) {
-            return "Invalid email";
+            return 'Invalid email';
           }
           return null;
         }),
