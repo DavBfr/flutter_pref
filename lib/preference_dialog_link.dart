@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:preferences/preference_dialog.dart';
+
+import 'preference_dialog.dart';
 
 class PreferenceDialogLink extends StatelessWidget {
   final String title;

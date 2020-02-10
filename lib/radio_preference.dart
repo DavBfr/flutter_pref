@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:preferences/preference_service.dart';
+
+import 'preference_service.dart';
 
 class RadioPreference<T> extends StatefulWidget {
   final String title;

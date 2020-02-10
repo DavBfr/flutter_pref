@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:preferences/preference_service.dart';
+
+import 'preference_service.dart';
 
 class PreferenceHider extends StatelessWidget {
   final List<Widget> preferences;

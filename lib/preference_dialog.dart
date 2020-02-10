@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:preferences/preference_service.dart';
+
+import 'preference_service.dart';
+import 'preference_service_base.dart';
+import 'preference_service_cache.dart';
+import 'preference_service_shared.dart';
 
 class PreferenceDialog extends StatefulWidget {
   final String title;

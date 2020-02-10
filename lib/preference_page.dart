@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:preferences/preference_service.dart';
+
+import 'preference_service.dart';
+import 'preference_service_shared.dart';
 
 /// PreferencePage isn't required if you init PrefService in your main() function
 class PreferencePage extends StatefulWidget {
