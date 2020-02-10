@@ -48,8 +48,9 @@ class _TextFieldPreferenceState extends State<TextFieldPreference> {
   @override
   void initState() {
     if (PrefService.getString(widget.localKey) == null &&
-        widget.defaultVal != null)
+        widget.defaultVal != null) {
       PrefService.setString(widget.localKey, widget.defaultVal);
+    }
     controller.text =
         PrefService.getString(widget.localKey) ?? widget.defaultVal ?? '';
     super.initState();
@@ -82,7 +83,7 @@ class _TextFieldPreferenceState extends State<TextFieldPreference> {
           style: widget.style,
           keyboardType: widget.keyboardType,
           obscureText: widget.obscureText,
-          validator: widget.validator ?? null,
+          validator: widget.validator,
           enabled: !widget.disabled,
         ),
       ),
