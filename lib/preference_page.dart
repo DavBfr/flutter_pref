@@ -17,10 +17,7 @@ class PreferencePageState extends State<PreferencePage> {
     // Check if we already have a BasePrefService
     final service = PrefService.of(context);
     if (service != null) {
-      return PrefService(
-        service: service,
-        child: settings,
-      );
+      return settings;
     }
 
     // Fallback to SharedPreferences

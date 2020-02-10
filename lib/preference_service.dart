@@ -238,9 +238,13 @@ abstract class BasePrefService extends ChangeNotifier {
   }
 
   Future<void> apply(BasePrefService other) async {
+    print('Apply ${other.runtimeType} to $runtimeType');
     for (final key in other.getKeys()) {
-      await set(key, other.get(key));
+      final val = other.get(key);
+      print('   $key <= "$val" was "${get(key)}" ');
+      await set(key, val);
     }
+    print('End Apply');
   }
 
   Map<String, dynamic> toMap() {
@@ -273,6 +277,11 @@ abstract class BasePrefService extends ChangeNotifier {
     return false;
   }
 
+  void _changed(String key, dynamic val) {
+    print('$runtimeType $key <= "$val"');
+    notifyListeners();
+  }
+
   @override
   String toString() => toMap().toString();
 
@@ -281,7 +290,7 @@ abstract class BasePrefService extends ChangeNotifier {
 
   @mustCallSuper
   FutureOr<bool> setBool(String key, bool val) {
-    notifyListeners();
+    _changed(key, val);
     return true;
   }
 
@@ -289,7 +298,7 @@ abstract class BasePrefService extends ChangeNotifier {
 
   @mustCallSuper
   FutureOr<bool> setString(String key, String val) {
-    notifyListeners();
+    _changed(key, val);
     return true;
   }
 
@@ -297,7 +306,7 @@ abstract class BasePrefService extends ChangeNotifier {
 
   @mustCallSuper
   FutureOr<bool> setInt(String key, int val) {
-    notifyListeners();
+    _changed(key, val);
     return true;
   }
 
@@ -305,7 +314,7 @@ abstract class BasePrefService extends ChangeNotifier {
 
   @mustCallSuper
   FutureOr<bool> setDouble(String key, double val) {
-    notifyListeners();
+    _changed(key, val);
     return true;
   }
 
@@ -313,7 +322,7 @@ abstract class BasePrefService extends ChangeNotifier {
 
   @mustCallSuper
   FutureOr<bool> setStringList(String key, List<String> val) {
-    notifyListeners();
+    _changed(key, val);
     return true;
   }
 
@@ -322,8 +331,14 @@ abstract class BasePrefService extends ChangeNotifier {
   Set<String> getKeys();
 
   @mustCallSuper
+  FutureOr<bool> remove(String key) async {
+    _changed(key, null);
+    return true;
+  }
+
+  @mustCallSuper
   void clear() {
-    notifyListeners();
+    _changed(null, null);
   }
 }
 
@@ -416,22 +431,45 @@ class SharedPrefService extends BasePrefService {
 
   @override
   Set<String> getKeys() {
-    return sharedPreferences.getKeys();
+    if (prefix == '') {
+      return sharedPreferences.getKeys();
+    }
+
+    final result = Set<String>();
+    for (final key in sharedPreferences.getKeys()) {
+      if (key.startsWith(prefix)) {
+        result.add(key.substring(prefix.length));
+      }
+    }
+
+    return result;
   }
 
   @override
-  void clear() {
+  FutureOr<bool> remove(String key) async {
+    if (await sharedPreferences.remove('$prefix$key')) {
+      return super.remove(key);
+    }
+    return false;
+  }
+
+  @override
+  FutureOr<bool> clear() async {
+    var result = true;
     if (prefix == '') {
-      sharedPreferences.clear();
+      result = await sharedPreferences.clear();
     } else {
       for (final key in sharedPreferences.getKeys()) {
         if (key.startsWith(prefix)) {
-          sharedPreferences.remove('$prefix$key');
+          if (!await sharedPreferences.remove('$prefix$key')) {
+            result = false;
+          }
         }
       }
     }
 
     super.clear();
+    return result;
   }
 }
 
@@ -495,13 +533,18 @@ class JustCachePrefService extends BasePrefService {
 
   @override
   dynamic get(String key) {
-    print('_cache[$key] => ${_cache[key]}');
     return _cache[key];
   }
 
   @override
   Set<String> getKeys() {
     return Set<String>.from(_cache.keys);
+  }
+
+  @override
+  FutureOr<bool> remove(String key) async {
+    _cache.remove(key);
+    return super.remove(key);
   }
 
   @override
