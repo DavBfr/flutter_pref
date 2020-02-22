@@ -25,26 +25,24 @@ abstract class BasePrefService extends ChangeNotifier {
     subs[key]?.remove(f);
   }
 
-  void setDefaultValues(Map<String, dynamic> values) {
+  Future<bool> setDefaultValues(Map<String, dynamic> values) async {
+    var result = true;
     final keys = getKeys();
     for (final key in values.keys) {
-      if (keys.contains(key)) {
-        continue;
-      }
-
-      final val = values[key];
-      if (val is bool) {
-        setBool(key, val);
-      } else if (val is double) {
-        setDouble(key, val);
-      } else if (val is int) {
-        setInt(key, val);
-      } else if (val is String) {
-        setString(key, val);
-      } else if (val is List<String>) {
-        setStringList(key, val);
+      if (!keys.contains(key)) {
+        if (!await set(key, values[key])) {
+          result = false;
+        }
+      } else {
+        if (get(key).runtimeType != values[key].runtimeType) {
+          if (!await set(key, values[key])) {
+            result = false;
+          }
+        }
       }
     }
+
+    return result;
   }
 
   bool getBool(String key) {
@@ -95,6 +93,10 @@ abstract class BasePrefService extends ChangeNotifier {
   }
 
   void _changed(String key, dynamic val) {
+    assert(() {
+      print('PrefService set $key to "$val"');
+      return true;
+    }());
     notifyListeners();
   }
 
