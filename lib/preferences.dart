@@ -2,6 +2,7 @@ library preferences;
 
 export 'checkbox_preference.dart';
 export 'dropdown_preference.dart';
+export 'preference_button.dart';
 export 'preference_dialog.dart';
 export 'preference_dialog_link.dart';
 export 'preference_hider.dart';
