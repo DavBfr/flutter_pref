@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class PreferenceButton extends StatelessWidget {
   const PreferenceButton(
     this.child, {
+    Key key,
     this.color,
     this.textColor,
     this.decoration,
@@ -10,7 +11,7 @@ class PreferenceButton extends StatelessWidget {
     this.title,
     this.subtitle,
     this.onTap,
-  });
+  }) : super(key: key);
 
   final Widget child;
 
@@ -34,8 +35,8 @@ class PreferenceButton extends StatelessWidget {
 
     final button = FlatButton(
       child: child,
-      color: color ?? theme.buttonTheme.colorScheme.background,
-      textColor: textColor ?? theme.buttonTheme.colorScheme.primaryVariant,
+      color: color ?? theme.buttonTheme.colorScheme?.background,
+      textColor: textColor ?? theme.buttonTheme.colorScheme?.primaryVariant,
       onPressed: onTap,
     );
 

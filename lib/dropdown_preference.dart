@@ -18,13 +18,14 @@ class DropdownPreference<T> extends StatefulWidget {
   const DropdownPreference(
     this.title,
     this.localKey, {
+    Key key,
     this.desc,
-    @required this.defaultVal,
+    this.defaultVal,
     @required this.values,
     this.displayValues,
     this.onChange,
     this.disabled = false,
-  });
+  }) : super(key: key);
 
   _DropdownPreferenceState<T> createState() => _DropdownPreferenceState<T>();
 }
@@ -35,7 +36,7 @@ class _DropdownPreferenceState<T> extends State<DropdownPreference<T>> {
     super.didChangeDependencies();
     final service = PrefService.of(context);
     if (service.get(widget.localKey) == null) {
-      service.setDefaultValues({widget.localKey: widget.defaultVal});
+      service.set(widget.localKey, widget.defaultVal);
     }
   }
 
