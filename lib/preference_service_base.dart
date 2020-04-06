@@ -16,7 +16,7 @@ abstract class BasePrefService extends ChangeNotifier {
 
   void onNotify(String key, VoidCallback f) {
     if (subs[key] == null) {
-      subs[key] = Set<VoidCallback>();
+      subs[key] = <VoidCallback>{};
     }
     subs[key].add(f);
   }

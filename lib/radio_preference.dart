@@ -30,6 +30,7 @@ class RadioPreference<T> extends StatefulWidget {
     this.leading,
   });
 
+  @override
   _RadioPreferenceState createState() => _RadioPreferenceState();
 }
 

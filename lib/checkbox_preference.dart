@@ -29,6 +29,7 @@ class CheckboxPreference extends StatefulWidget {
       this.onChange,
       this.disabled = false});
 
+  @override
   _CheckboxPreferenceState createState() => _CheckboxPreferenceState();
 }
 

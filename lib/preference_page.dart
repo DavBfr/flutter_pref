@@ -8,6 +8,7 @@ class PreferencePage extends StatefulWidget {
   final List<Widget> preferences;
   const PreferencePage(this.preferences);
 
+  @override
   PreferencePageState createState() => PreferencePageState();
 }
 

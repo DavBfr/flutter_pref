@@ -21,6 +21,7 @@ class PreferenceDialog extends StatefulWidget {
       this.onlySaveOnSubmit = false,
       this.cancelText});
 
+  @override
   PreferenceDialogState createState() => PreferenceDialogState();
 }
 

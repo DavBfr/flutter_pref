@@ -27,6 +27,7 @@ class DropdownPreference<T> extends StatefulWidget {
     this.disabled = false,
   }) : super(key: key);
 
+  @override
   _DropdownPreferenceState<T> createState() => _DropdownPreferenceState<T>();
 }
 

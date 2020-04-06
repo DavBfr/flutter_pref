@@ -97,7 +97,7 @@ class SharedPrefService extends BasePrefService {
       return sharedPreferences.getKeys();
     }
 
-    final result = Set<String>();
+    final result = <String>{};
     for (final key in sharedPreferences.getKeys()) {
       if (key.startsWith(prefix)) {
         result.add(key.substring(prefix.length));

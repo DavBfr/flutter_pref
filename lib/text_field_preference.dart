@@ -39,6 +39,7 @@ class TextFieldPreference extends StatefulWidget {
     this.disabled = false,
   });
 
+  @override
   _TextFieldPreferenceState createState() => _TextFieldPreferenceState();
 }
 
