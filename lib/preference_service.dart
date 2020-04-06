@@ -21,7 +21,6 @@ class PrefService {
   }
 
   static void setDefaultValues(Map<String, dynamic> values) {
-    print(values);
     for (String key in values.keys) {
       if (sharedPreferences.containsKey(prefix + key)) continue;
       var val = values[key];

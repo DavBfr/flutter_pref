@@ -1,3 +1,8 @@
+## [5.2.0] - 06.04.2020
+
+- Fixed types in `DropdownPreference` (thx to @davbfr)
+- Resolved `pedantic` warnings (thx to @davbfr)
+
 ## [5.1.0] - 01.02.2020
 
 - Added `sharedPreferences.clear()`

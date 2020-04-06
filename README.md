@@ -26,7 +26,7 @@ You should ensure that you add `preferences` as a dependency in your flutter pro
 
 ```yaml
 dependencies:
-  preferences: ^5.1.0
+  preferences: ^5.2.0
 ```
 
 Then run `flutter packages get` to get the package.
