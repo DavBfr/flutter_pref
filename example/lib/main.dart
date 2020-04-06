@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:preferences/preferences.dart';
 import 'package:dynamic_theme/dynamic_theme.dart'; // Just for theme example
@@ -16,15 +17,15 @@ main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new DynamicTheme(
+    return DynamicTheme(
         defaultBrightness: Brightness.light,
         data: (brightness) =>
-            new ThemeData(brightness: brightness, accentColor: Colors.green),
+            ThemeData(brightness: brightness, accentColor: Colors.green),
         themedWidgetBuilder: (context, theme) {
-          return new MaterialApp(
+          return MaterialApp(
             title: 'Preferences Demo',
             theme: theme,
-            home: new MyHomePage(title: 'Preferences Demo'),
+            home: MyHomePage(title: 'Preferences Demo'),
           );
         });
   }
@@ -113,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 // No Connection? No Problem! Just throw an Exception with your custom message...
                 throw Exception('No Connection');
 
-                print('Disabled Notifications for PMs from Strangers!');
+                // Disabled Notifications for PMs from Strangers!
               },
             ),
           ]),

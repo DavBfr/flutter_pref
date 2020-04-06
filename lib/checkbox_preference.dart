@@ -33,8 +33,9 @@ class _CheckboxPreferenceState extends State<CheckboxPreference> {
   @override
   void initState() {
     super.initState();
-    if (PrefService.getBool(widget.localKey) == null)
+    if (PrefService.getBool(widget.localKey) == null) {
       PrefService.setBool(widget.localKey, widget.defaultVal);
+    }
   }
 
   @override
@@ -58,7 +59,7 @@ class _CheckboxPreferenceState extends State<CheckboxPreference> {
   onEnable() async {
     setState(() => PrefService.setBool(widget.localKey, true));
     if (widget.onChange != null) widget.onChange();
-    if (widget.onEnable != null)
+    if (widget.onEnable != null) {
       try {
         await widget.onEnable();
       } catch (e) {
@@ -68,12 +69,13 @@ class _CheckboxPreferenceState extends State<CheckboxPreference> {
         }
         if (mounted) PrefService.showError(context, e.message);
       }
+    }
   }
 
   onDisable() async {
     setState(() => PrefService.setBool(widget.localKey, false));
     if (widget.onChange != null) widget.onChange();
-    if (widget.onDisable != null)
+    if (widget.onDisable != null) {
       try {
         await widget.onDisable();
       } catch (e) {
@@ -83,5 +85,6 @@ class _CheckboxPreferenceState extends State<CheckboxPreference> {
         }
         if (mounted) PrefService.showError(context, e.message);
       }
+    }
   }
 }

@@ -41,7 +41,9 @@ class _RadioPreferenceState<T> extends State<RadioPreference<T>> {
     PrefService.onNotify(widget.localGroupKey, () {
       try {
         setState(() {});
-      } catch (e) {}
+      } catch (e) {
+        print(e);
+      }
     });
   }
 

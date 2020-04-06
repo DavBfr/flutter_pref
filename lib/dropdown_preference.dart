@@ -32,8 +32,9 @@ class _DropdownPreferenceState<T> extends State<DropdownPreference<T>> {
   @override
   void initState() {
     super.initState();
-    if (PrefService.get(widget.localKey) == null)
+    if (PrefService.get(widget.localKey) == null) {
       PrefService.setDefaultValues({widget.localKey: widget.defaultVal});
+    }
   }
 
   @override
