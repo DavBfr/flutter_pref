@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
 
@@ -16,7 +18,7 @@ class CheckboxPreference extends StatefulWidget {
   final Function onDisable;
   final Function onChange;
 
-  CheckboxPreference(this.title, this.localKey,
+  const CheckboxPreference(this.title, this.localKey,
       {this.desc,
       this.defaultVal = false,
       this.ignoreTileTap = false,
@@ -59,7 +61,7 @@ class _CheckboxPreferenceState extends State<CheckboxPreference> {
     );
   }
 
-  onEnable() async {
+  Future<void> onEnable() async {
     setState(() {
       PrefService.of(context).setBool(widget.localKey, true);
     });
@@ -77,7 +79,7 @@ class _CheckboxPreferenceState extends State<CheckboxPreference> {
     }
   }
 
-  onDisable() async {
+  Future<void> onDisable() async {
     setState(() {
       PrefService.of(context).setBool(widget.localKey, false);
     });

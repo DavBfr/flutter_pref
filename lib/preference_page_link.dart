@@ -8,7 +8,7 @@ class PreferencePageLink extends StatelessWidget {
   final PreferencePage page;
   final Widget leading;
   final Widget trailing;
-  PreferencePageLink(this.title,
+  const PreferencePageLink(this.title,
       {@required this.page,
       this.desc,
       this.pageTitle,

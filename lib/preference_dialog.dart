@@ -9,7 +9,7 @@ class PreferenceDialog extends StatefulWidget {
 
   final bool onlySaveOnSubmit;
 
-  PreferenceDialog(this.preferences,
+  const PreferenceDialog(this.preferences,
       {this.title,
       this.submitText,
       this.onlySaveOnSubmit = false,

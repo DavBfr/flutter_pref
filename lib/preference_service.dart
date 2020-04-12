@@ -144,7 +144,7 @@ class PrefService extends InheritedWidget {
   }
 
   @Deprecated('Use PrefService.of()')
-  static checkInit() {
+  static void checkInit() {
     if (_instance == null) {
       throw Exception('''\n
   PrefService not initialized.

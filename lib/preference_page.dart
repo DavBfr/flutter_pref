@@ -4,7 +4,7 @@ import 'package:preferences/preference_service.dart';
 /// PreferencePage isn't required if you init PrefService in your main() function
 class PreferencePage extends StatefulWidget {
   final List<Widget> preferences;
-  PreferencePage(this.preferences);
+  const PreferencePage(this.preferences);
 
   PreferencePageState createState() => PreferencePageState();
 }

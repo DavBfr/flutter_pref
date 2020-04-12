@@ -20,7 +20,7 @@ class TextFieldPreference extends StatefulWidget {
 
   final bool disabled;
 
-  TextFieldPreference(
+  const TextFieldPreference(
     this.label,
     this.localKey, {
     this.defaultVal,

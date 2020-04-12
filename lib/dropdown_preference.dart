@@ -14,7 +14,7 @@ class DropdownPreference<T> extends StatefulWidget {
 
   final bool disabled;
 
-  DropdownPreference(
+  const DropdownPreference(
     this.title,
     this.localKey, {
     this.desc,

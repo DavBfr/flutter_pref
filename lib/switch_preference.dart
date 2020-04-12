@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:preferences/preference_service.dart';
 
@@ -18,7 +20,7 @@ class SwitchPreference extends StatefulWidget {
 
   final Color switchActiveColor;
 
-  SwitchPreference(
+  const SwitchPreference(
     this.title,
     this.localKey, {
     this.desc,
@@ -67,7 +69,7 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
     );
   }
 
-  onEnable() async {
+  Future<void> onEnable() async {
     setState(() {
       PrefService.of(context).setBool(widget.localKey, true);
     });
@@ -85,7 +87,7 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
     }
   }
 
-  onDisable() async {
+  Future<void> onDisable() async {
     setState(() {
       PrefService.of(context).setBool(widget.localKey, false);
     });

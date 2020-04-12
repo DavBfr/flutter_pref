@@ -11,7 +11,7 @@ class PreferenceText extends StatelessWidget {
 
   final Function onTap;
 
-  PreferenceText(
+  const PreferenceText(
     this.text, {
     this.style,
     this.decoration,

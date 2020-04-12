@@ -11,7 +11,7 @@ class PreferenceDialogLink extends StatelessWidget {
 
   final Function onPop;
 
-  PreferenceDialogLink(this.title,
+  const PreferenceDialogLink(this.title,
       {@required this.dialog,
       this.desc,
       this.leading,

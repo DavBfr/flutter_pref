@@ -14,9 +14,9 @@ class RadioPreference<T> extends StatefulWidget {
 
   final bool disabled;
 
-  final leading;
+  final Widget leading;
 
-  RadioPreference(
+  const RadioPreference(
     this.title,
     this.val,
     this.localGroupKey, {
@@ -34,7 +34,7 @@ class RadioPreference<T> extends StatefulWidget {
 
 class _RadioPreferenceState<T> extends State<RadioPreference<T>> {
   @override
-  didChangeDependencies() {
+  void didChangeDependencies() {
     super.didChangeDependencies();
     PrefService.of(context).onNotify(widget.localGroupKey, _onNotify);
   }
@@ -48,7 +48,7 @@ class _RadioPreferenceState<T> extends State<RadioPreference<T>> {
   }
 
   @override
-  deactivate() {
+  void deactivate() {
     super.deactivate();
     PrefService.of(context).onNotifyRemove(widget.localGroupKey, _onNotify);
   }
@@ -75,7 +75,7 @@ class _RadioPreferenceState<T> extends State<RadioPreference<T>> {
     );
   }
 
-  onChange(T val) {
+  void onChange(T val) {
     final service = PrefService.of(context);
     if (val is String) {
       setState(() {
