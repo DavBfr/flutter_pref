@@ -183,7 +183,7 @@ class PrefService extends InheritedWidget {
   static Future<void> applyCache() async {}
 }
 
-abstract class BasePrefService {
+abstract class BasePrefService extends ChangeNotifier {
   final subs = <String, Set<VoidCallback>>{};
 
   void notify(String key) {
@@ -207,12 +207,12 @@ abstract class BasePrefService {
 
   void setDefaultValues(Map<String, dynamic> values) {
     final keys = getKeys();
-    for (String key in values.keys) {
+    for (final key in values.keys) {
       if (keys.contains(key)) {
         continue;
       }
 
-      var val = values[key];
+      final val = values[key];
       if (val is bool) {
         setBool(key, val);
       } else if (val is double) {
@@ -229,7 +229,7 @@ abstract class BasePrefService {
 
   bool getBool(String key) {
     if (key.startsWith('!')) {
-      bool val = getBoolRaw(key.substring(1));
+      final val = getBoolRaw(key.substring(1));
       if (val == null) return null;
       return !val;
     }
@@ -273,32 +273,58 @@ abstract class BasePrefService {
     return false;
   }
 
+  @override
+  String toString() => toMap().toString();
+
   @protected
   bool getBoolRaw(String key);
 
-  FutureOr<bool> setBool(String key, bool val);
+  @mustCallSuper
+  FutureOr<bool> setBool(String key, bool val) {
+    notifyListeners();
+    return true;
+  }
 
   String getString(String key);
 
-  FutureOr<bool> setString(String key, String val);
+  @mustCallSuper
+  FutureOr<bool> setString(String key, String val) {
+    notifyListeners();
+    return true;
+  }
 
   int getInt(String key);
 
-  FutureOr<bool> setInt(String key, int val);
+  @mustCallSuper
+  FutureOr<bool> setInt(String key, int val) {
+    notifyListeners();
+    return true;
+  }
 
   double getDouble(String key);
 
-  FutureOr<bool> setDouble(String key, double val);
+  @mustCallSuper
+  FutureOr<bool> setDouble(String key, double val) {
+    notifyListeners();
+    return true;
+  }
 
   List<String> getStringList(String key);
 
-  FutureOr<bool> setStringList(String key, List<String> val);
+  @mustCallSuper
+  FutureOr<bool> setStringList(String key, List<String> val) {
+    notifyListeners();
+    return true;
+  }
 
-  get(String key);
+  dynamic get(String key);
 
   Set<String> getKeys();
 
-  void clear();
+  @mustCallSuper
+  void clear() {
+    notifyListeners();
+  }
 }
 
 class SharedPrefService extends BasePrefService {
@@ -321,8 +347,11 @@ class SharedPrefService extends BasePrefService {
   }
 
   @override
-  FutureOr<bool> setBool(String key, bool val) {
-    return sharedPreferences.setBool('$prefix$key', val);
+  FutureOr<bool> setBool(String key, bool val) async {
+    if (await sharedPreferences.setBool('$prefix$key', val)) {
+      return super.setBool(key, val);
+    }
+    return false;
   }
 
   @override
@@ -331,8 +360,12 @@ class SharedPrefService extends BasePrefService {
   }
 
   @override
-  FutureOr<bool> setString(String key, String val) {
-    return sharedPreferences.setString('$prefix$key', val);
+  FutureOr<bool> setString(String key, String val) async {
+    if (await sharedPreferences.setString('$prefix$key', val)) {
+      return super.setString(key, val);
+    }
+
+    return false;
   }
 
   @override
@@ -341,8 +374,12 @@ class SharedPrefService extends BasePrefService {
   }
 
   @override
-  FutureOr<bool> setInt(String key, int val) {
-    return sharedPreferences.setInt('$prefix$key', val);
+  FutureOr<bool> setInt(String key, int val) async {
+    if (await sharedPreferences.setInt('$prefix$key', val)) {
+      super.setInt(key, val);
+    }
+
+    return false;
   }
 
   @override
@@ -351,8 +388,12 @@ class SharedPrefService extends BasePrefService {
   }
 
   @override
-  FutureOr<bool> setDouble(String key, double val) {
-    return sharedPreferences.setDouble('$prefix$key', val);
+  FutureOr<bool> setDouble(String key, double val) async {
+    if (await sharedPreferences.setDouble('$prefix$key', val)) {
+      return super.setDouble(key, val);
+    }
+
+    return false;
   }
 
   @override
@@ -361,8 +402,11 @@ class SharedPrefService extends BasePrefService {
   }
 
   @override
-  FutureOr<bool> setStringList(String key, List<String> val) {
-    return sharedPreferences.setStringList('$prefix$key', val);
+  FutureOr<bool> setStringList(String key, List<String> val) async {
+    if (await sharedPreferences.setStringList('$prefix$key', val)) {
+      return super.setStringList(key, val);
+    }
+    return false;
   }
 
   @override
@@ -386,81 +430,83 @@ class SharedPrefService extends BasePrefService {
         }
       }
     }
+
+    super.clear();
   }
 }
 
 class JustCachePrefService extends BasePrefService {
-  JustCachePrefService();
-
-  Map<String, dynamic> cache;
+  final _cache = <String, dynamic>{};
 
   @override
   bool getBoolRaw(String key) {
-    return cache[key];
+    return _cache[key];
   }
 
   @override
   FutureOr<bool> setBool(String key, bool val) {
-    cache[key] = val;
-    return true;
+    _cache[key] = val;
+    return super.setBool(key, val);
   }
 
   @override
   String getString(String key) {
-    return cache[key];
+    return _cache[key];
   }
 
   @override
   FutureOr<bool> setString(String key, String val) {
-    cache[key] = val;
-    return true;
+    _cache[key] = val;
+    return super.setString(key, val);
   }
 
   @override
   int getInt(String key) {
-    return cache[key];
+    return _cache[key];
   }
 
   @override
   FutureOr<bool> setInt(String key, int val) {
-    cache[key] = val;
-    return true;
+    _cache[key] = val;
+    return super.setInt(key, val);
   }
 
   @override
   double getDouble(String key) {
-    return cache[key];
+    return _cache[key];
   }
 
   @override
   FutureOr<bool> setDouble(String key, double val) {
-    cache[key] = val;
-    return true;
+    _cache[key] = val;
+    return super.setDouble(key, val);
   }
 
   @override
   List<String> getStringList(String key) {
-    return cache[key];
+    return _cache[key];
   }
 
   @override
   FutureOr<bool> setStringList(String key, List<String> val) {
-    cache[key] = val;
-    return true;
+    _cache[key] = val;
+    return super.setStringList(key, val);
   }
 
   @override
   dynamic get(String key) {
-    return cache[key];
+    print('_cache[$key] => ${_cache[key]}');
+    return _cache[key];
   }
 
   @override
   Set<String> getKeys() {
-    return Set<String>.from(cache.keys);
+    return Set<String>.from(_cache.keys);
   }
 
   @override
   void clear() {
-    cache.clear();
+    _cache.clear();
+    super.clear();
   }
 }
