@@ -7,29 +7,33 @@ import 'package:validators/validators.dart';
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await PrefService.init(
-    service: await SharedPrefService.init(prefix: 'pref_'),
-  );
+  final service = await SharedPrefService.init(prefix: 'pref_');
+  service.setDefaultValues({'user_description': 'This is my description!'});
 
-  PrefService.setDefaultValues({'user_description': 'This is my description!'});
-
-  runApp(MyApp());
+  runApp(MyApp(service));
 }
 
 class MyApp extends StatelessWidget {
+  MyApp(this.service);
+
+  final BasePrefService service;
+
   @override
   Widget build(BuildContext context) {
-    return DynamicTheme(
-        defaultBrightness: Brightness.light,
-        data: (brightness) =>
-            ThemeData(brightness: brightness, accentColor: Colors.green),
-        themedWidgetBuilder: (context, theme) {
-          return MaterialApp(
-            title: 'Preferences Demo',
-            theme: theme,
-            home: MyHomePage(title: 'Preferences Demo'),
-          );
-        });
+    return PrefService(
+      service: service,
+      child: DynamicTheme(
+          defaultBrightness: Brightness.light,
+          data: (brightness) =>
+              ThemeData(brightness: brightness, accentColor: Colors.green),
+          themedWidgetBuilder: (context, theme) {
+            return MaterialApp(
+              title: 'Preferences Demo',
+              theme: theme,
+              home: MyHomePage(title: 'Preferences Demo'),
+            );
+          }),
+    );
   }
 }
 
@@ -134,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return null;
         }),
         PreferenceText(
-          PrefService.getString('user_description') ?? '',
+          PrefService.of(context).getString('user_description') ?? '',
           style: TextStyle(color: Colors.grey),
         ),
         PreferenceDialogLink(
@@ -233,7 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
             setState(() {});
           },
           onDisable: () {
-            PrefService.setBool('exp_showos', false);
+            PrefService.of(context).setBool('exp_showos', false);
           },
         )
       ]),

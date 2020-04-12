@@ -37,10 +37,12 @@ class SwitchPreference extends StatefulWidget {
 
 class _SwitchPreferenceState extends State<SwitchPreference> {
   @override
-  void initState() {
-    super.initState();
-    if (PrefService.getBool(widget.localKey) == null) {
-      PrefService.setBool(widget.localKey, widget.defaultVal);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final service = PrefService.of(context);
+
+    if (service.getBool(widget.localKey) == null) {
+      service.setBool(widget.localKey, widget.defaultVal);
     }
   }
 
@@ -50,28 +52,32 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
       title: Text(widget.title),
       subtitle: widget.desc == null ? null : Text(widget.desc),
       trailing: Switch.adaptive(
-        value: PrefService.getBool(widget.localKey) ?? widget.defaultVal,
+        value: PrefService.of(context).getBool(widget.localKey) ??
+            widget.defaultVal,
         activeColor: widget.switchActiveColor,
         onChanged:
             widget.disabled ? null : (val) => val ? onEnable() : onDisable(),
       ),
       onTap: (widget.disabled || widget.ignoreTileTap)
           ? null
-          : () => (PrefService.getBool(widget.localKey) ?? widget.defaultVal)
+          : () => (PrefService.of(context).getBool(widget.localKey) ??
+                  widget.defaultVal)
               ? onDisable()
               : onEnable(),
     );
   }
 
   onEnable() async {
-    setState(() => PrefService.setBool(widget.localKey, true));
+    setState(() {
+      PrefService.of(context).setBool(widget.localKey, true);
+    });
     if (widget.onChange != null) widget.onChange();
     if (widget.onEnable != null) {
       try {
         await widget.onEnable();
       } catch (e) {
         if (widget.resetOnException) {
-          PrefService.setBool(widget.localKey, false);
+          PrefService.of(context).setBool(widget.localKey, false);
           if (mounted) setState(() {});
         }
         if (mounted) PrefService.showError(context, e.message);
@@ -80,14 +86,16 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
   }
 
   onDisable() async {
-    setState(() => PrefService.setBool(widget.localKey, false));
+    setState(() {
+      PrefService.of(context).setBool(widget.localKey, false);
+    });
     if (widget.onChange != null) widget.onChange();
     if (widget.onDisable != null) {
       try {
         await widget.onDisable();
       } catch (e) {
         if (widget.resetOnException) {
-          PrefService.setBool(widget.localKey, true);
+          PrefService.of(context).setBool(widget.localKey, true);
           if (mounted) setState(() {});
         }
         if (mounted) PrefService.showError(context, e.message);

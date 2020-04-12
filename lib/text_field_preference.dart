@@ -46,14 +46,17 @@ class _TextFieldPreferenceState extends State<TextFieldPreference> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    if (PrefService.getString(widget.localKey) == null &&
+  void didChangeDependencies() {
+    final service = PrefService.of(context);
+
+    if (service.getString(widget.localKey) == null &&
         widget.defaultVal != null) {
-      PrefService.setString(widget.localKey, widget.defaultVal);
+      service.setString(widget.localKey, widget.defaultVal);
     }
+
     controller.text =
-        PrefService.getString(widget.localKey) ?? widget.defaultVal ?? '';
-    super.initState();
+        service.getString(widget.localKey) ?? widget.defaultVal ?? '';
+    super.didChangeDependencies();
   }
 
   @override
@@ -75,7 +78,7 @@ class _TextFieldPreferenceState extends State<TextFieldPreference> {
           onChanged: (val) {
             if (_formKey.currentState.validate()) {
               if (widget.onChange != null) val = widget.onChange(val) ?? val;
-              PrefService.setString(widget.localKey, val);
+              PrefService.of(context).setString(widget.localKey, val);
             }
           },
           autofocus: widget.autofocus,

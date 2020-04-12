@@ -10,7 +10,10 @@ class PreferenceHider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (PrefService.getBool(hidePref) ?? defaultVal) return Container();
+    if (PrefService.of(context).getBool(hidePref) ?? defaultVal) {
+      return Container();
+    }
+
     return Column(
       children: preferences,
       crossAxisAlignment: CrossAxisAlignment.start,

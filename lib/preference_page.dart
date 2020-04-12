@@ -13,12 +13,15 @@ class PreferencePageState extends State<PreferencePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: PrefService.init(),
+      future: SharedPrefService.init(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Container();
         }
-        return ListView(children: widget.preferences);
+        return PrefService(
+          service: snapshot.data,
+          child: ListView(children: widget.preferences),
+        );
       },
     );
   }

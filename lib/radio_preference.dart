@@ -33,40 +33,40 @@ class RadioPreference<T> extends StatefulWidget {
 }
 
 class _RadioPreferenceState<T> extends State<RadioPreference<T>> {
-  BuildContext context;
-
   @override
-  initState() {
-    super.initState();
-    PrefService.onNotify(widget.localGroupKey, () {
-      try {
-        setState(() {});
-      } catch (e) {
-        print(e);
-      }
-    });
+  didChangeDependencies() {
+    super.didChangeDependencies();
+    PrefService.of(context).onNotify(widget.localGroupKey, _onNotify);
+  }
+
+  void _onNotify() {
+    try {
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
-  dispose() {
-    super.dispose();
-    PrefService.onNotifyRemove(widget.localGroupKey);
+  deactivate() {
+    super.deactivate();
+    PrefService.of(context).onNotifyRemove(widget.localGroupKey, _onNotify);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.isDefault && PrefService.get(widget.localGroupKey) == null) {
+    if (widget.isDefault &&
+        PrefService.of(context).get(widget.localGroupKey) == null) {
       onChange(widget.val);
     }
 
-    this.context = context;
     return ListTile(
       title: Text(widget.title),
       leading: widget.leading,
       subtitle: widget.desc == null ? null : Text(widget.desc),
       trailing: Radio(
         value: widget.val,
-        groupValue: PrefService.get(widget.localGroupKey),
+        groupValue: PrefService.of(context).get(widget.localGroupKey),
         onChanged: widget.disabled ? null : (var val) => onChange(widget.val),
       ),
       onTap: (widget.ignoreTileTap || widget.disabled)
@@ -76,16 +76,25 @@ class _RadioPreferenceState<T> extends State<RadioPreference<T>> {
   }
 
   onChange(T val) {
+    final service = PrefService.of(context);
     if (val is String) {
-      setState(() => PrefService.setString(widget.localGroupKey, val));
+      setState(() {
+        service.setString(widget.localGroupKey, val);
+      });
     } else if (val is int) {
-      setState(() => PrefService.setInt(widget.localGroupKey, val));
+      setState(() {
+        service.setInt(widget.localGroupKey, val);
+      });
     } else if (val is double) {
-      setState(() => PrefService.setDouble(widget.localGroupKey, val));
+      setState(() {
+        service.setDouble(widget.localGroupKey, val);
+      });
     } else if (val is bool) {
-      setState(() => PrefService.setBool(widget.localGroupKey, val));
+      setState(() {
+        service.setBool(widget.localGroupKey, val);
+      });
     }
-    PrefService.notify(widget.localGroupKey);
+    service.notify(widget.localGroupKey);
 
     if (widget.onSelect != null) widget.onSelect();
   }

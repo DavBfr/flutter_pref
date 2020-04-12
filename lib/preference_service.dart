@@ -4,11 +4,26 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-mixin PrefService {
+class PrefService extends InheritedWidget {
+  const PrefService({
+    Key key,
+    @required Widget child,
+    @required this.service,
+  })  : assert(service != null),
+        super(key: key, child: child);
+
+  final BasePrefService service;
+
   static BasePrefService _instance;
 
-  static Map subs = {};
+  @override
+  bool updateShouldNotify(InheritedWidget oldWidget) => false;
 
+  static BasePrefService of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<PrefService>().service ??
+      _instance;
+
+  @Deprecated('Use PrefService as a widget instead')
   static Future<bool> init({
     @Deprecated('Use service instead') String prefix = '',
     BasePrefService service,
@@ -26,86 +41,100 @@ mixin PrefService {
     return true;
   }
 
+  @Deprecated('Use PrefService.of()')
   static void setDefaultValues(Map<String, dynamic> values) {
     checkInit();
     _instance.setDefaultValues(values);
   }
 
+  @Deprecated('Use PrefService.of()')
   static bool getBool(String key) {
     checkInit();
     return _instance.getBool(key);
   }
 
+  @Deprecated('Use PrefService.of()')
   static FutureOr<bool> setBool(String key, bool val) {
     checkInit();
     return _instance.setBool(key, val);
   }
 
+  @Deprecated('Use PrefService.of()')
   static String getString(String key) {
     checkInit();
     return _instance.getString(key);
   }
 
+  @Deprecated('Use PrefService.of()')
   static FutureOr<bool> setString(String key, String val) {
     checkInit();
     return _instance.setString(key, val);
   }
 
+  @Deprecated('Use PrefService.of()')
   static int getInt(String key) {
     checkInit();
     return _instance.getInt(key);
   }
 
+  @Deprecated('Use PrefService.of()')
   static FutureOr<bool> setInt(String key, int val) {
     checkInit();
     return _instance.setInt(key, val);
   }
 
+  @Deprecated('Use PrefService.of()')
   static double getDouble(String key) {
     checkInit();
     return _instance.getDouble(key);
   }
 
+  @Deprecated('Use PrefService.of()')
   static FutureOr<bool> setDouble(String key, double val) {
     checkInit();
     return _instance.setDouble(key, val);
   }
 
+  @Deprecated('Use PrefService.of()')
   static List<String> getStringList(String key) {
     checkInit();
     return _instance.getStringList(key);
   }
 
+  @Deprecated('Use PrefService.of()')
   static FutureOr<bool> setStringList(String key, List<String> val) {
     checkInit();
     return _instance.setStringList(key, val);
   }
 
+  @Deprecated('Use PrefService.of()')
   static dynamic get(String key) {
     checkInit();
     return _instance.get(key);
   }
 
+  @Deprecated('Use PrefService.of()')
   static Set<String> getKeys() {
     checkInit();
     return _instance.getKeys();
   }
 
+  @Deprecated('Use PrefService.of()')
   static void notify(String key) {
-    if (subs[key] == null) return;
-
-    for (Function f in subs[key]) {
-      f();
-    }
+    checkInit();
+    _instance.notify(key);
   }
 
-  static void onNotify(String key, Function f) {
-    if (subs[key] == null) subs[key] = [];
-    subs[key].add(f);
+  @Deprecated('Use PrefService.of()')
+  static void onNotify(String key, VoidCallback f) {
+    checkInit();
+    _instance.onNotify(key, f);
   }
 
-  static void onNotifyRemove(String key) {
-    subs[key] = null;
+  @Deprecated('Use PrefService.of()')
+  static void onNotifyRemove(String key, VoidCallback f) {
+    checkInit();
+    _instance.onNotifyRemove(key, f);
   }
 
   static void showError(BuildContext context, String message) {
@@ -114,6 +143,7 @@ mixin PrefService {
     ));
   }
 
+  @Deprecated('Use PrefService.of()')
   static checkInit() {
     if (_instance == null) {
       throw Exception('''\n
@@ -128,11 +158,13 @@ mixin PrefService {
     }
   }
 
+  @Deprecated('Use PrefService.of()')
   static void clear() {
     checkInit();
     _instance.clear();
   }
 
+  @Deprecated('Use PrefService.of()')
   static void apply(BasePrefService other) {
     checkInit();
     _instance.apply(other);
@@ -152,6 +184,27 @@ mixin PrefService {
 }
 
 abstract class BasePrefService {
+  final subs = <String, Set<VoidCallback>>{};
+
+  void notify(String key) {
+    if (subs[key] == null) return;
+
+    for (Function f in subs[key]) {
+      f();
+    }
+  }
+
+  void onNotify(String key, VoidCallback f) {
+    if (subs[key] == null) {
+      subs[key] = Set<VoidCallback>();
+    }
+    subs[key].add(f);
+  }
+
+  void onNotifyRemove(String key, VoidCallback f) {
+    subs[key]?.remove(f);
+  }
+
   void setDefaultValues(Map<String, dynamic> values) {
     final keys = getKeys();
     for (String key in values.keys) {

@@ -30,10 +30,11 @@ class DropdownPreference<T> extends StatefulWidget {
 
 class _DropdownPreferenceState<T> extends State<DropdownPreference<T>> {
   @override
-  void initState() {
-    super.initState();
-    if (PrefService.get(widget.localKey) == null) {
-      PrefService.setDefaultValues({widget.localKey: widget.defaultVal});
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final service = PrefService.of(context);
+    if (service.get(widget.localKey) == null) {
+      service.setDefaultValues({widget.localKey: widget.defaultVal});
     }
   }
 
@@ -72,20 +73,30 @@ In release mode, the default value ($value) will silently be used.
             : (newVal) async {
                 onChange(newVal);
               },
-        value: value,
+        value:
+            PrefService.of(context).get(widget.localKey) ?? widget.defaultVal,
       ),
     );
   }
 
   onChange(T val) {
+    final service = PrefService.of(context);
     if (val is String) {
-      this.setState(() => PrefService.setString(widget.localKey, val));
+      this.setState(() {
+        service.setString(widget.localKey, val);
+      });
     } else if (val is int) {
-      this.setState(() => PrefService.setInt(widget.localKey, val));
+      this.setState(() {
+        service.setInt(widget.localKey, val);
+      });
     } else if (val is double) {
-      this.setState(() => PrefService.setDouble(widget.localKey, val));
+      this.setState(() {
+        service.setDouble(widget.localKey, val);
+      });
     } else if (val is bool) {
-      this.setState(() => PrefService.setBool(widget.localKey, val));
+      this.setState(() {
+        service.setBool(widget.localKey, val);
+      });
     }
     if (widget.onChange != null) widget.onChange(val);
   }
