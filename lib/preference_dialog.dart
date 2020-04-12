@@ -38,19 +38,14 @@ class PreferenceDialogState extends State<PreferenceDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: widget.title == null ? null : Text(widget.title),
-      content: FutureBuilder(
-        future: PrefService.init(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return Container();
+    final settings = widget.preferences;
 
-          return SingleChildScrollView(
-            child: Column(
-              children: widget.preferences,
-            ),
-          );
-        },
+    final alert = AlertDialog(
+      title: widget.title == null ? null : Text(widget.title),
+      content: SingleChildScrollView(
+        child: Column(
+          children: settings,
+        ),
       ),
       actions: <Widget>[]
         ..addAll(widget.cancelText == null
@@ -76,6 +71,30 @@ class PreferenceDialogState extends State<PreferenceDialog> {
                   },
                 )
               ]),
+    );
+
+    // Check if we already have a BasePrefService
+    final service = PrefService.of(context);
+    if (service != null) {
+      return PrefService(
+        service: service,
+        child: alert,
+      );
+    }
+
+    // Fallback to SharedPreferences
+    return FutureBuilder(
+      future: SharedPrefService.init(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return SizedBox();
+        }
+
+        return PrefService(
+          service: service,
+          child: snapshot.data,
+        );
+      },
     );
   }
 }
