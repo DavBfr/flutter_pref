@@ -43,7 +43,7 @@ class TextFieldPreference extends StatefulWidget {
 
 class _TextFieldPreferenceState extends State<TextFieldPreference> {
   TextEditingController controller = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  bool _initialized = false;
 
   @override
   void didChangeDependencies() {
@@ -54,8 +54,12 @@ class _TextFieldPreferenceState extends State<TextFieldPreference> {
       service.setString(widget.localKey, widget.defaultVal);
     }
 
-    controller.text =
-        service.getString(widget.localKey) ?? widget.defaultVal ?? '';
+    if (!_initialized) {
+      controller.text =
+          service.getString(widget.localKey) ?? widget.defaultVal ?? '';
+      _initialized = true;
+    }
+
     super.didChangeDependencies();
   }
 
@@ -65,29 +69,32 @@ class _TextFieldPreferenceState extends State<TextFieldPreference> {
       padding: widget.padding ??
           const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
       child: Form(
-        key: _formKey,
-        child: TextFormField(
-          decoration: widget.decoration ??
-              InputDecoration(
-                hintText: widget.hintText,
-                labelText: widget.label,
-                labelStyle: widget.labelStyle,
-                border: OutlineInputBorder(),
-              ),
-          controller: controller,
-          onChanged: (val) {
-            if (_formKey.currentState.validate()) {
-              if (widget.onChange != null) val = widget.onChange(val) ?? val;
-              PrefService.of(context).setString(widget.localKey, val);
-            }
-          },
-          autofocus: widget.autofocus,
-          maxLines: widget.maxLines,
-          style: widget.style,
-          keyboardType: widget.keyboardType,
-          obscureText: widget.obscureText,
-          validator: widget.validator,
-          enabled: !widget.disabled,
+        child: Builder(
+          builder: (BuildContext context) => TextFormField(
+            decoration: widget.decoration ??
+                InputDecoration(
+                  hintText: widget.hintText,
+                  labelText: widget.label,
+                  labelStyle: widget.labelStyle,
+                  border: OutlineInputBorder(),
+                ),
+            controller: controller,
+            onChanged: (val) {
+              if (Form.of(context).validate()) {
+                if (widget.onChange != null) {
+                  val = widget.onChange(val) ?? val;
+                }
+                PrefService.of(context).setString(widget.localKey, val);
+              }
+            },
+            autofocus: widget.autofocus,
+            maxLines: widget.maxLines,
+            style: widget.style,
+            keyboardType: widget.keyboardType,
+            obscureText: widget.obscureText,
+            validator: widget.validator,
+            enabled: !widget.disabled,
+          ),
         ),
       ),
     );
