@@ -7,7 +7,9 @@ import 'package:validators/validators.dart';
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await PrefService.init(prefix: 'pref_');
+  await PrefService.init(
+    service: await SharedPrefService.init(prefix: 'pref_'),
+  );
 
   PrefService.setDefaultValues({'user_description': 'This is my description!'});
 

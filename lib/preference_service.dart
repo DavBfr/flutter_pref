@@ -4,153 +4,93 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PrefService {
-  static SharedPreferences sharedPreferences;
-  static String prefix = '';
+mixin PrefService {
+  static BasePrefService _instance;
 
-  static bool _justCache = false;
+  static Map subs = {};
 
-  static Map<String, dynamic> cache;
+  static Future<bool> init({
+    @Deprecated('Use service instead') String prefix = '',
+    BasePrefService service,
+  }) async {
+    if (service != null) {
+      _instance = service;
+      return true;
+    }
 
-  static Future<bool> init({String prefix = ''}) async {
-    if (sharedPreferences != null) return false;
-    PrefService.prefix = prefix;
-    sharedPreferences = await SharedPreferences.getInstance();
-    rebuildCache();
+    if (_instance != null) {
+      return false;
+    }
+
+    _instance = await SharedPrefService.init(prefix: prefix);
     return true;
   }
 
   static void setDefaultValues(Map<String, dynamic> values) {
-    for (String key in values.keys) {
-      if (sharedPreferences.containsKey(prefix + key)) continue;
-      var val = values[key];
-      if (val is bool) {
-        sharedPreferences.setBool(prefix + key, val);
-      } else if (val is double) {
-        sharedPreferences.setDouble(prefix + key, val);
-      } else if (val is int) {
-        sharedPreferences.setInt(prefix + key, val);
-      } else if (val is String) {
-        sharedPreferences.setString(prefix + key, val);
-      } else if (val is List<String>) sharedPreferences.setStringList(key, val);
-    }
+    checkInit();
+    _instance.setDefaultValues(values);
   }
 
   static bool getBool(String key) {
     checkInit();
-    if (key.startsWith('!')) {
-      bool val;
-      if (_justCache) {
-        val = cache[prefix + key.substring(1)];
-      } else {
-        val = sharedPreferences.getBool('$prefix${key.substring(1)}');
-      }
-      if (val == null) return null;
-      return !val;
-    }
-    if (_justCache) {
-      return cache['$prefix$key'];
-    } else {
-      return sharedPreferences.getBool('$prefix$key');
-    }
+    return _instance.getBool(key);
   }
 
-  static setBool(String key, bool val) {
+  static FutureOr<bool> setBool(String key, bool val) {
     checkInit();
-    if (_justCache) {
-      cache['$prefix$key'] = val;
-    } else {
-      sharedPreferences.setBool('$prefix$key', val);
-    }
+    return _instance.setBool(key, val);
   }
 
   static String getString(String key) {
     checkInit();
-    if (_justCache) {
-      return cache['$prefix$key'];
-    } else {
-      return sharedPreferences.getString('$prefix$key');
-    }
+    return _instance.getString(key);
   }
 
-  static setString(String key, String val) {
+  static FutureOr<bool> setString(String key, String val) {
     checkInit();
-    if (_justCache) {
-      cache['$prefix$key'] = val;
-    } else {
-      sharedPreferences.setString('$prefix$key', val);
-    }
+    return _instance.setString(key, val);
   }
 
   static int getInt(String key) {
     checkInit();
-    if (_justCache) {
-      return cache['$prefix$key'];
-    } else {
-      return sharedPreferences.getInt('$prefix$key');
-    }
+    return _instance.getInt(key);
   }
 
-  static setInt(String key, int val) {
+  static FutureOr<bool> setInt(String key, int val) {
     checkInit();
-    if (_justCache) {
-      cache['$prefix$key'] = val;
-    } else {
-      sharedPreferences.setInt('$prefix$key', val);
-    }
+    return _instance.setInt(key, val);
   }
 
   static double getDouble(String key) {
     checkInit();
-    if (_justCache) {
-      return cache['$prefix$key'];
-    } else {
-      return sharedPreferences.getDouble('$prefix$key');
-    }
+    return _instance.getDouble(key);
   }
 
-  static setDouble(String key, double val) {
+  static FutureOr<bool> setDouble(String key, double val) {
     checkInit();
-    if (_justCache) {
-      cache['$prefix$key'] = val;
-    } else {
-      sharedPreferences.setDouble('$prefix$key', val);
-    }
+    return _instance.setDouble(key, val);
   }
 
   static List<String> getStringList(String key) {
     checkInit();
-    if (_justCache) {
-      return cache['$prefix$key'];
-    } else {
-      return sharedPreferences.getStringList('$prefix$key');
-    }
+    return _instance.getStringList(key);
   }
 
-  static setStringList(String key, List<String> val) {
+  static FutureOr<bool> setStringList(String key, List<String> val) {
     checkInit();
-    if (_justCache) {
-      cache['$prefix$key'] = val;
-    } else {
-      sharedPreferences.setStringList('$prefix$key', val);
-    }
+    return _instance.setStringList(key, val);
   }
 
-  static get(String key) {
+  static dynamic get(String key) {
     checkInit();
-    if (_justCache) {
-      return cache['$prefix$key'];
-    } else {
-      return sharedPreferences.get('$prefix$key');
-    }
+    return _instance.get(key);
   }
 
   static Set<String> getKeys() {
     checkInit();
-    return sharedPreferences.getKeys();
+    return _instance.getKeys();
   }
 
-  static Map subs = {};
   static void notify(String key) {
     if (subs[key] == null) return;
 
@@ -175,11 +115,11 @@ class PrefService {
   }
 
   static checkInit() {
-    if (sharedPreferences == null && !_justCache) {
+    if (_instance == null) {
       throw Exception('''\n
   PrefService not initialized.
   Call await PrefService.init() before any other PrefService call.
-          
+
   main() async {
     await PrefService.init();
     runApp(MyApp());
@@ -188,42 +128,292 @@ class PrefService {
     }
   }
 
-  static void rebuildCache() {
-    cache = {};
-
-    for (String key in sharedPreferences.getKeys()) {
-      cache[key] = sharedPreferences.get(key);
-    }
+  static void clear() {
+    checkInit();
+    _instance.clear();
   }
 
-  static void enableCaching() {
-    _justCache = true;
+  static void apply(BasePrefService other) {
+    checkInit();
+    _instance.apply(other);
   }
 
-  static void disableCaching() {
-    _justCache = false;
-  }
+  @Deprecated('You can safely remove the call to this function')
+  static void rebuildCache() {}
 
-  static void applyCache() {
-    disableCaching();
-    for (String key in cache.keys) {
-      var val = cache[key];
+  @Deprecated('Use JustCachePrefService')
+  static void enableCaching() {}
+
+  @Deprecated('Use SharedPrefService')
+  static void disableCaching() {}
+
+  @Deprecated('use apply(other)')
+  static Future<void> applyCache() async {}
+}
+
+abstract class BasePrefService {
+  void setDefaultValues(Map<String, dynamic> values) {
+    final keys = getKeys();
+    for (String key in values.keys) {
+      if (keys.contains(key)) {
+        continue;
+      }
+
+      var val = values[key];
       if (val is bool) {
-        sharedPreferences.setBool(key, val);
+        setBool(key, val);
       } else if (val is double) {
-        sharedPreferences.setDouble(key, val);
+        setDouble(key, val);
       } else if (val is int) {
-        sharedPreferences.setInt(key, val);
+        setInt(key, val);
       } else if (val is String) {
-        sharedPreferences.setString(key, val);
+        setString(key, val);
       } else if (val is List<String>) {
-        sharedPreferences.setStringList(key, val);
+        setStringList(key, val);
       }
     }
-    rebuildCache();
   }
 
-  static void clear() {
-    sharedPreferences.clear();
+  bool getBool(String key) {
+    if (key.startsWith('!')) {
+      bool val = getBoolRaw(key.substring(1));
+      if (val == null) return null;
+      return !val;
+    }
+
+    return getBoolRaw(key);
+  }
+
+  Future<void> apply(BasePrefService other) async {
+    for (String key in other.getKeys()) {
+      var val = other.get(key);
+      if (val is bool) {
+        await setBool(key, val);
+      } else if (val is double) {
+        await setDouble(key, val);
+      } else if (val is int) {
+        await setInt(key, val);
+      } else if (val is String) {
+        await setString(key, val);
+      } else if (val is List<String>) {
+        await setStringList(key, val);
+      }
+    }
+  }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+    for (String key in getKeys()) {
+      result[key] = get(key);
+    }
+    return result;
+  }
+
+  Future<void> fromMap(Map<String, dynamic> map) async {
+    for (String key in map.keys) {
+      var val = map[key];
+      if (val is bool) {
+        await setBool(key, val);
+      } else if (val is double) {
+        await setDouble(key, val);
+      } else if (val is int) {
+        await setInt(key, val);
+      } else if (val is String) {
+        await setString(key, val);
+      } else if (val is List<String>) {
+        await setStringList(key, val);
+      }
+    }
+  }
+
+  @protected
+  bool getBoolRaw(String key);
+
+  FutureOr<bool> setBool(String key, bool val);
+
+  String getString(String key);
+
+  FutureOr<bool> setString(String key, String val);
+
+  int getInt(String key);
+
+  FutureOr<bool> setInt(String key, int val);
+
+  double getDouble(String key);
+
+  FutureOr<bool> setDouble(String key, double val);
+
+  List<String> getStringList(String key);
+
+  FutureOr<bool> setStringList(String key, List<String> val);
+
+  get(String key);
+
+  Set<String> getKeys();
+
+  void clear();
+}
+
+class SharedPrefService extends BasePrefService {
+  SharedPrefService._(this.prefix, this.sharedPreferences)
+      : assert(prefix != null),
+        assert(sharedPreferences != null);
+
+  final SharedPreferences sharedPreferences;
+
+  final String prefix;
+
+  static Future<SharedPrefService> init({String prefix = ''}) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    return SharedPrefService._(prefix, sharedPreferences);
+  }
+
+  @override
+  bool getBoolRaw(String key) {
+    return sharedPreferences.getBool('$prefix$key');
+  }
+
+  @override
+  FutureOr<bool> setBool(String key, bool val) {
+    return sharedPreferences.setBool('$prefix$key', val);
+  }
+
+  @override
+  String getString(String key) {
+    return sharedPreferences.getString('$prefix$key');
+  }
+
+  @override
+  FutureOr<bool> setString(String key, String val) {
+    return sharedPreferences.setString('$prefix$key', val);
+  }
+
+  @override
+  int getInt(String key) {
+    return sharedPreferences.getInt('$prefix$key');
+  }
+
+  @override
+  FutureOr<bool> setInt(String key, int val) {
+    return sharedPreferences.setInt('$prefix$key', val);
+  }
+
+  @override
+  double getDouble(String key) {
+    return sharedPreferences.getDouble('$prefix$key');
+  }
+
+  @override
+  FutureOr<bool> setDouble(String key, double val) {
+    return sharedPreferences.setDouble('$prefix$key', val);
+  }
+
+  @override
+  List<String> getStringList(String key) {
+    return sharedPreferences.getStringList('$prefix$key');
+  }
+
+  @override
+  FutureOr<bool> setStringList(String key, List<String> val) {
+    return sharedPreferences.setStringList('$prefix$key', val);
+  }
+
+  @override
+  dynamic get(String key) {
+    return sharedPreferences.get('$prefix$key');
+  }
+
+  @override
+  Set<String> getKeys() {
+    return sharedPreferences.getKeys();
+  }
+
+  @override
+  void clear() {
+    if (prefix == '') {
+      sharedPreferences.clear();
+    } else {
+      for (final key in sharedPreferences.getKeys()) {
+        if (key.startsWith(prefix)) {
+          sharedPreferences.remove('$prefix$key');
+        }
+      }
+    }
+  }
+}
+
+class JustCachePrefService extends BasePrefService {
+  JustCachePrefService();
+
+  Map<String, dynamic> cache;
+
+  @override
+  bool getBoolRaw(String key) {
+    return cache[key];
+  }
+
+  @override
+  FutureOr<bool> setBool(String key, bool val) {
+    cache[key] = val;
+    return true;
+  }
+
+  @override
+  String getString(String key) {
+    return cache[key];
+  }
+
+  @override
+  FutureOr<bool> setString(String key, String val) {
+    cache[key] = val;
+    return true;
+  }
+
+  @override
+  int getInt(String key) {
+    return cache[key];
+  }
+
+  @override
+  FutureOr<bool> setInt(String key, int val) {
+    cache[key] = val;
+    return true;
+  }
+
+  @override
+  double getDouble(String key) {
+    return cache[key];
+  }
+
+  @override
+  FutureOr<bool> setDouble(String key, double val) {
+    cache[key] = val;
+    return true;
+  }
+
+  @override
+  List<String> getStringList(String key) {
+    return cache[key];
+  }
+
+  @override
+  FutureOr<bool> setStringList(String key, List<String> val) {
+    cache[key] = val;
+    return true;
+  }
+
+  @override
+  dynamic get(String key) {
+    return cache[key];
+  }
+
+  @override
+  Set<String> getKeys() {
+    return Set<String>.from(cache.keys);
+  }
+
+  @override
+  void clear() {
+    cache.clear();
   }
 }
