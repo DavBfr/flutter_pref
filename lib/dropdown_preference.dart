@@ -79,25 +79,11 @@ In release mode, the default value ($value) will silently be used.
     );
   }
 
-  onChange(T val) {
-    final service = PrefService.of(context);
-    if (val is String) {
-      this.setState(() {
-        service.setString(widget.localKey, val);
-      });
-    } else if (val is int) {
-      this.setState(() {
-        service.setInt(widget.localKey, val);
-      });
-    } else if (val is double) {
-      this.setState(() {
-        service.setDouble(widget.localKey, val);
-      });
-    } else if (val is bool) {
-      this.setState(() {
-        service.setBool(widget.localKey, val);
-      });
-    }
+  void onChange(T val) {
+    setState(() {
+      PrefService.of(context).set(widget.localKey, val);
+    });
+
     if (widget.onChange != null) widget.onChange(val);
   }
 }

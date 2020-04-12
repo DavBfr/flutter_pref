@@ -12,15 +12,28 @@ class PreferencePage extends StatefulWidget {
 class PreferencePageState extends State<PreferencePage> {
   @override
   Widget build(BuildContext context) {
+    final settings = ListView(children: widget.preferences);
+
+    // Check if we already have a BasePrefService
+    final service = PrefService.of(context);
+    if (service != null) {
+      return PrefService(
+        service: service,
+        child: settings,
+      );
+    }
+
+    // Fallback to SharedPreferences
     return FutureBuilder(
       future: SharedPrefService.init(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Container();
+          return SizedBox();
         }
+
         return PrefService(
-          service: snapshot.data,
-          child: ListView(children: widget.preferences),
+          service: service,
+          child: snapshot.data,
         );
       },
     );

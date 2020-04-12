@@ -238,45 +238,39 @@ abstract class BasePrefService {
   }
 
   Future<void> apply(BasePrefService other) async {
-    for (String key in other.getKeys()) {
-      var val = other.get(key);
-      if (val is bool) {
-        await setBool(key, val);
-      } else if (val is double) {
-        await setDouble(key, val);
-      } else if (val is int) {
-        await setInt(key, val);
-      } else if (val is String) {
-        await setString(key, val);
-      } else if (val is List<String>) {
-        await setStringList(key, val);
-      }
+    for (final key in other.getKeys()) {
+      await set(key, other.get(key));
     }
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-    for (String key in getKeys()) {
+    for (final key in getKeys()) {
       result[key] = get(key);
     }
     return result;
   }
 
   Future<void> fromMap(Map<String, dynamic> map) async {
-    for (String key in map.keys) {
-      var val = map[key];
-      if (val is bool) {
-        await setBool(key, val);
-      } else if (val is double) {
-        await setDouble(key, val);
-      } else if (val is int) {
-        await setInt(key, val);
-      } else if (val is String) {
-        await setString(key, val);
-      } else if (val is List<String>) {
-        await setStringList(key, val);
-      }
+    for (final key in map.keys) {
+      await set(key, map[key]);
     }
+  }
+
+  Future<bool> set(String key, dynamic val) async {
+    if (val is bool) {
+      return await setBool(key, val);
+    } else if (val is double) {
+      return await setDouble(key, val);
+    } else if (val is int) {
+      return await setInt(key, val);
+    } else if (val is List<String>) {
+      return await setStringList(key, val);
+    } else if (val is String) {
+      return await setString(key, val);
+    }
+
+    return false;
   }
 
   @protected
