@@ -40,41 +40,37 @@ class _DropdownPreferenceState<T> extends State<DropdownPreference<T>> {
 
   @override
   Widget build(BuildContext context) {
-    T value;
-    try {
-      value = PrefService.get(widget.localKey) ?? widget.defaultVal;
-    } on TypeError catch (e) {
-      value = widget.defaultVal;
-      assert(() {
-        throw FlutterError('''$e
-The PrefService value for "${widget.localKey}" is not the right type (${PrefService.get(widget.localKey)}).
-In release mode, the default value ($value) will silently be used.
-''');
-      }());
-    }
+    final items = widget.values.map((var val) {
+      return DropdownMenuItem<T>(
+        value: val,
+        child: Text(
+          widget.displayValues == null
+              ? val.toString()
+              : widget.displayValues[widget.values.indexOf(val)],
+          textAlign: TextAlign.end,
+        ),
+      );
+    }).toList();
+
+    print(items);
+
+    print('value: ${PrefService.of(context).get(widget.localKey)}');
+    print('${PrefService.of(context).runtimeType}');
+
+    final T value =
+        PrefService.of(context).get(widget.localKey) ?? widget.defaultVal;
 
     return ListTile(
       title: Text(widget.title),
       subtitle: widget.desc == null ? null : Text(widget.desc),
       trailing: DropdownButton<T>(
-        items: widget.values.map((var val) {
-          return DropdownMenuItem<T>(
-            value: val,
-            child: Text(
-              widget.displayValues == null
-                  ? val.toString()
-                  : widget.displayValues[widget.values.indexOf(val)],
-              textAlign: TextAlign.end,
-            ),
-          );
-        }).toList(),
+        items: items,
         onChanged: widget.disabled
             ? null
             : (newVal) async {
                 onChange(newVal);
               },
-        value:
-            PrefService.of(context).get(widget.localKey) ?? widget.defaultVal,
+        value: value,
       ),
     );
   }
