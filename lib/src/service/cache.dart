@@ -8,7 +8,7 @@ import 'dart:core';
 
 import 'base.dart';
 
-class JustCachePrefService extends BasePrefService {
+class PrefServiceCache extends BasePrefService {
   final _cache = <String, dynamic>{};
 
   @override

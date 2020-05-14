@@ -12,34 +12,35 @@ import 'service/cache.dart';
 import 'service/pref_service.dart';
 import 'service/shared_preferences.dart';
 
-class PreferenceDialog extends StatefulWidget {
-  const PreferenceDialog(
-    this.preferences, {
+class PrefDialog extends StatefulWidget {
+  const PrefDialog({
+    @required this.children,
     this.title,
-    this.submitText,
-    this.onlySaveOnSubmit = false,
-    this.cancelText,
-  });
+    this.submit,
+    bool onlySaveOnSubmit,
+    this.cancel,
+  })  : assert(children != null),
+        onlySaveOnSubmit = onlySaveOnSubmit ?? submit != null;
 
-  final String title;
-  final List<Widget> preferences;
-  final String submitText;
-  final String cancelText;
+  final Widget title;
+  final List<Widget> children;
+  final Widget submit;
+  final Widget cancel;
 
   final bool onlySaveOnSubmit;
 
   @override
-  PreferenceDialogState createState() => PreferenceDialogState();
+  PrefDialogState createState() => PrefDialogState();
 }
 
-class PreferenceDialogState extends State<PreferenceDialog> {
+class PrefDialogState extends State<PrefDialog> {
   Widget _buildDialog(BuildContext context, BasePrefService parent) {
     final actions = <Widget>[];
 
-    if (widget.cancelText != null && widget.onlySaveOnSubmit) {
+    if (widget.cancel != null && widget.onlySaveOnSubmit) {
       actions.add(
         FlatButton(
-          child: Text(widget.cancelText),
+          child: widget.cancel,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -47,10 +48,10 @@ class PreferenceDialogState extends State<PreferenceDialog> {
       );
     }
 
-    if (widget.submitText != null) {
+    if (widget.submit != null) {
       actions.add(
         FlatButton(
-          child: Text(widget.submitText),
+          child: widget.submit,
           onPressed: () {
             if (widget.onlySaveOnSubmit) {
               parent.apply(PrefService.of(context));
@@ -62,10 +63,10 @@ class PreferenceDialogState extends State<PreferenceDialog> {
     }
 
     return AlertDialog(
-      title: widget.title == null ? null : Text(widget.title),
+      title: widget.title,
       content: SingleChildScrollView(
         child: Column(
-          children: widget.preferences,
+          children: widget.children,
         ),
       ),
       actions: actions,
@@ -73,7 +74,7 @@ class PreferenceDialogState extends State<PreferenceDialog> {
   }
 
   Future<BasePrefService> _createCache(BasePrefService parent) async {
-    final service = JustCachePrefService();
+    final service = PrefServiceCache();
     await service.apply(parent);
     return service;
   }
@@ -110,7 +111,7 @@ class PreferenceDialogState extends State<PreferenceDialog> {
 
     // Fallback to SharedPreferences
     return FutureBuilder(
-      future: SharedPrefService.init(),
+      future: PrefServiceShared.init(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const SizedBox();

@@ -8,20 +8,22 @@ import 'package:flutter/material.dart';
 import 'service/pref_service.dart';
 import 'service/shared_preferences.dart';
 
-/// PreferencePage isn't required if you init PrefService in your main() function
-class PreferencePage extends StatefulWidget {
-  const PreferencePage(this.preferences);
+/// [PrefPage] isn't required if you init PrefService in your main() function
+class PrefPage extends StatefulWidget {
+  const PrefPage({
+    @required this.children,
+  }) : assert(children != null);
 
-  final List<Widget> preferences;
+  final List<Widget> children;
 
   @override
-  PreferencePageState createState() => PreferencePageState();
+  _PrefPageState createState() => _PrefPageState();
 }
 
-class PreferencePageState extends State<PreferencePage> {
+class _PrefPageState extends State<PrefPage> {
   @override
   Widget build(BuildContext context) {
-    final settings = ListView(children: widget.preferences);
+    final settings = ListView(children: widget.children);
 
     // Check if we already have a BasePrefService
     final service = PrefService.of(context);
@@ -31,7 +33,7 @@ class PreferencePageState extends State<PreferencePage> {
 
     // Fallback to SharedPreferences
     return FutureBuilder(
-      future: SharedPrefService.init(),
+      future: PrefServiceShared.init(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const SizedBox();

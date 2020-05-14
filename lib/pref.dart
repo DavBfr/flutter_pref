@@ -1,13 +1,19 @@
-library preferences;
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
 
 export 'src/button.dart';
+export 'src/button_group.dart';
 export 'src/checkbox.dart';
+export 'src/custom/button_group.dart' show ButtonGroupItem;
 export 'src/dialog.dart';
-export 'src/dialog_link.dart';
+export 'src/dialog_button.dart';
 export 'src/dropdown.dart';
 export 'src/hider.dart';
+export 'src/label.dart';
 export 'src/page.dart';
-export 'src/page_link.dart';
+export 'src/page_button.dart';
 export 'src/radio.dart';
 export 'src/service/base.dart';
 export 'src/service/cache.dart';
@@ -15,5 +21,4 @@ export 'src/service/pref_service.dart';
 export 'src/service/shared_preferences.dart';
 export 'src/switch.dart';
 export 'src/text.dart';
-export 'src/text_field.dart';
 export 'src/title.dart';

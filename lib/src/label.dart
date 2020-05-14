@@ -5,8 +5,8 @@
 
 import 'package:flutter/material.dart';
 
-class PrefTitle extends StatelessWidget {
-  const PrefTitle({
+class PrefLabel extends StatelessWidget {
+  const PrefLabel({
     @required this.title,
     this.decoration,
     this.leading,
@@ -30,19 +30,15 @@ class PrefTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final style = theme.textTheme.subtitle2.apply(color: theme.accentColor);
-
     return Container(
       margin: margin,
-      padding: padding ?? const EdgeInsets.only(left: 10, bottom: 0, top: 20),
+      padding: padding,
       decoration: decoration,
       child: ListTile(
         leading: leading,
         onTap: onTap,
         title: DefaultTextStyle.merge(
           overflow: TextOverflow.ellipsis,
-          style: style,
           child: title,
         ),
         subtitle: subtitle,

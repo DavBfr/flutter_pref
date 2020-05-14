@@ -5,39 +5,109 @@
 
 import 'package:flutter/material.dart';
 
-class PreferenceText extends StatelessWidget {
-  const PreferenceText(
-    this.text, {
-    this.style,
-    this.decoration,
-    this.leading,
-    this.subtitle,
-    this.onTap,
-  });
+import 'service/pref_service.dart';
 
-  final String text;
+class PrefText extends StatefulWidget {
+  const PrefText({
+    this.label,
+    @required this.pref,
+    Key key,
+    this.onChange,
+    this.validator,
+    this.padding,
+    this.obscureText = false,
+    this.autofocus = false,
+    this.hintText = '',
+    this.maxLines = 1,
+    this.style,
+    this.keyboardType,
+    this.labelStyle,
+    this.decoration,
+    this.disabled = false,
+  })  : assert(pref != null),
+        super(key: key);
+
+  final String label;
+
+  final String pref;
+
+  final EdgeInsets padding;
+
+  final bool autofocus;
+
+  final int maxLines;
+
+  final bool obscureText;
+
+  final String hintText;
 
   final TextStyle style;
-  final Decoration decoration;
 
-  final Widget leading;
-  final Text subtitle;
+  final TextInputType keyboardType;
 
-  final Function onTap;
+  final TextStyle labelStyle;
+
+  final InputDecoration decoration;
+
+  final ValueChanged<String> onChange;
+
+  final String Function(String) validator;
+
+  final bool disabled;
+
+  @override
+  _PrefTextState createState() => _PrefTextState();
+}
+
+class _PrefTextState extends State<PrefText> {
+  TextEditingController controller = TextEditingController();
+  bool _initialized = false;
+
+  @override
+  void didChangeDependencies() {
+    final service = PrefService.of(context);
+
+    if (!_initialized) {
+      controller.text = service.getString(widget.pref) ?? '';
+      _initialized = true;
+    }
+
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: decoration,
-      child: ListTile(
-        leading: leading,
-        onTap: onTap,
-        title: Text(
-          text,
-          style: style,
-          overflow: TextOverflow.ellipsis,
+    return Padding(
+      padding: widget.padding ??
+          const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+      child: Form(
+        child: Builder(
+          builder: (BuildContext context) => TextFormField(
+            decoration: widget.decoration ??
+                InputDecoration(
+                  hintText: widget.hintText,
+                  labelText: widget.label,
+                  labelStyle: widget.labelStyle,
+                  border: const OutlineInputBorder(),
+                ),
+            controller: controller,
+            onChanged: (val) {
+              if (Form.of(context).validate()) {
+                if (widget.onChange != null) {
+                  widget.onChange(val);
+                }
+                PrefService.of(context).setString(widget.pref, val);
+              }
+            },
+            autofocus: widget.autofocus,
+            maxLines: widget.maxLines,
+            style: widget.style,
+            keyboardType: widget.keyboardType,
+            obscureText: widget.obscureText,
+            validator: widget.validator,
+            enabled: !widget.disabled,
+          ),
         ),
-        subtitle: subtitle,
       ),
     );
   }

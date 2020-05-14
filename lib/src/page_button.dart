@@ -7,18 +7,20 @@ import 'package:flutter/material.dart';
 
 import 'page.dart';
 
-class PreferencePageLink extends StatelessWidget {
-  const PreferencePageLink(this.title,
-      {@required this.page,
-      this.desc,
-      this.pageTitle,
-      this.leading,
-      this.trailing});
+class PrefPageButton extends StatelessWidget {
+  const PrefPageButton({
+    this.title,
+    @required this.page,
+    this.subtitle,
+    this.pageTitle,
+    this.leading,
+    this.trailing,
+  });
 
-  final String title;
-  final String pageTitle;
-  final String desc;
-  final PreferencePage page;
+  final Widget title;
+  final Widget pageTitle;
+  final Widget subtitle;
+  final PrefPage page;
   final Widget leading;
   final Widget trailing;
 
@@ -29,14 +31,14 @@ class PreferencePageLink extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) => Scaffold(
             appBar: AppBar(
-              title: Text(pageTitle ?? title),
+              title: pageTitle ?? title,
             ),
             body: page,
           ),
         ),
       ),
-      title: Text(title),
-      subtitle: desc == null ? null : Text(desc),
+      title: title,
+      subtitle: subtitle,
       leading: leading,
       trailing: trailing,
     );

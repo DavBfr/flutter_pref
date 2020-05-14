@@ -9,19 +9,26 @@ import 'dart:core';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'base.dart';
 
-class SharedPrefService extends BasePrefService {
-  SharedPrefService._(this.prefix, this.sharedPreferences)
+class PrefServiceShared extends BasePrefService {
+  PrefServiceShared._(this.prefix, this.sharedPreferences)
       : assert(prefix != null),
         assert(sharedPreferences != null);
+
+  static Future<PrefServiceShared> init({
+    String prefix = '',
+    Map<String, dynamic> defaults,
+  }) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final instance = PrefServiceShared._(prefix, sharedPreferences);
+    if (defaults != null) {
+      await instance.setDefaultValues(defaults);
+    }
+    return instance;
+  }
 
   final SharedPreferences sharedPreferences;
 
   final String prefix;
-
-  static Future<SharedPrefService> init({String prefix = ''}) async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    return SharedPrefService._(prefix, sharedPreferences);
-  }
 
   @override
   bool getBoolRaw(String key) {

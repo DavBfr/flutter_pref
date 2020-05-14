@@ -9,27 +9,27 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 
 abstract class BasePrefService extends ChangeNotifier {
-  final subs = <String, Set<VoidCallback>>{};
+  final _subs = <String, Set<VoidCallback>>{};
 
   void notify(String key) {
-    if (subs[key] == null) {
+    if (_subs[key] == null) {
       return;
     }
 
-    for (Function f in subs[key]) {
+    for (Function f in _subs[key]) {
       f();
     }
   }
 
   void onNotify(String key, VoidCallback f) {
-    if (subs[key] == null) {
-      subs[key] = <VoidCallback>{};
+    if (_subs[key] == null) {
+      _subs[key] = <VoidCallback>{};
     }
-    subs[key].add(f);
+    _subs[key].add(f);
   }
 
   void onNotifyRemove(String key, VoidCallback f) {
-    subs[key]?.remove(f);
+    _subs[key]?.remove(f);
   }
 
   Future<bool> setDefaultValues(Map<String, dynamic> values) async {
@@ -106,6 +106,29 @@ abstract class BasePrefService extends ChangeNotifier {
       print('PrefService set $key to "$val"');
       return true;
     }());
+
+    if (_subs[key] != null) {
+      final localListeners = List<VoidCallback>.from(_subs[key]);
+
+      for (final listener in localListeners) {
+        try {
+          if (_subs[key].contains(listener)) {
+            listener();
+          }
+        } catch (exception, stack) {
+          FlutterError.reportError(
+            FlutterErrorDetails(
+              exception: exception,
+              stack: stack,
+              library: 'pref',
+              context: ErrorDescription(
+                  'while dispatching notifications for $runtimeType'),
+            ),
+          );
+        }
+      }
+    }
+
     notifyListeners();
   }
 

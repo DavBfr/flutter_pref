@@ -5,47 +5,36 @@
 
 import 'package:flutter/material.dart';
 
+import 'custom/button_group.dart';
 import 'service/pref_service.dart';
 
-class PrefRadio<T> extends StatefulWidget {
-  const PrefRadio({
-    this.title,
-    @required this.value,
-    @required this.pref,
+class PrefButtonGroup<T> extends StatefulWidget {
+  const PrefButtonGroup({
     Key key,
+    this.title,
+    @required this.items,
+    @required this.pref,
     this.subtitle,
-    this.selected = false,
-    this.ignoreTileTap = false,
-    this.onSelect,
+    this.onChange,
     this.disabled = false,
-    this.leading,
-  })  : assert(value != null),
-        assert(pref != null),
+  })  : assert(pref != null),
         super(key: key);
 
   final Widget title;
-
   final Widget subtitle;
-
-  final T value;
-
   final String pref;
-
-  final bool selected;
-
-  final Function onSelect;
-
-  final bool ignoreTileTap;
 
   final bool disabled;
 
-  final Widget leading;
+  final ValueChanged<T> onChange;
+
+  final List<ButtonGroupItem<T>> items;
 
   @override
-  _PrefRadioState createState() => _PrefRadioState<T>();
+  _PrefButtonGroupState createState() => _PrefButtonGroupState<T>();
 }
 
-class _PrefRadioState<T> extends State<PrefRadio<T>> {
+class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -63,27 +52,29 @@ class _PrefRadioState<T> extends State<PrefRadio<T>> {
   }
 
   void _onChange(T value) {
-    PrefService.of(context).set(widget.pref, value);
+    if (widget.onChange != null) {
+      widget.onChange(value);
+    }
 
-    if (widget.onSelect != null) {
-      widget.onSelect();
+    PrefService.of(context).set(widget.pref, value);
+    if (mounted) {
+      setState(() {});
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final T value = PrefService.of(context).get(widget.pref);
+
     return ListTile(
       title: widget.title,
-      leading: widget.leading,
       subtitle: widget.subtitle,
-      trailing: Radio<T>(
-        value: widget.value,
-        groupValue: PrefService.of(context).get(widget.pref),
-        onChanged: widget.disabled ? null : (T val) => _onChange(widget.value),
+      trailing: ButtonGroup<T>(
+        items: widget.items,
+        value: value,
+        disabled: widget.disabled,
+        onChanged: widget.disabled ? null : _onChange,
       ),
-      onTap: (widget.ignoreTileTap || widget.disabled)
-          ? null
-          : () => _onChange(widget.value),
     );
   }
 }

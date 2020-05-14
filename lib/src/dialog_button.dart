@@ -7,18 +7,20 @@ import 'package:flutter/material.dart';
 
 import 'dialog.dart';
 
-class PreferenceDialogLink extends StatelessWidget {
-  const PreferenceDialogLink(this.title,
-      {@required this.dialog,
-      this.desc,
-      this.leading,
-      this.trailing,
-      this.onPop,
-      this.barrierDismissible = true});
+class PrefDialogButton extends StatelessWidget {
+  const PrefDialogButton({
+    this.title,
+    @required this.dialog,
+    this.subtitle,
+    this.leading,
+    this.trailing,
+    this.onPop,
+    this.barrierDismissible = true,
+  });
 
-  final String title;
-  final String desc;
-  final PreferenceDialog dialog;
+  final Widget title;
+  final Widget subtitle;
+  final PrefDialog dialog;
   final Widget leading;
   final Widget trailing;
   final bool barrierDismissible;
@@ -37,8 +39,8 @@ class PreferenceDialogLink extends StatelessWidget {
           onPop();
         }
       },
-      title: Text(title),
-      subtitle: desc == null ? null : Text(desc),
+      title: title,
+      subtitle: subtitle,
       leading: leading,
       trailing: trailing,
     );

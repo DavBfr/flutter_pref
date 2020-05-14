@@ -9,110 +9,75 @@ import 'package:flutter/material.dart';
 
 import 'service/pref_service.dart';
 
-class CheckboxPreference extends StatefulWidget {
-  const CheckboxPreference(this.title, this.localKey,
-      {this.desc,
-      this.defaultVal = false,
-      this.ignoreTileTap = false,
-      this.resetOnException = true,
-      this.onEnable,
-      this.onDisable,
-      this.onChange,
-      this.disabled = false});
+class PrefCheckbox extends StatefulWidget {
+  const PrefCheckbox({
+    Key key,
+    this.title,
+    @required this.pref,
+    this.subtitle,
+    this.ignoreTileTap = false,
+    this.onChange,
+    this.disabled = false,
+  })  : assert(pref != null),
+        super(key: key);
 
-  final String title;
-  final String desc;
-  final String localKey;
-  final bool defaultVal;
+  final Widget title;
+
+  final Widget subtitle;
+
+  final String pref;
+
   final bool ignoreTileTap;
 
   final bool disabled;
 
-  final bool resetOnException;
-
-  final Function onEnable;
-  final Function onDisable;
-  final Function onChange;
+  final ValueChanged<bool> onChange;
 
   @override
-  _CheckboxPreferenceState createState() => _CheckboxPreferenceState();
+  _PrefCheckboxState createState() => _PrefCheckboxState();
 }
 
-class _CheckboxPreferenceState extends State<CheckboxPreference> {
+class _PrefCheckboxState extends State<PrefCheckbox> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final service = PrefService.of(context);
-    if (service.getBool(widget.localKey) == null) {
-      service.setBool(widget.localKey, widget.defaultVal);
+    PrefService.of(context).onNotify(widget.pref, _onNotify);
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    PrefService.of(context).onNotifyRemove(widget.pref, _onNotify);
+  }
+
+  void _onNotify() {
+    setState(() {});
+  }
+
+  Future<void> _onChange(bool value) async {
+    setState(() {
+      PrefService.of(context).setBool(widget.pref, value);
+    });
+
+    if (widget.onChange != null) {
+      widget.onChange(value);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final value = PrefService.of(context).getBool(widget.pref);
     return ListTile(
-      title: Text(widget.title),
-      subtitle: widget.desc == null ? null : Text(widget.desc),
+      title: widget.title,
+      subtitle: widget.subtitle,
       trailing: Checkbox(
-        value: PrefService.of(context).getBool(widget.localKey) ??
-            widget.defaultVal,
-        onChanged:
-            widget.disabled ? null : (val) => val ? onEnable() : onDisable(),
+        value: value,
+        tristate: value == null,
+        onChanged: widget.disabled ? null : (val) => _onChange(val),
       ),
       onTap: (widget.ignoreTileTap || widget.disabled)
           ? null
-          : () => (PrefService.of(context).getBool(widget.localKey) ??
-                  widget.defaultVal)
-              ? onDisable()
-              : onEnable(),
+          : () => _onChange(!(value ?? true)),
     );
-  }
-
-  Future<void> onEnable() async {
-    setState(() {
-      PrefService.of(context).setBool(widget.localKey, true);
-    });
-    if (widget.onChange != null) {
-      widget.onChange();
-    }
-    if (widget.onEnable != null) {
-      try {
-        await widget.onEnable();
-      } catch (e) {
-        if (widget.resetOnException) {
-          PrefService.of(context).setBool(widget.localKey, false);
-          if (mounted) {
-            setState(() {});
-          }
-        }
-        if (mounted) {
-          PrefService.showError(context, e.message);
-        }
-      }
-    }
-  }
-
-  Future<void> onDisable() async {
-    setState(() {
-      PrefService.of(context).setBool(widget.localKey, false);
-    });
-    if (widget.onChange != null) {
-      widget.onChange();
-    }
-    if (widget.onDisable != null) {
-      try {
-        await widget.onDisable();
-      } catch (e) {
-        if (widget.resetOnException) {
-          PrefService.of(context).setBool(widget.localKey, true);
-          if (mounted) {
-            setState(() {});
-          }
-        }
-        if (mounted) {
-          PrefService.showError(context, e.message);
-        }
-      }
-    }
   }
 }
