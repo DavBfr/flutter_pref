@@ -7,7 +7,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final service = await SharedPrefService.init(prefix: 'pref_');
-  service.setDefaultValues({'user_description': 'This is my description!'});
+  service.setDefaultValues(<String, dynamic>{
+    'user_description': 'This is my description!',
+  });
 
   runApp(MyApp(service));
 }
