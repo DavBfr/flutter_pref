@@ -1,26 +1,13 @@
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 
-import 'preference_service.dart';
+import 'service/pref_service.dart';
 
 class TextFieldPreference extends StatefulWidget {
-  final String label;
-  final String localKey;
-  final String defaultVal;
-  final EdgeInsets padding;
-  final bool autofocus;
-  final int maxLines;
-  final bool obscureText;
-  final String hintText;
-  final TextStyle style;
-  final TextInputType keyboardType;
-  final TextStyle labelStyle;
-  final InputDecoration decoration;
-
-  final Function onChange;
-  final Function validator;
-
-  final bool disabled;
-
   const TextFieldPreference(
     this.label,
     this.localKey, {
@@ -38,6 +25,24 @@ class TextFieldPreference extends StatefulWidget {
     this.decoration,
     this.disabled = false,
   });
+
+  final String label;
+  final String localKey;
+  final String defaultVal;
+  final EdgeInsets padding;
+  final bool autofocus;
+  final int maxLines;
+  final bool obscureText;
+  final String hintText;
+  final TextStyle style;
+  final TextInputType keyboardType;
+  final TextStyle labelStyle;
+  final InputDecoration decoration;
+
+  final Function onChange;
+  final Function validator;
+
+  final bool disabled;
 
   @override
   _TextFieldPreferenceState createState() => _TextFieldPreferenceState();
@@ -78,7 +83,7 @@ class _TextFieldPreferenceState extends State<TextFieldPreference> {
                   hintText: widget.hintText,
                   labelText: widget.label,
                   labelStyle: widget.labelStyle,
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                 ),
             controller: controller,
             onChanged: (val) {

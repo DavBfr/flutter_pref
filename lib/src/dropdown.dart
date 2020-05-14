@@ -1,20 +1,13 @@
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 
-import 'preference_service.dart';
+import 'service/pref_service.dart';
 
 class DropdownPreference<T> extends StatefulWidget {
-  final String title;
-  final String desc;
-  final String localKey;
-  final T defaultVal;
-
-  final List<T> values;
-  final List<String> displayValues;
-
-  final Function onChange;
-
-  final bool disabled;
-
   const DropdownPreference(
     this.title,
     this.localKey, {
@@ -26,6 +19,18 @@ class DropdownPreference<T> extends StatefulWidget {
     this.onChange,
     this.disabled = false,
   }) : super(key: key);
+
+  final String title;
+  final String desc;
+  final String localKey;
+  final T defaultVal;
+
+  final List<T> values;
+  final List<String> displayValues;
+
+  final Function onChange;
+
+  final bool disabled;
 
   @override
   _DropdownPreferenceState<T> createState() => _DropdownPreferenceState<T>();
@@ -83,6 +88,8 @@ class _DropdownPreferenceState<T> extends State<DropdownPreference<T>> {
       PrefService.of(context).set(widget.localKey, val);
     });
 
-    if (widget.onChange != null) widget.onChange(val);
+    if (widget.onChange != null) {
+      widget.onChange(val);
+    }
   }
 }

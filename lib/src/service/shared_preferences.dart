@@ -1,8 +1,13 @@
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 import 'dart:async';
 import 'dart:core';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'preference_service_base.dart';
+import 'base.dart';
 
 class SharedPrefService extends BasePrefService {
   SharedPrefService._(this.prefix, this.sharedPreferences)

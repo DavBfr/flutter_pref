@@ -1,10 +1,25 @@
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'preference_service.dart';
+import 'service/pref_service.dart';
 
 class CheckboxPreference extends StatefulWidget {
+  const CheckboxPreference(this.title, this.localKey,
+      {this.desc,
+      this.defaultVal = false,
+      this.ignoreTileTap = false,
+      this.resetOnException = true,
+      this.onEnable,
+      this.onDisable,
+      this.onChange,
+      this.disabled = false});
+
   final String title;
   final String desc;
   final String localKey;
@@ -18,16 +33,6 @@ class CheckboxPreference extends StatefulWidget {
   final Function onEnable;
   final Function onDisable;
   final Function onChange;
-
-  const CheckboxPreference(this.title, this.localKey,
-      {this.desc,
-      this.defaultVal = false,
-      this.ignoreTileTap = false,
-      this.resetOnException = true,
-      this.onEnable,
-      this.onDisable,
-      this.onChange,
-      this.disabled = false});
 
   @override
   _CheckboxPreferenceState createState() => _CheckboxPreferenceState();
@@ -67,16 +72,22 @@ class _CheckboxPreferenceState extends State<CheckboxPreference> {
     setState(() {
       PrefService.of(context).setBool(widget.localKey, true);
     });
-    if (widget.onChange != null) widget.onChange();
+    if (widget.onChange != null) {
+      widget.onChange();
+    }
     if (widget.onEnable != null) {
       try {
         await widget.onEnable();
       } catch (e) {
         if (widget.resetOnException) {
           PrefService.of(context).setBool(widget.localKey, false);
-          if (mounted) setState(() {});
+          if (mounted) {
+            setState(() {});
+          }
         }
-        if (mounted) PrefService.showError(context, e.message);
+        if (mounted) {
+          PrefService.showError(context, e.message);
+        }
       }
     }
   }
@@ -85,16 +96,22 @@ class _CheckboxPreferenceState extends State<CheckboxPreference> {
     setState(() {
       PrefService.of(context).setBool(widget.localKey, false);
     });
-    if (widget.onChange != null) widget.onChange();
+    if (widget.onChange != null) {
+      widget.onChange();
+    }
     if (widget.onDisable != null) {
       try {
         await widget.onDisable();
       } catch (e) {
         if (widget.resetOnException) {
           PrefService.of(context).setBool(widget.localKey, true);
-          if (mounted) setState(() {});
+          if (mounted) {
+            setState(() {});
+          }
         }
-        if (mounted) PrefService.showError(context, e.message);
+        if (mounted) {
+          PrefService.showError(context, e.message);
+        }
       }
     }
   }

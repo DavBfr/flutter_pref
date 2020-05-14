@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:preferences/preferences.dart';
-import 'package:dynamic_theme/dynamic_theme.dart'; // Just for theme example
-import 'package:validators/validators.dart';
+
+import 'package:pref/pref.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,17 +21,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return PrefService(
       service: service,
-      child: DynamicTheme(
-          defaultBrightness: Brightness.light,
-          data: (brightness) =>
-              ThemeData(brightness: brightness, accentColor: Colors.green),
-          themedWidgetBuilder: (context, theme) {
-            return MaterialApp(
-              title: 'Preferences Demo',
-              theme: theme,
-              home: MyHomePage(title: 'Preferences Demo'),
-            );
-          }),
+      child: MaterialApp(
+        title: 'Preferences Demo',
+        home: MyHomePage(title: 'Preferences Demo'),
+      ),
     );
   }
 }
@@ -74,17 +66,11 @@ class _MyHomePageState extends State<MyHomePage> {
           'light',
           'ui_theme',
           isDefault: true,
-          onSelect: () {
-            DynamicTheme.of(context).setBrightness(Brightness.light);
-          },
         ),
         RadioPreference(
           'Dark Theme',
           'dark',
           'ui_theme',
-          onSelect: () {
-            DynamicTheme.of(context).setBrightness(Brightness.dark);
-          },
         ),
         PreferenceTitle('Messaging'),
         PreferencePageLink(
@@ -130,13 +116,17 @@ class _MyHomePageState extends State<MyHomePage> {
           'Display Name',
           'user_display_name',
         ),
-        TextFieldPreference('E-Mail', 'user_email',
-            defaultVal: 'email@example.com', validator: (str) {
-          if (!isEmail(str)) {
-            return 'Invalid email';
-          }
-          return null;
-        }),
+        TextFieldPreference(
+          'E-Mail',
+          'user_email',
+          defaultVal: 'email@gmail.com',
+          validator: (String str) {
+            if (!str.endsWith('@gmail.com')) {
+              return 'Invalid email';
+            }
+            return null;
+          },
+        ),
         PreferenceText(
           PrefService.of(context).getString('user_description') ?? '',
           style: TextStyle(color: Colors.grey),

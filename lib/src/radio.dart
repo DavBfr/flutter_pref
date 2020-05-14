@@ -1,8 +1,26 @@
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 
-import 'preference_service.dart';
+import 'service/pref_service.dart';
 
 class RadioPreference<T> extends StatefulWidget {
+  const RadioPreference(
+    this.title,
+    this.val,
+    this.localGroupKey, {
+    this.desc,
+    this.selected = false,
+    this.ignoreTileTap = false,
+    this.isDefault = false,
+    this.onSelect,
+    this.disabled = false,
+    this.leading,
+  });
+
   final String title;
   final String desc;
   final T val;
@@ -17,21 +35,8 @@ class RadioPreference<T> extends StatefulWidget {
 
   final Widget leading;
 
-  const RadioPreference(
-    this.title,
-    this.val,
-    this.localGroupKey, {
-    this.desc,
-    this.selected = false,
-    this.ignoreTileTap = false,
-    this.isDefault = false,
-    this.onSelect,
-    this.disabled = false,
-    this.leading,
-  });
-
   @override
-  _RadioPreferenceState createState() => _RadioPreferenceState();
+  _RadioPreferenceState createState() => _RadioPreferenceState<T>();
 }
 
 class _RadioPreferenceState<T> extends State<RadioPreference<T>> {
@@ -66,10 +71,10 @@ class _RadioPreferenceState<T> extends State<RadioPreference<T>> {
       title: Text(widget.title),
       leading: widget.leading,
       subtitle: widget.desc == null ? null : Text(widget.desc),
-      trailing: Radio(
+      trailing: Radio<T>(
         value: widget.val,
         groupValue: PrefService.of(context).get(widget.localGroupKey),
-        onChanged: widget.disabled ? null : (var val) => onChange(widget.val),
+        onChanged: widget.disabled ? null : (T val) => onChange(widget.val),
       ),
       onTap: (widget.ignoreTileTap || widget.disabled)
           ? null
@@ -98,6 +103,8 @@ class _RadioPreferenceState<T> extends State<RadioPreference<T>> {
     }
     service.notify(widget.localGroupKey);
 
-    if (widget.onSelect != null) widget.onSelect();
+    if (widget.onSelect != null) {
+      widget.onSelect();
+    }
   }
 }

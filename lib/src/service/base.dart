@@ -1,3 +1,8 @@
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 import 'dart:async';
 import 'dart:core';
 
@@ -7,7 +12,9 @@ abstract class BasePrefService extends ChangeNotifier {
   final subs = <String, Set<VoidCallback>>{};
 
   void notify(String key) {
-    if (subs[key] == null) return;
+    if (subs[key] == null) {
+      return;
+    }
 
     for (Function f in subs[key]) {
       f();
@@ -48,7 +55,9 @@ abstract class BasePrefService extends ChangeNotifier {
   bool getBool(String key) {
     if (key.startsWith('!')) {
       final val = getBoolRaw(key.substring(1));
-      if (val == null) return null;
+      if (val == null) {
+        return null;
+      }
       return !val;
     }
 
@@ -57,7 +66,7 @@ abstract class BasePrefService extends ChangeNotifier {
 
   Future<void> apply(BasePrefService other) async {
     for (final key in other.getKeys()) {
-      final val = other.get(key);
+      final dynamic val = other.get(key);
       await set(key, val);
     }
   }

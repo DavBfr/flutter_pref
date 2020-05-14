@@ -1,10 +1,15 @@
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 import 'dart:async';
 import 'dart:core';
 
 import 'package:flutter/material.dart';
 
-import 'preference_service_base.dart';
-import 'preference_service_shared.dart';
+import 'base.dart';
+import 'shared_preferences.dart';
 
 class PrefService extends InheritedWidget {
   const PrefService({

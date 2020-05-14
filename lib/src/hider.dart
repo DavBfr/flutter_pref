@@ -1,14 +1,22 @@
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 
-import 'preference_service.dart';
+import 'service/pref_service.dart';
 
 class PreferenceHider extends StatelessWidget {
+  const PreferenceHider(
+    this.preferences,
+    this.hidePref, {
+    this.defaultVal = true,
+  });
+
   final List<Widget> preferences;
   final String hidePref;
   final bool defaultVal;
-
-  const PreferenceHider(this.preferences, this.hidePref,
-      {this.defaultVal = true});
 
   @override
   Widget build(BuildContext context) {

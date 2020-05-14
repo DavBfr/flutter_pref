@@ -1,10 +1,29 @@
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'preference_service.dart';
+import 'service/pref_service.dart';
 
 class SwitchPreference extends StatefulWidget {
+  const SwitchPreference(
+    this.title,
+    this.localKey, {
+    this.desc,
+    this.defaultVal = false,
+    this.ignoreTileTap = false,
+    this.resetOnException = true,
+    this.onEnable,
+    this.onDisable,
+    this.onChange,
+    this.disabled = false,
+    this.switchActiveColor,
+  });
+
   final String title;
   final String desc;
   final String localKey;
@@ -20,20 +39,6 @@ class SwitchPreference extends StatefulWidget {
   final bool disabled;
 
   final Color switchActiveColor;
-
-  const SwitchPreference(
-    this.title,
-    this.localKey, {
-    this.desc,
-    this.defaultVal = false,
-    this.ignoreTileTap = false,
-    this.resetOnException = true,
-    this.onEnable,
-    this.onDisable,
-    this.onChange,
-    this.disabled = false,
-    this.switchActiveColor,
-  });
 
   @override
   _SwitchPreferenceState createState() => _SwitchPreferenceState();
@@ -75,16 +80,22 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
     setState(() {
       PrefService.of(context).setBool(widget.localKey, true);
     });
-    if (widget.onChange != null) widget.onChange();
+    if (widget.onChange != null) {
+      widget.onChange();
+    }
     if (widget.onEnable != null) {
       try {
         await widget.onEnable();
       } catch (e) {
         if (widget.resetOnException) {
           PrefService.of(context).setBool(widget.localKey, false);
-          if (mounted) setState(() {});
+          if (mounted) {
+            setState(() {});
+          }
         }
-        if (mounted) PrefService.showError(context, e.message);
+        if (mounted) {
+          PrefService.showError(context, e.message);
+        }
       }
     }
   }
@@ -93,16 +104,22 @@ class _SwitchPreferenceState extends State<SwitchPreference> {
     setState(() {
       PrefService.of(context).setBool(widget.localKey, false);
     });
-    if (widget.onChange != null) widget.onChange();
+    if (widget.onChange != null) {
+      widget.onChange();
+    }
     if (widget.onDisable != null) {
       try {
         await widget.onDisable();
       } catch (e) {
         if (widget.resetOnException) {
           PrefService.of(context).setBool(widget.localKey, true);
-          if (mounted) setState(() {});
+          if (mounted) {
+            setState(() {});
+          }
         }
-        if (mounted) PrefService.showError(context, e.message);
+        if (mounted) {
+          PrefService.showError(context, e.message);
+        }
       }
     }
   }

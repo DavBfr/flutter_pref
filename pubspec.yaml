@@ -1,8 +1,8 @@
-name: preferences
-description: Create Preference Screens easily with advanced features and subpages
-version: 5.2.0
-author: redsolver <info@redsolver.net>
-homepage: https://gitlab.com/redsolver/preferences
+name: pref
+description: Create Preference Screens easily with advanced features and sub-pages
+version: 6.0.0
+homepage: https://github.com/DavBfr/flutter_pref
+author: David PHAM-VAN <dev.nfet.net@gmail.com>
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -15,6 +15,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  pedantic: any
+  pedantic: ^1.8.0
 
 flutter:

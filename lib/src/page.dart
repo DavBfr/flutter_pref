@@ -1,12 +1,18 @@
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 
-import 'preference_service.dart';
-import 'preference_service_shared.dart';
+import 'service/pref_service.dart';
+import 'service/shared_preferences.dart';
 
 /// PreferencePage isn't required if you init PrefService in your main() function
 class PreferencePage extends StatefulWidget {
-  final List<Widget> preferences;
   const PreferencePage(this.preferences);
+
+  final List<Widget> preferences;
 
   @override
   PreferencePageState createState() => PreferencePageState();
@@ -28,7 +34,7 @@ class PreferencePageState extends State<PreferencePage> {
       future: SharedPrefService.init(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return SizedBox();
+          return const SizedBox();
         }
 
         return PrefService(

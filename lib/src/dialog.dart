@@ -1,25 +1,32 @@
+// Copyright (c) 2020, David PHAM-VAN <dev.nfet.net@gmail.com>
+// All rights reserved.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'preference_service.dart';
-import 'preference_service_base.dart';
-import 'preference_service_cache.dart';
-import 'preference_service_shared.dart';
+import 'service/base.dart';
+import 'service/cache.dart';
+import 'service/pref_service.dart';
+import 'service/shared_preferences.dart';
 
 class PreferenceDialog extends StatefulWidget {
+  const PreferenceDialog(
+    this.preferences, {
+    this.title,
+    this.submitText,
+    this.onlySaveOnSubmit = false,
+    this.cancelText,
+  });
+
   final String title;
   final List<Widget> preferences;
   final String submitText;
   final String cancelText;
 
   final bool onlySaveOnSubmit;
-
-  const PreferenceDialog(this.preferences,
-      {this.title,
-      this.submitText,
-      this.onlySaveOnSubmit = false,
-      this.cancelText});
 
   @override
   PreferenceDialogState createState() => PreferenceDialogState();
@@ -77,7 +84,7 @@ class PreferenceDialogState extends State<PreferenceDialog> {
         future: _createCache(parent),
         builder: (BuildContext context, snapshot) {
           if (!snapshot.hasData) {
-            return SizedBox();
+            return const SizedBox();
           }
 
           return PrefService(
@@ -106,7 +113,7 @@ class PreferenceDialogState extends State<PreferenceDialog> {
       future: SharedPrefService.init(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return SizedBox();
+          return const SizedBox();
         }
 
         return PrefService(
