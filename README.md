@@ -1,4 +1,4 @@
-# preferences
+# pref
 
 Create Preference Screens easily with advanced features and subpages
 
