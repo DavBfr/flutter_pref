@@ -39,14 +39,20 @@ class PrefDropdown<T> extends StatefulWidget {
 class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
   @override
   void didChangeDependencies() {
+    PrefService.of(context).addKeyListener(widget.pref, _onNotify);
     super.didChangeDependencies();
-    PrefService.of(context).onNotify(widget.pref, _onNotify);
   }
 
   @override
   void deactivate() {
+    PrefService.of(context).removeKeyListener(widget.pref, _onNotify);
     super.deactivate();
-    PrefService.of(context).onNotifyRemove(widget.pref, _onNotify);
+  }
+
+  @override
+  void reassemble() {
+    PrefService.of(context).addKeyListener(widget.pref, _onNotify);
+    super.reassemble();
   }
 
   void _onNotify() {

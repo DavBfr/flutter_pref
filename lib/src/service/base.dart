@@ -9,27 +9,31 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 
 abstract class BasePrefService extends ChangeNotifier {
-  final _subs = <String, Set<VoidCallback>>{};
+  final _keyListeners = <String, Set<VoidCallback>>{};
 
-  void notify(String key) {
-    if (_subs[key] == null) {
-      return;
+  void addKeyListener(String key, VoidCallback f) {
+    if (key.startsWith('!')) {
+      key = key.substring(1);
     }
 
-    for (Function f in _subs[key]) {
-      f();
+    if (_keyListeners[key] == null) {
+      _keyListeners[key] = <VoidCallback>{};
     }
+    _keyListeners[key].add(f);
   }
 
-  void onNotify(String key, VoidCallback f) {
-    if (_subs[key] == null) {
-      _subs[key] = <VoidCallback>{};
+  void removeKeyListener(String key, VoidCallback f) {
+    if (key.startsWith('!')) {
+      key = key.substring(1);
     }
-    _subs[key].add(f);
+
+    _keyListeners[key]?.remove(f);
   }
 
-  void onNotifyRemove(String key, VoidCallback f) {
-    _subs[key]?.remove(f);
+  @override
+  void dispose() {
+    _keyListeners.clear();
+    super.dispose();
   }
 
   Future<bool> setDefaultValues(Map<String, dynamic> values) async {
@@ -107,12 +111,12 @@ abstract class BasePrefService extends ChangeNotifier {
       return true;
     }());
 
-    if (_subs[key] != null) {
-      final localListeners = List<VoidCallback>.from(_subs[key]);
+    if (_keyListeners[key] != null) {
+      final localListeners = List<VoidCallback>.from(_keyListeners[key]);
 
       for (final listener in localListeners) {
         try {
-          if (_subs[key].contains(listener)) {
+          if (_keyListeners[key].contains(listener)) {
             listener();
           }
         } catch (exception, stack) {
