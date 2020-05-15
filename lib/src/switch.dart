@@ -93,7 +93,7 @@ class _PrefSwitchState extends State<PrefSwitch> {
       trailing: Switch.adaptive(
         value: value,
         activeColor: widget.switchActiveColor,
-        onChanged: widget.disabled ? null : (val) => _onChange(value),
+        onChanged: widget.disabled ? null : (value) => _onChange(value),
       ),
       onTap: (widget.disabled || widget.ignoreTileTap)
           ? null
