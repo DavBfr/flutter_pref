@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'service/base.dart';
 import 'service/pref_service.dart';
 import 'service/shared_preferences.dart';
 
@@ -32,7 +33,7 @@ class _PrefPageState extends State<PrefPage> {
     }
 
     // Fallback to SharedPreferences
-    return FutureBuilder(
+    return FutureBuilder<BasePrefService>(
       future: PrefServiceShared.init(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -40,8 +41,8 @@ class _PrefPageState extends State<PrefPage> {
         }
 
         return PrefService(
-          service: service,
-          child: snapshot.data,
+          service: snapshot.data,
+          child: settings,
         );
       },
     );

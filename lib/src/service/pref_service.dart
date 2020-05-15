@@ -25,7 +25,7 @@ class PrefService extends InheritedWidget {
   bool updateShouldNotify(InheritedWidget oldWidget) => false;
 
   static BasePrefService of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<PrefService>().service ??
+      context.dependOnInheritedWidgetOfExactType<PrefService>()?.service ??
       _instance;
 
   static void showError(BuildContext context, String message) {
