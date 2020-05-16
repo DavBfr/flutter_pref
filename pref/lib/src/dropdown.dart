@@ -96,7 +96,10 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
         title: value == null
             ? null
             : DefaultTextStyle.merge(
-                style: Theme.of(context).textTheme.overline,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    .copyWith(fontSize: 12),
                 child: widget.title,
               ),
         isThreeLine: widget.subtitle != null,
@@ -106,7 +109,6 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
             DropdownButton<T>(
               hint: widget.title,
               isExpanded: true,
-              underline: const SizedBox(),
               items: widget.items,
               onChanged: widget.disabled ? null : _onChange,
               value: value,
