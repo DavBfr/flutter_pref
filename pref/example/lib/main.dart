@@ -159,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           PrefLabel(
             title: Text(
-              PrefService.of(context).getString('user_description') ?? '',
+              PrefService.of(context).get<String>('user_description') ?? '',
               style: TextStyle(color: Colors.grey),
             ),
           ),
@@ -288,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onChange: (value) {
               setState(() {});
               if (!value) {
-                PrefService.of(context).setBool('exp_showos', false);
+                PrefService.of(context).set('exp_showos', false);
               }
             },
           ),

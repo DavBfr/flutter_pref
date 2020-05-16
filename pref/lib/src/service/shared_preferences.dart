@@ -31,75 +31,29 @@ class PrefServiceShared extends BasePrefService {
   final String prefix;
 
   @override
-  bool getBool(String key) {
-    return sharedPreferences.getBool('$prefix$key');
-  }
-
-  @override
-  FutureOr<bool> setBool(String key, bool val) async {
-    if (await sharedPreferences.setBool('$prefix$key', val)) {
-      return super.setBool(key, val);
+  FutureOr<bool> set<T>(String key, T val) async {
+    if (val is bool) {
+      if (await sharedPreferences.setBool('$prefix$key', val)) {
+        return super.set<T>(key, val);
+      }
+    } else if (val is double) {
+      if (await sharedPreferences.setDouble('$prefix$key', val)) {
+        return super.set<T>(key, val);
+      }
+    } else if (val is int) {
+      if (await sharedPreferences.setInt('$prefix$key', val)) {
+        return super.set<T>(key, val);
+      }
+    } else if (val is String) {
+      if (await sharedPreferences.setString('$prefix$key', val)) {
+        return super.set<T>(key, val);
+      }
     }
     return false;
   }
 
   @override
-  String getString(String key) {
-    return sharedPreferences.getString('$prefix$key');
-  }
-
-  @override
-  FutureOr<bool> setString(String key, String val) async {
-    if (await sharedPreferences.setString('$prefix$key', val)) {
-      return super.setString(key, val);
-    }
-
-    return false;
-  }
-
-  @override
-  int getInt(String key) {
-    return sharedPreferences.getInt('$prefix$key');
-  }
-
-  @override
-  FutureOr<bool> setInt(String key, int val) async {
-    if (await sharedPreferences.setInt('$prefix$key', val)) {
-      super.setInt(key, val);
-    }
-
-    return false;
-  }
-
-  @override
-  double getDouble(String key) {
-    return sharedPreferences.getDouble('$prefix$key');
-  }
-
-  @override
-  FutureOr<bool> setDouble(String key, double val) async {
-    if (await sharedPreferences.setDouble('$prefix$key', val)) {
-      return super.setDouble(key, val);
-    }
-
-    return false;
-  }
-
-  @override
-  List<String> getStringList(String key) {
-    return sharedPreferences.getStringList('$prefix$key');
-  }
-
-  @override
-  FutureOr<bool> setStringList(String key, List<String> val) async {
-    if (await sharedPreferences.setStringList('$prefix$key', val)) {
-      return super.setStringList(key, val);
-    }
-    return false;
-  }
-
-  @override
-  dynamic get(String key) {
+  T get<T>(String key) {
     return sharedPreferences.get('$prefix$key');
   }
 

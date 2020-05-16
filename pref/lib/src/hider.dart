@@ -57,7 +57,7 @@ class _PrefHiderState extends State<PrefHider> {
     bool value;
 
     try {
-      value = PrefService.of(context).getBool(widget.pref);
+      value = PrefService.of(context).get(widget.pref);
     } catch (e) {
       print('Unable to load the value: $e');
     }

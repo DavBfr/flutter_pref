@@ -12,64 +12,13 @@ class PrefServiceCache extends BasePrefService {
   final _cache = <String, dynamic>{};
 
   @override
-  bool getBool(String key) {
-    return _cache[key];
-  }
-
-  @override
-  FutureOr<bool> setBool(String key, bool val) {
+  FutureOr<bool> set<T>(String key, T val) {
     _cache[key] = val;
-    return super.setBool(key, val);
+    return super.set<T>(key, val);
   }
 
   @override
-  String getString(String key) {
-    return _cache[key];
-  }
-
-  @override
-  FutureOr<bool> setString(String key, String val) {
-    _cache[key] = val;
-    return super.setString(key, val);
-  }
-
-  @override
-  int getInt(String key) {
-    return _cache[key];
-  }
-
-  @override
-  FutureOr<bool> setInt(String key, int val) {
-    _cache[key] = val;
-    return super.setInt(key, val);
-  }
-
-  @override
-  double getDouble(String key) {
-    return _cache[key];
-  }
-
-  @override
-  FutureOr<bool> setDouble(String key, double val) {
-    _cache[key] = val;
-    return super.setDouble(key, val);
-  }
-
-  @override
-  List<String> getStringList(String key) {
-    return _cache[key];
-  }
-
-  @override
-  FutureOr<bool> setStringList(String key, List<String> val) {
-    _cache[key] = val;
-    return super.setStringList(key, val);
-  }
-
-  @override
-  dynamic get(String key) {
-    return _cache[key];
-  }
+  T get<T>(String key) => _cache[key];
 
   @override
   Set<String> getKeys() {

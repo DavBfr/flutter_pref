@@ -68,7 +68,7 @@ class _PrefTextState extends State<PrefText> {
     final service = PrefService.of(context);
 
     if (!_initialized) {
-      controller.text = service.getString(widget.pref) ?? '';
+      controller.text = service.get(widget.pref) ?? '';
       _initialized = true;
     }
 
@@ -96,7 +96,7 @@ class _PrefTextState extends State<PrefText> {
                 if (widget.onChange != null) {
                   widget.onChange(val);
                 }
-                PrefService.of(context).setString(widget.pref, val);
+                PrefService.of(context).set(widget.pref, val);
               }
             },
             autofocus: widget.autofocus,

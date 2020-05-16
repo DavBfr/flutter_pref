@@ -69,8 +69,7 @@ class _PrefSwitchState extends State<PrefSwitch> {
   }
 
   Future<void> _onChange(bool value) async {
-    PrefService.of(context)
-        .setBool(widget.pref, widget.reversed ? !value : value);
+    PrefService.of(context).set(widget.pref, widget.reversed ? !value : value);
 
     if (widget.onChange != null) {
       widget.onChange(value);

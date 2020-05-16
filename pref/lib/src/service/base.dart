@@ -33,12 +33,12 @@ abstract class BasePrefService extends ChangeNotifier {
     final keys = getKeys();
     for (final key in values.keys) {
       if (!keys.contains(key)) {
-        if (!await set(key, values[key])) {
+        if (!await set<dynamic>(key, values[key])) {
           result = false;
         }
       } else {
-        if (get(key).runtimeType != values[key].runtimeType) {
-          if (!await set(key, values[key])) {
+        if (get<dynamic>(key).runtimeType != values[key].runtimeType) {
+          if (!await set<dynamic>(key, values[key])) {
             result = false;
           }
         }
@@ -50,42 +50,34 @@ abstract class BasePrefService extends ChangeNotifier {
 
   Future<void> apply(BasePrefService other) async {
     for (final key in other.getKeys()) {
-      final dynamic val = other.get(key);
-      await set(key, val);
+      final dynamic val = other.get<dynamic>(key);
+      if (val != get<dynamic>(key)) {
+        await set<dynamic>(key, val);
+      }
     }
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
     for (final key in getKeys()) {
-      result[key] = get(key);
+      result[key] = get<dynamic>(key);
     }
     return result;
   }
 
   Future<void> fromMap(Map<String, dynamic> map) async {
     for (final key in map.keys) {
-      await set(key, map[key]);
+      await set<dynamic>(key, map[key]);
     }
   }
 
-  Future<bool> set(String key, dynamic val) async {
-    if (val is bool) {
-      return await setBool(key, val);
-    } else if (val is double) {
-      return await setDouble(key, val);
-    } else if (val is int) {
-      return await setInt(key, val);
-    } else if (val is List<String>) {
-      return await setStringList(key, val);
-    } else if (val is String) {
-      return await setString(key, val);
-    }
-
-    return false;
+  @mustCallSuper
+  FutureOr<bool> set<T>(String key, T val) {
+    _changed<T>(key, val);
+    return true;
   }
 
-  void _changed(String key, dynamic val) {
+  void _changed<T>(String key, T val) {
     assert(() {
       print('PrefService set $key to "$val"');
       return true;
@@ -119,47 +111,7 @@ abstract class BasePrefService extends ChangeNotifier {
   @override
   String toString() => toMap().toString();
 
-  bool getBool(String key);
-
-  @mustCallSuper
-  FutureOr<bool> setBool(String key, bool val) {
-    _changed(key, val);
-    return true;
-  }
-
-  String getString(String key);
-
-  @mustCallSuper
-  FutureOr<bool> setString(String key, String val) {
-    _changed(key, val);
-    return true;
-  }
-
-  int getInt(String key);
-
-  @mustCallSuper
-  FutureOr<bool> setInt(String key, int val) {
-    _changed(key, val);
-    return true;
-  }
-
-  double getDouble(String key);
-
-  @mustCallSuper
-  FutureOr<bool> setDouble(String key, double val) {
-    _changed(key, val);
-    return true;
-  }
-
-  List<String> getStringList(String key);
-
-  @mustCallSuper
-  FutureOr<bool> setStringList(String key, List<String> val) {
-    _changed(key, val);
-    return true;
-  }
-
-  dynamic get(String key);
+  T get<T>(String key);
 
   Set<String> getKeys();
 
