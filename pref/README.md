@@ -2,6 +2,8 @@
 
 Create Preference Screens easily with advanced features and sub-pages
 
+![Demo video](https://media.githubusercontent.com/media/DavBfr/flutter_pref/master/demo.gif)
+
 ## Usage
 
 In your main method, add:

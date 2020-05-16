@@ -19,8 +19,19 @@ Future<void> main() async {
     'start_page': 'Timeline',
     'notification_pm_friend': true,
     'notification_newpost_friend': true,
+    'notification_pm_stranger': false,
     'ui_theme': 'light',
     'user_email': 'email@gmail.com',
+    'gender': 2,
+    'content_show_text': false,
+    'content_show_image': true,
+    'content_show_audio': null,
+    'android_listpref_selected': null,
+    'android_listpref_auto_selected': null,
+    'android_multilistpref_a': false,
+    'android_multilistpref_b': true,
+    'android_multilistpref_c': true,
+    'exp_showos': false,
   });
 
   runApp(MyApp(service));
