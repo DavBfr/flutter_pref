@@ -31,7 +31,7 @@ publish: format analyze clean
 	find pref -name pubspec.yaml -exec sed -i -e 's/^dependency_overrides:/_dependency_overrides:/g' '{}' ';'
 	cd pref; pub publish -f
 	find pref -name pubspec.yaml -exec sed -i -e 's/^_dependency_overrides:/dependency_overrides:/g' '{}' ';'
-	git tag $(shell grep version pubspec.yaml | sed 's/version\s*:\s*/v/g')
+	git tag $(shell grep version pref/pubspec.yaml | sed 's/version\s*:\s*/v/g')
 
 .dartfix:
 	pub global activate dartfix
