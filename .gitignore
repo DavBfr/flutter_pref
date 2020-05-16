@@ -71,4 +71,8 @@ build/
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 example/.flutter-plugins-dependencies
 example/ios/Flutter/flutter_export_environment.sh
+
 .dartfix
+.pana
+tools/.flutter-plugins-dependencies
+tools/readme.dart

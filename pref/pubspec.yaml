@@ -1,8 +1,10 @@
 name: pref
 description: Create Preference Screens easily with advanced features and sub-pages
-version: 6.0.0
-homepage: https://github.com/DavBfr/flutter_pref
+homepage: https://github.com/DavBfr/flutter_pref/tree/master/pref
+repository: https://github.com/DavBfr/flutter_pref
+issue_tracker: https://github.com/DavBfr/flutter_pref/issues
 author: David PHAM-VAN <dev.nfet.net@gmail.com>
+version: 1.0.0
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

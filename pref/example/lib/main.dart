@@ -10,8 +10,10 @@ import 'package:pref/pref.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // This PrefService is in memory only.
+  // Use PrefServiceShared.init() to store the settings permanantly
   final service = PrefServiceCache();
-  service.setDefaultValues(<String, dynamic>{
+  await service.setDefaultValues(<String, dynamic>{
     'user_description': 'This is my description!',
     'advanced_enabled': false,
     'start_page': 'Timeline',

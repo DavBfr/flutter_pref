@@ -19,15 +19,18 @@ node_modules:
 	npm install lcov-summary
 
 test: node_modules
-	flutter test --coverage --coverage-path lcov.info
-	dart bin/json_intl.dart -s test/data -d test/intl.dart -v
-	cat lcov.info | node_modules/.bin/lcov-summary
+	cd pref; flutter test --coverage --coverage-path lcov.info
+	cat pref/lcov.info | node_modules/.bin/lcov-summary
+
+test-readme:
+	cd tools; flutter pub get
+	cd tools; dart extract_readme.dart
 
 publish: format analyze clean
 	test -z "$(shell git status --porcelain)"
-	find . -name pubspec.yaml -exec sed -i -e 's/^dependency_overrides:/_dependency_overrides:/g' '{}' ';'
-	pub publish -f
-	find . -name pubspec.yaml -exec sed -i -e 's/^_dependency_overrides:/dependency_overrides:/g' '{}' ';'
+	find pref -name pubspec.yaml -exec sed -i -e 's/^dependency_overrides:/_dependency_overrides:/g' '{}' ';'
+	cd pref; pub publish -f
+	find pref -name pubspec.yaml -exec sed -i -e 's/^_dependency_overrides:/dependency_overrides:/g' '{}' ';'
 	git tag $(shell grep version pubspec.yaml | sed 's/version\s*:\s*/v/g')
 
 .dartfix:
@@ -39,15 +42,12 @@ publish: format analyze clean
 	touch $@
 
 fix: .dartfix $(DART_SRC)
-	pub global run dartfix --overwrite .
+	cd pref; pub global run dartfix --overwrite .
 
 analyze: $(DART_SRC)
-	dartanalyzer --fatal-infos --fatal-warnings --fatal-hints --fatal-lints -v .
+	cd pref; dartanalyzer --fatal-infos --fatal-warnings --fatal-hints --fatal-lints -v .
 
 pana: .pana
-	pub global run pana --no-warning --source path .
+	cd pref; pub global run pana --no-warning --source path .
 
 .PHONY: format format-dart clean publish test fix analyze
-
-lib/src/pubspec.dart: pubspec.yaml
-	flutter pub run pubspec_extract -s $^ -d $@
