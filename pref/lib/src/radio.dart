@@ -78,13 +78,20 @@ class _PrefRadioState<T> extends State<PrefRadio<T>> {
 
   @override
   Widget build(BuildContext context) {
+    T value;
+    try {
+      value = PrefService.of(context).get(widget.pref);
+    } catch (e) {
+      print('Unable to load the value: $e');
+    }
+
     return ListTile(
       title: widget.title,
       leading: widget.leading,
       subtitle: widget.subtitle,
       trailing: Radio<T>(
         value: widget.value,
-        groupValue: PrefService.of(context).get(widget.pref),
+        groupValue: value,
         onChanged: widget.disabled ? null : (T val) => _onChange(widget.value),
       ),
       onTap: (widget.ignoreTileTap || widget.disabled)

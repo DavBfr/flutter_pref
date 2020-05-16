@@ -73,7 +73,12 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
 
   @override
   Widget build(BuildContext context) {
-    T value = PrefService.of(context).get(widget.pref);
+    T value;
+    try {
+      value = PrefService.of(context).get(widget.pref);
+    } catch (e) {
+      print('Unable to load the value: $e');
+    }
 
     // check if the value is present in the list of choices
     var found = false;

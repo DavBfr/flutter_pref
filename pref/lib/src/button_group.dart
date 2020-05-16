@@ -70,7 +70,12 @@ class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final T value = PrefService.of(context).get(widget.pref);
+    T value;
+    try {
+      value = PrefService.of(context).get(widget.pref);
+    } catch (e) {
+      print('Unable to load the value: $e');
+    }
 
     return ListTile(
       title: widget.title,

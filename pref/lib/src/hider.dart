@@ -54,10 +54,15 @@ class _PrefHiderState extends State<PrefHider> {
 
   @override
   Widget build(BuildContext context) {
-    final value =
-        PrefService.of(context).getBool(widget.pref) ?? widget.nullValue;
+    bool value;
 
-    if (value != widget.reversed) {
+    try {
+      value = PrefService.of(context).getBool(widget.pref);
+    } catch (e) {
+      print('Unable to load the value: $e');
+    }
+
+    if ((value ?? widget.nullValue) != widget.reversed) {
       return Column(
         children: widget.children,
         crossAxisAlignment: CrossAxisAlignment.start,
