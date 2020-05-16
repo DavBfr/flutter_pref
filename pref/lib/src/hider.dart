@@ -11,12 +11,19 @@ class PrefHider extends StatefulWidget {
   const PrefHider({
     @required this.children,
     @required this.pref,
+    this.reversed = false,
+    this.nullValue = false,
   })  : assert(children != null),
-        assert(pref != null);
+        assert(pref != null),
+        assert(reversed != null);
 
   final List<Widget> children;
 
   final String pref;
+
+  final bool reversed;
+
+  final bool nullValue;
 
   @override
   _PrefHiderState createState() => _PrefHiderState();
@@ -47,13 +54,16 @@ class _PrefHiderState extends State<PrefHider> {
 
   @override
   Widget build(BuildContext context) {
-    if (PrefService.of(context).getBool(widget.pref) == true) {
-      return Container();
+    final value =
+        PrefService.of(context).getBool(widget.pref) ?? widget.nullValue;
+
+    if (value != widget.reversed) {
+      return Column(
+        children: widget.children,
+        crossAxisAlignment: CrossAxisAlignment.start,
+      );
     }
 
-    return Column(
-      children: widget.children,
-      crossAxisAlignment: CrossAxisAlignment.start,
-    );
+    return Container();
   }
 }

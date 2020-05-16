@@ -293,7 +293,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
           PrefHider(
-            pref: '!advanced_enabled', // Use ! to get reversed boolean values
+            pref: 'advanced_enabled',
             children: [
               PrefSwitch(
                 title: Text('Show Operating System'),

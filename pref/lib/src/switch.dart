@@ -19,8 +19,10 @@ class PrefSwitch extends StatefulWidget {
     this.ignoreTileTap = false,
     this.onChange,
     this.disabled = false,
+    this.reversed = false,
     this.switchActiveColor,
   })  : assert(pref != null),
+        assert(reversed != null),
         super(key: key);
 
   final Widget title;
@@ -36,6 +38,8 @@ class PrefSwitch extends StatefulWidget {
   final bool disabled;
 
   final Color switchActiveColor;
+
+  final bool reversed;
 
   @override
   _PrefSwitchState createState() => _PrefSwitchState();
@@ -65,7 +69,8 @@ class _PrefSwitchState extends State<PrefSwitch> {
   }
 
   Future<void> _onChange(bool value) async {
-    PrefService.of(context).setBool(widget.pref, value);
+    PrefService.of(context)
+        .setBool(widget.pref, widget.reversed ? !value : value);
 
     if (widget.onChange != null) {
       widget.onChange(value);
@@ -74,7 +79,10 @@ class _PrefSwitchState extends State<PrefSwitch> {
 
   @override
   Widget build(BuildContext context) {
-    final value = PrefService.of(context).getBool(widget.pref);
+    var value = PrefService.of(context).getBool(widget.pref);
+    if (widget.reversed && value != null) {
+      value = !value;
+    }
 
     if (value == null) {
       return PrefCheckbox(

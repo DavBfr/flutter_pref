@@ -31,7 +31,7 @@ class PrefServiceShared extends BasePrefService {
   final String prefix;
 
   @override
-  bool getBoolRaw(String key) {
+  bool getBool(String key) {
     return sharedPreferences.getBool('$prefix$key');
   }
 

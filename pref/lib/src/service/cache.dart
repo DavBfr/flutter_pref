@@ -12,7 +12,7 @@ class PrefServiceCache extends BasePrefService {
   final _cache = <String, dynamic>{};
 
   @override
-  bool getBoolRaw(String key) {
+  bool getBool(String key) {
     return _cache[key];
   }
 

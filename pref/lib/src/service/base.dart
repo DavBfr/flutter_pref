@@ -12,10 +12,6 @@ abstract class BasePrefService extends ChangeNotifier {
   final _keyListeners = <String, Set<VoidCallback>>{};
 
   void addKeyListener(String key, VoidCallback f) {
-    if (key.startsWith('!')) {
-      key = key.substring(1);
-    }
-
     if (_keyListeners[key] == null) {
       _keyListeners[key] = <VoidCallback>{};
     }
@@ -23,10 +19,6 @@ abstract class BasePrefService extends ChangeNotifier {
   }
 
   void removeKeyListener(String key, VoidCallback f) {
-    if (key.startsWith('!')) {
-      key = key.substring(1);
-    }
-
     _keyListeners[key]?.remove(f);
   }
 
@@ -54,18 +46,6 @@ abstract class BasePrefService extends ChangeNotifier {
     }
 
     return result;
-  }
-
-  bool getBool(String key) {
-    if (key.startsWith('!')) {
-      final val = getBoolRaw(key.substring(1));
-      if (val == null) {
-        return null;
-      }
-      return !val;
-    }
-
-    return getBoolRaw(key);
   }
 
   Future<void> apply(BasePrefService other) async {
@@ -139,8 +119,7 @@ abstract class BasePrefService extends ChangeNotifier {
   @override
   String toString() => toMap().toString();
 
-  @protected
-  bool getBoolRaw(String key);
+  bool getBool(String key);
 
   @mustCallSuper
   FutureOr<bool> setBool(String key, bool val) {

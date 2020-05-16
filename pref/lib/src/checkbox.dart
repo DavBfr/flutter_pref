@@ -18,7 +18,9 @@ class PrefCheckbox extends StatefulWidget {
     this.ignoreTileTap = false,
     this.onChange,
     this.disabled = false,
+    this.reversed = false,
   })  : assert(pref != null),
+        assert(reversed != null),
         super(key: key);
 
   final Widget title;
@@ -30,6 +32,8 @@ class PrefCheckbox extends StatefulWidget {
   final bool ignoreTileTap;
 
   final bool disabled;
+
+  final bool reversed;
 
   final ValueChanged<bool> onChange;
 
@@ -62,7 +66,8 @@ class _PrefCheckboxState extends State<PrefCheckbox> {
 
   Future<void> _onChange(bool value) async {
     setState(() {
-      PrefService.of(context).setBool(widget.pref, value);
+      PrefService.of(context)
+          .setBool(widget.pref, widget.reversed ? !value : value);
     });
 
     if (widget.onChange != null) {
@@ -72,7 +77,11 @@ class _PrefCheckboxState extends State<PrefCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-    final value = PrefService.of(context).getBool(widget.pref);
+    var value = PrefService.of(context).getBool(widget.pref);
+    if (widget.reversed && value != null) {
+      value = !value;
+    }
+
     return ListTile(
       title: widget.title,
       subtitle: widget.subtitle,
