@@ -16,8 +16,10 @@ class PrefDropdown<T> extends StatefulWidget {
     @required this.items,
     this.onChange,
     this.disabled = false,
+    this.fullWidth = true,
   })  : assert(pref != null),
         assert(items != null),
+        assert(fullWidth != null),
         super(key: key);
 
   final Widget title;
@@ -31,6 +33,8 @@ class PrefDropdown<T> extends StatefulWidget {
   final ValueChanged<T> onChange;
 
   final bool disabled;
+
+  final bool fullWidth;
 
   @override
   _PrefDropdownState<T> createState() => _PrefDropdownState<T>();
@@ -80,6 +84,32 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
     }
     if (!found) {
       value = null;
+    }
+
+    if (widget.fullWidth) {
+      return ListTile(
+        title: value == null
+            ? null
+            : DefaultTextStyle.merge(
+                style: Theme.of(context).textTheme.overline,
+                child: widget.title,
+              ),
+        isThreeLine: widget.subtitle != null,
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DropdownButton<T>(
+              hint: widget.title,
+              isExpanded: true,
+              underline: const SizedBox(),
+              items: widget.items,
+              onChanged: widget.disabled ? null : _onChange,
+              value: value,
+            ),
+            if (widget.subtitle != null) widget.subtitle
+          ],
+        ),
+      );
     }
 
     return ListTile(
