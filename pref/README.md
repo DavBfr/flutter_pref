@@ -2,7 +2,7 @@
 
 Create Preference Screens easily with advanced features and sub-pages
 
-![Demo video](https://media.githubusercontent.com/media/DavBfr/flutter_pref/master/demo.gif)
+![Demo video](https://media.githubusercontent.com/media/DavBfr/flutter_pref/649cb56158d3a1b50ffca8a0db56e4a671d9a80c/demo.gif)
 
 ## Usage
 
