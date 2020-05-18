@@ -76,3 +76,7 @@ example/ios/Flutter/flutter_export_environment.sh
 .pana
 tools/.flutter-plugins-dependencies
 tools/readme.dart
+
+node_modules
+lcov.info
+package-lock.json
