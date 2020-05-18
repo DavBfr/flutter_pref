@@ -68,7 +68,12 @@ class _PrefTextState extends State<PrefText> {
     final service = PrefService.of(context);
 
     if (!_initialized) {
-      controller.text = service.get(widget.pref) ?? '';
+      try {
+        controller.text = service.get<String>(widget.pref) ?? '';
+      } catch (e) {
+        print('Unable to load the value: $e');
+      }
+
       _initialized = true;
     }
 

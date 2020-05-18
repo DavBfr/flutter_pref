@@ -4,6 +4,7 @@
 
 - Fix reversed for null Switch
 - Add defaults to PrefServiceCache
+- Fix PrefText with invalid value
 
 ## 1.1.0
 
