@@ -98,6 +98,7 @@ class _PrefSwitchState extends State<PrefSwitch> {
         ignoreTileTap: widget.ignoreTileTap,
         onChange: widget.onChange,
         disabled: widget.disabled,
+        reversed: widget.reversed,
       );
     }
 

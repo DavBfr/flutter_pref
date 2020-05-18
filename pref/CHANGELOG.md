@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- Fix reversed for null Switch
+
 ## 1.1.0
 
 - Add `reversed` attributes to boolean widgets
