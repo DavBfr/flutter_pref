@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.1.1
+## 1.2.0
 
 - Fix reversed for null Switch
+- Add defaults to PrefServiceCache
 
 ## 1.1.0
 

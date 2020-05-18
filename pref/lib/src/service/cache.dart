@@ -9,7 +9,11 @@ import 'dart:core';
 import 'base.dart';
 
 class PrefServiceCache extends BasePrefService {
-  final _cache = <String, dynamic>{};
+  PrefServiceCache({
+    Map<String, dynamic> defaults,
+  }) : _cache = defaults ?? <String, dynamic>{};
+
+  final Map<String, dynamic> _cache;
 
   @override
   FutureOr<bool> set<T>(String key, T val) {
