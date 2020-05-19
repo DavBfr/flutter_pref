@@ -5,12 +5,16 @@
 
 DART_SRC=$(shell find . -name '*.dart')
 
-all: format
+all: pref/example/.metadata format
 
 format: format-dart
 
 format-dart: $(DART_SRC)
 	dartfmt -w --fix $^
+
+pref/example/.metadata:
+	cd pref/example; flutter create -t app --no-overwrite --org net.nfet --project-name example .
+	rm -rf pref/example/test
 
 clean:
 	git clean -fdx -e .vscode
