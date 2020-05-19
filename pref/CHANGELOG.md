@@ -5,6 +5,7 @@
 - Fix reversed for null Switch
 - Add defaults to PrefServiceCache
 - Fix PrefText with invalid value
+- Improve PrefDialogButton
 
 ## 1.1.0
 

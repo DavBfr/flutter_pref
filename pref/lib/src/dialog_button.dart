@@ -19,26 +19,35 @@ class PrefDialogButton extends StatelessWidget {
   });
 
   final Widget title;
+
   final Widget subtitle;
+
   final PrefDialog dialog;
+
   final Widget leading;
+
   final Widget trailing;
+
   final bool barrierDismissible;
 
-  final Function onPop;
+  final VoidCallback onPop;
+
+  Future<void> _onTap(BuildContext context) async {
+    if (onPop != null) {
+      onPop();
+    }
+
+    await showDialog<bool>(
+      context: context,
+      builder: (context) => dialog,
+      barrierDismissible: barrierDismissible,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () async {
-        await showDialog<void>(
-            context: context,
-            builder: (context) => dialog,
-            barrierDismissible: barrierDismissible);
-        if (onPop != null) {
-          onPop();
-        }
-      },
+      onTap: () => _onTap(context),
       title: title,
       subtitle: subtitle,
       leading: leading,
