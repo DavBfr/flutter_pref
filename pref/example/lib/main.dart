@@ -32,6 +32,7 @@ Future<void> main() async {
     'android_multilistpref_b': true,
     'android_multilistpref_c': true,
     'exp_showos': false,
+    'age': 65,
   });
 
   runApp(MyApp(service));
@@ -156,6 +157,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ButtonGroupItem(value: 2, child: Text('Female')),
               ButtonGroupItem(value: 3, child: Text('Other')),
             ],
+          ),
+          PrefSlider<int>(
+            title: Text('Your age'),
+            pref: 'age',
+            trailing: (num v) => SizedBox(width: 50, child: Text('I\'m $v')),
+            min: 10,
+            max: 90,
           ),
           PrefLabel(
             title: Text(

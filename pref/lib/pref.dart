@@ -19,6 +19,7 @@ export 'src/service/base.dart';
 export 'src/service/cache.dart';
 export 'src/service/pref_service.dart';
 export 'src/service/shared_preferences.dart';
+export 'src/slider.dart';
 export 'src/switch.dart';
 export 'src/text.dart';
 export 'src/title.dart';

@@ -9,6 +9,7 @@
 - Remove useless code from PrefService
 - Remove Page and Dialog fallback to shared_preferences
 - Add unit tests
+- Add PrefSlider
 
 ## 1.1.0
 
