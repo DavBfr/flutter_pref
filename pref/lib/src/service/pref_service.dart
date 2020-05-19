@@ -19,18 +19,9 @@ class PrefService extends InheritedWidget {
 
   final BasePrefService service;
 
-  static BasePrefService _instance;
-
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => false;
 
   static BasePrefService of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<PrefService>()?.service ??
-      _instance;
-
-  static void showError(BuildContext context, String message) {
-    Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text(message),
-    ));
-  }
+      context.dependOnInheritedWidgetOfExactType<PrefService>()?.service;
 }

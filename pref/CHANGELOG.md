@@ -6,6 +6,7 @@
 - Add defaults to PrefServiceCache
 - Fix PrefText with invalid value
 - Improve PrefDialogButton
+- Remove useless code from PrefService
 
 ## 1.1.0
 
