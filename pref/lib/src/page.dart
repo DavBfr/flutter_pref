@@ -5,11 +5,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'service/base.dart';
 import 'service/pref_service.dart';
-import 'service/shared_preferences.dart';
 
-/// [PrefPage] isn't required if you init PrefService in your main() function
 class PrefPage extends StatefulWidget {
   const PrefPage({
     @required this.children,
@@ -24,27 +21,14 @@ class PrefPage extends StatefulWidget {
 class _PrefPageState extends State<PrefPage> {
   @override
   Widget build(BuildContext context) {
-    final settings = ListView(children: widget.children);
-
     // Check if we already have a BasePrefService
     final service = PrefService.of(context);
-    if (service != null) {
-      return settings;
+
+    if (service == null) {
+      throw FlutterError(
+          'No PrefService widget found in the tree. Unable to load settings');
     }
 
-    // Fallback to SharedPreferences
-    return FutureBuilder<BasePrefService>(
-      future: PrefServiceShared.init(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const SizedBox();
-        }
-
-        return PrefService(
-          service: snapshot.data,
-          child: settings,
-        );
-      },
-    );
+    return ListView(children: widget.children);
   }
 }

@@ -7,6 +7,7 @@
 - Fix PrefText with invalid value
 - Improve PrefDialogButton
 - Remove useless code from PrefService
+- Remove Page and Dialog fallback to shared_preferences
 
 ## 1.1.0
 

@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'service/base.dart';
 import 'service/cache.dart';
 import 'service/pref_service.dart';
-import 'service/shared_preferences.dart';
 
 class PrefDialog extends StatefulWidget {
   const PrefDialog({
@@ -105,25 +104,11 @@ class PrefDialogState extends State<PrefDialog> {
   Widget build(BuildContext context) {
     // Check if we already have a BasePrefService
     final service = PrefService.of(context);
-    if (service != null) {
-      return _buildService(context, service);
+    if (service == null) {
+      throw FlutterError(
+          'No PrefService widget found in the tree. Unable to load settings');
     }
 
-    // Fallback to SharedPreferences
-    return FutureBuilder(
-      future: PrefServiceShared.init(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const SizedBox();
-        }
-
-        return PrefService(
-          service: service,
-          child: Builder(builder: (BuildContext context) {
-            return _buildService(context, service);
-          }),
-        );
-      },
-    );
+    return _buildService(context, service);
   }
 }
