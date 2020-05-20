@@ -5,30 +5,63 @@
 
 import 'package:flutter/material.dart';
 
+import 'service/base.dart';
+import 'service/cache.dart';
 import 'service/pref_service.dart';
 
-class PrefPage extends StatefulWidget {
+class PrefPage extends StatelessWidget {
   const PrefPage({
     @required this.children,
+    this.cache = false,
   }) : assert(children != null);
 
   final List<Widget> children;
 
-  @override
-  _PrefPageState createState() => _PrefPageState();
-}
+  final bool cache;
 
-class _PrefPageState extends State<PrefPage> {
+  Future<BasePrefService> _createCache(BasePrefService parent) async {
+    final service = PrefServiceCache();
+    await service.apply(parent);
+    return service;
+  }
+
   @override
   Widget build(BuildContext context) {
     // Check if we already have a BasePrefService
-    final service = PrefService.of(context);
+    final _parent = PrefService.of(context);
 
-    if (service == null) {
+    if (_parent == null) {
       throw FlutterError(
           'No PrefService widget found in the tree. Unable to load settings');
     }
 
-    return ListView(children: widget.children);
+    if (cache) {
+      return FutureBuilder<BasePrefService>(
+        future: _createCache(_parent),
+        builder: (BuildContext context, snapshot) {
+          if (!snapshot.hasData) {
+            return const SizedBox();
+          }
+
+          final _cache = snapshot.data;
+
+          return PrefService(
+            service: _cache,
+            child: Builder(
+              builder: (BuildContext context) => WillPopScope(
+                onWillPop: () async {
+                  // Save the settings
+                  await _parent.apply(_cache);
+                  return true;
+                },
+                child: ListView(children: children),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+    return ListView(children: children);
   }
 }

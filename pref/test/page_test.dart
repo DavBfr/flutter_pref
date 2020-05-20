@@ -19,7 +19,7 @@ void main() {
               service: service,
               child: const PrefPage(
                 children: [
-                  Text('Hello'),
+                  PrefCheckbox(pref: 'test'),
                 ],
               ),
             ),
@@ -27,7 +27,13 @@ void main() {
         ),
       );
 
-      expect(find.byType(Text), findsOneWidget);
+      expect(find.byType(Checkbox), findsOneWidget);
+      expect(service.get<bool>('test'), isNull);
+
+      await tester.tap(find.byType(Checkbox));
+      await tester.pump();
+
+      expect(service.get<bool>('test'), isFalse);
     });
 
     testWidgets('no service', (WidgetTester tester) async {
@@ -44,6 +50,36 @@ void main() {
       );
 
       expect(tester.takeException(), isInstanceOf<FlutterError>());
+    });
+
+    testWidgets('cached', (WidgetTester tester) async {
+      final service = PrefServiceCache();
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: PrefService(
+              service: service,
+              child: const PrefPage(
+                cache: true,
+                children: [
+                  PrefCheckbox(pref: 'test'),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pump();
+
+      expect(find.byType(Checkbox), findsOneWidget);
+      expect(service.get<bool>('test'), isNull);
+
+      await tester.tap(find.byType(Checkbox));
+      await tester.pump();
+
+      expect(service.get<bool>('test'), isNull);
     });
   });
 

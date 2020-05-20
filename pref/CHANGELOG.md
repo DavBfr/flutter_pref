@@ -3,6 +3,7 @@
 ## 1.3.0
 
 - Implement Stream on key change
+- Add PrefPage caching
 
 ## 1.2.0
 
