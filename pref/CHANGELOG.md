@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- Implement Stream on key change
+
 ## 1.2.0
 
 - Fix reversed for null Switch

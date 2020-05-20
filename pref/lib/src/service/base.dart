@@ -22,6 +22,36 @@ abstract class BasePrefService extends ChangeNotifier {
     _keyListeners[key]?.remove(f);
   }
 
+  Stream<T> stream<T>(String key) {
+    StreamController<T> controller;
+
+    void emit() {
+      try {
+        controller.add(get<T>(key));
+      } catch (e) {
+        controller.addError(e);
+      }
+    }
+
+    void listen() {
+      emit();
+      addKeyListener(key, emit);
+    }
+
+    void done() {
+      removeKeyListener(key, emit);
+    }
+
+    controller = StreamController<T>(
+      onListen: listen,
+      onResume: listen,
+      onPause: done,
+      onCancel: done,
+    );
+
+    return controller.stream;
+  }
+
   @override
   void dispose() {
     _keyListeners.clear();
