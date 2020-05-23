@@ -46,7 +46,10 @@ abstract class BasePrefService extends ChangeNotifier {
       onListen: listen,
       onResume: listen,
       onPause: done,
-      onCancel: done,
+      onCancel: () {
+        done();
+        controller.close();
+      },
     );
 
     return controller.stream;

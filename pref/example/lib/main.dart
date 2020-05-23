@@ -38,17 +38,52 @@ Future<void> main() async {
   runApp(MyApp(service));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   MyApp(this.service);
 
   final BasePrefService service;
 
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeMode _brightness;
+
+  StreamSubscription<String> _stream;
+
+  @override
+  void dispose() {
+    _stream.cancel();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _stream ??= widget.service.stream<String>('ui_theme').listen((event) {
+      setState(() {
+        switch (event) {
+          case 'system':
+            _brightness = ThemeMode.system;
+            break;
+          case 'light':
+            _brightness = ThemeMode.light;
+            break;
+          case 'dark':
+            _brightness = ThemeMode.dark;
+            break;
+        }
+      });
+    });
+
     return PrefService(
-      service: service,
+      service: widget.service,
       child: MaterialApp(
         title: 'Pref Demo',
+        themeMode: _brightness,
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
         home: MyHomePage(title: 'Pref Demo'),
       ),
     );
