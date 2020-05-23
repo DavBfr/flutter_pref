@@ -4,6 +4,7 @@
 
 - Implement Stream on key change
 - Add PrefPage caching
+- Remove text decoration border to follow the theme
 
 ## 1.2.0
 

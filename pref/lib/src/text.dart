@@ -93,7 +93,6 @@ class _PrefTextState extends State<PrefText> {
                   hintText: widget.hintText,
                   labelText: widget.label,
                   labelStyle: widget.labelStyle,
-                  border: const OutlineInputBorder(),
                 ),
             controller: controller,
             onChanged: (val) {
