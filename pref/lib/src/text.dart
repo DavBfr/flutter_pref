@@ -80,6 +80,15 @@ class _PrefTextState extends State<PrefText> {
     super.didChangeDependencies();
   }
 
+  void _onChange(String val) {
+    if (Form.of(context).validate()) {
+      if (widget.onChange != null) {
+        widget.onChange(val);
+      }
+      PrefService.of(context, listen: false).set(widget.pref, val);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -95,14 +104,7 @@ class _PrefTextState extends State<PrefText> {
                   labelStyle: widget.labelStyle,
                 ),
             controller: controller,
-            onChanged: (val) {
-              if (Form.of(context).validate()) {
-                if (widget.onChange != null) {
-                  widget.onChange(val);
-                }
-                PrefService.of(context).set(widget.pref, val);
-              }
-            },
+            onChanged: _onChange,
             autofocus: widget.autofocus,
             maxLines: widget.maxLines,
             style: widget.style,

@@ -64,7 +64,7 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
   }
 
   void _onChange(T val) {
-    PrefService.of(context).set(widget.pref, val);
+    PrefService.of(context, listen: false).set(widget.pref, val);
 
     if (widget.onChange != null) {
       widget.onChange(val);

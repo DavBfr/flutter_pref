@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.3.2
+## 1.4.0
 
 - Cache() copies the default values
+- Add listen parameter to PerfService.of()
 
 ## 1.3.1
 

@@ -22,6 +22,11 @@ class PrefService extends InheritedWidget {
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => false;
 
-  static BasePrefService of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<PrefService>()?.service;
+  static BasePrefService of(BuildContext context, {bool listen = true}) {
+    if (listen) {
+      return context.dependOnInheritedWidgetOfExactType<PrefService>()?.service;
+    }
+
+    return context.findAncestorWidgetOfExactType<PrefService>()?.service;
+  }
 }

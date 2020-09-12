@@ -69,7 +69,7 @@ class _PrefRadioState<T> extends State<PrefRadio<T>> {
   }
 
   void _onChange(T value) {
-    PrefService.of(context).set(widget.pref, value);
+    PrefService.of(context, listen: false).set(widget.pref, value);
 
     if (widget.onSelect != null) {
       widget.onSelect();

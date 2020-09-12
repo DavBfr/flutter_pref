@@ -62,7 +62,7 @@ class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
       widget.onChange(value);
     }
 
-    PrefService.of(context).set(widget.pref, value);
+    PrefService.of(context, listen: false).set(widget.pref, value);
     if (mounted) {
       setState(() {});
     }

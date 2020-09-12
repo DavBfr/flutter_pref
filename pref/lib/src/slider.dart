@@ -76,20 +76,22 @@ class _PrefSliderState<T extends num> extends State<PrefSlider> {
   }
 
   Future<void> _onChange(double value) async {
+    final service = PrefService.of(context, listen: false);
+
     if (T == double) {
-      PrefService.of(context).set<double>(widget.pref, value);
+      service.set<double>(widget.pref, value);
 
       if (widget.onChange != null) {
         widget.onChange(value);
       }
     } else if (T == int) {
-      PrefService.of(context).set<int>(widget.pref, value.round());
+      service.set<int>(widget.pref, value.round());
 
       if (widget.onChange != null) {
         widget.onChange(value.round());
       }
     } else if (T == num) {
-      PrefService.of(context).set<double>(widget.pref, value);
+      service.set<double>(widget.pref, value);
 
       if (widget.onChange != null) {
         widget.onChange(value);
