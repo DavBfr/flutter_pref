@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2
+
+- Cache() copies the default values
+
 ## 1.3.1
 
 - Add stream example
