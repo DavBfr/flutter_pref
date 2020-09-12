@@ -4,6 +4,7 @@
 
 - Cache() copies the default values
 - Add listen parameter to PerfService.of()
+- Fix cached Page and Dialog
 
 ## 1.3.1
 

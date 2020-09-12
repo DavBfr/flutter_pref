@@ -149,25 +149,28 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text('Notifications'),
             leading: Icon(Icons.message),
             trailing: Icon(Icons.keyboard_arrow_right),
-            page: PrefPage(children: [
-              PrefTitle(title: Text('New Posts')),
-              PrefSwitch(
-                title: Text('New Posts from Friends'),
-                pref: 'notification_newpost_friend',
-              ),
-              PrefTitle(title: Text('Private Messages')),
-              PrefSwitch(
-                title: Text('Private Messages from Friends'),
-                pref: 'notification_pm_friend',
-              ),
-              PrefSwitch(
-                title: Text('Private Messages from Strangers'),
-                pref: 'notification_pm_stranger',
-                onChange: (value) async {
-                  print('notification_pm_stranger changed to: $value');
-                },
-              ),
-            ]),
+            page: PrefPage(
+              cache: true,
+              children: [
+                PrefTitle(title: Text('New Posts')),
+                PrefSwitch(
+                  title: Text('New Posts from Friends'),
+                  pref: 'notification_newpost_friend',
+                ),
+                PrefTitle(title: Text('Private Messages')),
+                PrefSwitch(
+                  title: Text('Private Messages from Friends'),
+                  pref: 'notification_pm_friend',
+                ),
+                PrefSwitch(
+                  title: Text('Private Messages from Strangers'),
+                  pref: 'notification_pm_stranger',
+                  onChange: (value) async {
+                    print('notification_pm_stranger changed to: $value');
+                  },
+                ),
+              ],
+            ),
           ),
           PrefTitle(title: Text('User')),
           PrefText(

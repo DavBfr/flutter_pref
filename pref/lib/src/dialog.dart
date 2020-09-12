@@ -33,6 +33,28 @@ class PrefDialog extends StatefulWidget {
 }
 
 class PrefDialogState extends State<PrefDialog> {
+  Future<BasePrefService> _cache;
+
+  @override
+  void didChangeDependencies() {
+    if (widget.onlySaveOnSubmit) {
+      _cache ??= _createCache();
+    }
+    super.didChangeDependencies();
+  }
+
+  BasePrefService get _parent {
+    final parent = PrefService.of(context);
+
+    // Check if we already have a BasePrefService
+    if (parent == null) {
+      throw FlutterError(
+          'No PrefService widget found in the tree. Unable to load settings');
+    }
+
+    return parent;
+  }
+
   Widget _buildDialog(BuildContext context, BasePrefService parent) {
     final actions = <Widget>[];
 
@@ -72,16 +94,16 @@ class PrefDialogState extends State<PrefDialog> {
     );
   }
 
-  Future<BasePrefService> _createCache(BasePrefService parent) async {
+  Future<BasePrefService> _createCache() async {
     final service = PrefServiceCache();
-    await service.apply(parent);
+    await service.apply(_parent);
     return service;
   }
 
   Widget _buildService(BuildContext context, BasePrefService parent) {
     if (widget.onlySaveOnSubmit) {
       return FutureBuilder(
-        future: _createCache(parent),
+        future: _cache,
         builder: (BuildContext context, snapshot) {
           if (!snapshot.hasData) {
             return const SizedBox();
