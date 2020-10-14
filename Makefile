@@ -52,6 +52,6 @@ analyze: $(DART_SRC)
 	cd pref; dartanalyzer --fatal-infos --fatal-warnings --fatal-hints --fatal-lints -v .
 
 pana: .pana
-	cd pref; pub global run pana --no-warning --source path .
+	cd pref; flutter pub global run pana --no-warning --source path .
 
 .PHONY: format format-dart clean publish test fix analyze

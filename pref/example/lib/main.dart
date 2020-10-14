@@ -6,6 +6,7 @@ import 'package:pref/pref.dart';
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_constructors_in_immutables
 // ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: public_member_api_docs
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

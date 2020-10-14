@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 
 import 'service/pref_service.dart';
 
+/// A text input that get and set its value from a [PrefService] widget
 class PrefText extends StatefulWidget {
+  /// Creates a preference text.
   const PrefText({
     this.label,
     @required this.pref,
@@ -27,12 +29,16 @@ class PrefText extends StatefulWidget {
   })  : assert(pref != null),
         super(key: key);
 
+  /// Text that describes the input field.
   final String label;
 
+  /// The preference key used to store the value
   final String pref;
 
+  /// The padding for the input decoration's container.
   final EdgeInsets padding;
 
+  /// {@macro flutter.widgets.editableText.autofocus}
   final bool autofocus;
 
   final int maxLines;
