@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0
+
+- Add PrefChoice Widget
+
 ## 1.4.0
 
 - Cache() copies the default values

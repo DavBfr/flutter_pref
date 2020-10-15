@@ -13,13 +13,17 @@ import 'service/pref_service.dart';
 
 class PrefDialog extends StatefulWidget {
   const PrefDialog({
+    Key key,
     @required this.children,
     this.title,
     this.submit,
     bool onlySaveOnSubmit,
+    this.dismissOnChange = false,
     this.cancel,
   })  : assert(children != null),
-        onlySaveOnSubmit = onlySaveOnSubmit ?? submit != null;
+        onlySaveOnSubmit = onlySaveOnSubmit ?? submit != null,
+        assert(dismissOnChange != null),
+        super(key: key);
 
   final Widget title;
   final List<Widget> children;
@@ -27,6 +31,7 @@ class PrefDialog extends StatefulWidget {
   final Widget cancel;
 
   final bool onlySaveOnSubmit;
+  final bool dismissOnChange;
 
   @override
   PrefDialogState createState() => PrefDialogState();
@@ -81,6 +86,20 @@ class PrefDialogState extends State<PrefDialog> {
           },
         ),
       );
+    }
+
+    if (widget.dismissOnChange) {
+      Function f;
+
+      f = () {
+        PrefService.of(context).removeListener(f);
+        if (widget.onlySaveOnSubmit) {
+          parent.apply(PrefService.of(context));
+        }
+        Navigator.of(context).pop();
+      };
+
+      PrefService.of(context).addListener(f);
     }
 
     return AlertDialog(

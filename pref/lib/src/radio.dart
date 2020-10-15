@@ -19,8 +19,10 @@ class PrefRadio<T> extends StatefulWidget {
     this.onSelect,
     this.disabled = false,
     this.leading,
+    this.radioFirst = false,
   })  : assert(value != null),
         assert(pref != null),
+        assert(radioFirst != null),
         super(key: key);
 
   final Widget title;
@@ -38,6 +40,8 @@ class PrefRadio<T> extends StatefulWidget {
   final bool ignoreTileTap;
 
   final bool disabled;
+
+  final bool radioFirst;
 
   final Widget leading;
 
@@ -83,6 +87,23 @@ class _PrefRadioState<T> extends State<PrefRadio<T>> {
       value = PrefService.of(context).get(widget.pref);
     } catch (e) {
       print('Unable to load the value: $e');
+    }
+
+    if (widget.radioFirst) {
+      return ListTile(
+        title: widget.title,
+        trailing: widget.leading,
+        subtitle: widget.subtitle,
+        leading: Radio<T>(
+          value: widget.value,
+          groupValue: value,
+          onChanged:
+              widget.disabled ? null : (T val) => _onChange(widget.value),
+        ),
+        onTap: (widget.ignoreTileTap || widget.disabled)
+            ? null
+            : () => _onChange(widget.value),
+      );
     }
 
     return ListTile(

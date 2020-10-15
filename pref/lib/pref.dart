@@ -6,6 +6,7 @@
 export 'src/button.dart';
 export 'src/button_group.dart';
 export 'src/checkbox.dart';
+export 'src/choice.dart';
 export 'src/custom/button_group.dart' show ButtonGroupItem;
 export 'src/dialog.dart';
 export 'src/dialog_button.dart';

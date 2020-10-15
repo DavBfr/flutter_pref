@@ -27,7 +27,7 @@ Future<void> main() async {
     'content_show_text': false,
     'content_show_image': true,
     'content_show_audio': null,
-    'android_listpref_selected': null,
+    'android_listpref_selected': 'select_3',
     'android_listpref_auto_selected': null,
     'android_multilistpref_a': false,
     'android_multilistpref_b': true,
@@ -122,6 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
           PrefDropdown<int>(
             title: Text('Number of items'),
             pref: 'items_count',
+            fullWidth: false,
             items: [
               DropdownMenuItem(value: 1, child: Text('One')),
               DropdownMenuItem(value: 2, child: Text('Two')),
@@ -257,30 +258,15 @@ class _MyHomePageState extends State<MyHomePage> {
             color: Colors.red,
           ),
           PrefTitle(title: Text('More Dialogs')),
-          PrefDialogButton(
+          PrefChoice<String>(
             title: Text('Android\'s "ListPreference"'),
-            dialog: PrefDialog(
-              children: [
-                PrefRadio(
-                  title: Text('Select me!'),
-                  value: 'select_1',
-                  pref: 'android_listpref_selected',
-                ),
-                PrefRadio(
-                  title: Text('Hello World!'),
-                  value: 'select_2',
-                  pref: 'android_listpref_selected',
-                ),
-                PrefRadio(
-                  title: Text('Test'),
-                  value: 'select_3',
-                  pref: 'android_listpref_selected',
-                ),
-              ],
-              title: Text('Select an option'),
-              cancel: Text('Cancel'),
-              submit: Text('Save'),
-            ),
+            pref: 'android_listpref_selected',
+            items: [
+              DropdownMenuItem(value: 'select_1', child: Text('Select me!')),
+              DropdownMenuItem(value: 'select_2', child: Text('Hello World!')),
+              DropdownMenuItem(value: 'select_3', child: Text('Test')),
+            ],
+            cancel: Text('Cancel'),
           ),
           PrefDialogButton(
             title: Text('Android\'s "ListPreference" with autosave'),
@@ -303,7 +289,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
               title: Text('Select an option'),
-              cancel: Text('Close'),
+              submit: Text('Close'),
             ),
           ),
           PrefDialogButton(
