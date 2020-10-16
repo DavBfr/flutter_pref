@@ -15,6 +15,7 @@ format-dart: $(DART_SRC)
 pref/example/.metadata:
 	cd pref/example; flutter create -t app --no-overwrite --org net.nfet --project-name example .
 	rm -rf pref/example/test
+	cd pref; flutter pub get
 
 clean:
 	git clean -fdx -e .vscode
@@ -48,10 +49,10 @@ publish: format analyze clean
 fix: .dartfix $(DART_SRC)
 	cd pref; pub global run dartfix --overwrite .
 
-analyze: $(DART_SRC)
+analyze: pref/example/.metadata $(DART_SRC)
 	cd pref; dartanalyzer --fatal-infos --fatal-warnings --fatal-hints --fatal-lints -v .
 
-pana: .pana
+pana: pref/example/.metadata .pana
 	cd pref; flutter pub global run pana --no-warning --source path .
 
 .PHONY: format format-dart clean publish test fix analyze
