@@ -3,6 +3,7 @@
 ## 1.6.0
 
 - Fix cached dialog
+- Fix PrefText onChange not called
 
 ## 1.5.0
 

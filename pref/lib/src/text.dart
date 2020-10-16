@@ -86,7 +86,7 @@ class _PrefTextState extends State<PrefText> {
     super.didChangeDependencies();
   }
 
-  void _onChange(String val) {
+  void _onChange(BuildContext context, String val) {
     if (Form.of(context).validate()) {
       if (widget.onChange != null) {
         widget.onChange(val);
@@ -110,7 +110,7 @@ class _PrefTextState extends State<PrefText> {
                   labelStyle: widget.labelStyle,
                 ),
             controller: controller,
-            onChanged: _onChange,
+            onChanged: (val) => _onChange(context, val),
             autofocus: widget.autofocus,
             maxLines: widget.maxLines,
             style: widget.style,
