@@ -20,7 +20,8 @@ class PrefService extends InheritedWidget {
   final BasePrefService service;
 
   @override
-  bool updateShouldNotify(InheritedWidget oldWidget) => false;
+  bool updateShouldNotify(PrefService oldWidget) =>
+      service != oldWidget.service;
 
   static BasePrefService of(BuildContext context, {bool listen = true}) {
     if (listen) {

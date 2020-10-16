@@ -4,6 +4,7 @@
 
 - Fix cached dialog
 - Fix PrefText onChange not called
+- Use a common class for cached prefs
 
 ## 1.5.0
 
