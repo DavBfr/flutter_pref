@@ -6,6 +6,7 @@
 - Fix PrefText onChange not called
 - Use a common class for cached prefs
 - Print the PerfService type in logs
+- Improve PrefChoice
 
 ## 1.5.0
 

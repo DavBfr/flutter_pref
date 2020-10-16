@@ -12,7 +12,7 @@ import 'radio.dart';
 import 'service/pref_service.dart';
 
 class PrefChoice<T> extends StatefulWidget {
-  PrefChoice({
+  const PrefChoice({
     Key key,
     this.title,
     @required this.pref,
@@ -51,21 +51,25 @@ class PrefChoice<T> extends StatefulWidget {
 }
 
 class _PrefChoiceState<T> extends State<PrefChoice<T>> {
-  final _key = GlobalKey<PrefDialogState>();
-
   @override
   void didChangeDependencies() {
-    PrefService.of(context).addKeyListener(widget.pref, _onChange);
+    PrefService.of(context).addKeyListener(widget.pref, _onNotify);
     super.didChangeDependencies();
   }
 
   @override
-  void dispose() {
-    PrefService.of(context).removeKeyListener(widget.pref, _onChange);
-    super.dispose();
+  void deactivate() {
+    PrefService.of(context).removeKeyListener(widget.pref, _onNotify);
+    super.deactivate();
   }
 
-  void _onChange() {
+  @override
+  void reassemble() {
+    PrefService.of(context).addKeyListener(widget.pref, _onNotify);
+    super.reassemble();
+  }
+
+  void _onNotify() {
     setState(() {});
   }
 
@@ -92,9 +96,8 @@ class _PrefChoiceState<T> extends State<PrefChoice<T>> {
 
     return PrefDialogButton(
       title: widget.title,
-      subtitle: selected,
+      subtitle: widget.subtitle ?? selected,
       dialog: PrefDialog(
-        key: _key,
         children: widget.items
             .map<PrefRadio<T>>(
               (e) => PrefRadio<T>(
