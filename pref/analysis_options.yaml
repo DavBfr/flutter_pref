@@ -6,7 +6,7 @@ analyzer:
   errors:
     missing_required_param: warning
     missing_return: warning
-    public_member_api_docs: warning
+    public_member_api_docs: ignore
     todo: ignore
 
 linter:
