@@ -112,7 +112,7 @@ abstract class BasePrefService extends ChangeNotifier {
 
   void _changed<T>(String key, T val) {
     assert(() {
-      print('PrefService set $key to "$val"');
+      print('$runtimeType set $key to "$val"');
       return true;
     }());
 

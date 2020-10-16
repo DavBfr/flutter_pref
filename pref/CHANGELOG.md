@@ -5,6 +5,7 @@
 - Fix cached dialog
 - Fix PrefText onChange not called
 - Use a common class for cached prefs
+- Print the PerfService type in logs
 
 ## 1.5.0
 
