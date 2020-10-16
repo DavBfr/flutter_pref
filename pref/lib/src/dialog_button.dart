@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 
 import 'dialog.dart';
+import 'service/pref_service.dart';
 
 class PrefDialogButton extends StatelessWidget {
   const PrefDialogButton({
@@ -37,9 +38,15 @@ class PrefDialogButton extends StatelessWidget {
       onPop();
     }
 
+    // Propagate the current inherited PrefService
+    final service = PrefService.of(context);
+
     await showDialog<bool>(
       context: context,
-      builder: (context) => dialog,
+      builder: (context) => PrefService(
+        service: service,
+        child: dialog,
+      ),
       barrierDismissible: barrierDismissible,
     );
   }
