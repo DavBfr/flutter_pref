@@ -49,13 +49,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ThemeMode _brightness;
+  ThemeMode? _brightness;
 
-  StreamSubscription<String> _stream;
+  StreamSubscription<String>? _stream;
 
   @override
   void dispose() {
-    _stream.cancel();
+    _stream?.cancel();
 
     super.dispose();
   }
@@ -92,7 +92,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -182,8 +182,8 @@ class _MyHomePageState extends State<MyHomePage> {
           PrefText(
             label: 'E-Mail',
             pref: 'user_email',
-            validator: (String str) {
-              if (!str.endsWith('@gmail.com')) {
+            validator: (str) {
+              if (str == null || !str.endsWith('@gmail.com')) {
                 return 'Invalid email';
               }
               return null;

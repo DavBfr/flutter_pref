@@ -56,7 +56,7 @@ class PrefText extends StatefulWidget {
 
   final ValueChanged<String>? onChange;
 
-  final String Function(String?)? validator;
+  final FormFieldValidator<String>? validator;
 
   final bool disabled;
 
