@@ -34,7 +34,7 @@ void main() {
 
     testWidgets('basic', (WidgetTester tester) async {
       final service = PrefServiceCache();
-      int value;
+      int? value;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -76,7 +76,7 @@ void main() {
       final service = PrefServiceCache(defaults: <String, dynamic>{
         'test': '2',
       });
-      int value;
+      int? value;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -127,7 +127,7 @@ void main() {
                 ButtonGroupItem(value: 2, child: Text('two')),
                 ButtonGroupItem(value: 3, child: Text('three')),
               ],
-              onChanged: (_) => null,
+              onChanged: (_) {},
             ),
           ),
         ),

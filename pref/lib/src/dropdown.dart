@@ -10,27 +10,24 @@ import 'service/pref_service.dart';
 class PrefDropdown<T> extends StatefulWidget {
   const PrefDropdown({
     this.title,
-    @required this.pref,
-    Key key,
+    required this.pref,
+    Key? key,
     this.subtitle,
-    @required this.items,
+    required this.items,
     this.onChange,
     this.disabled = false,
     this.fullWidth = true,
-  })  : assert(pref != null),
-        assert(items != null),
-        assert(fullWidth != null),
-        super(key: key);
+  }) : super(key: key);
 
-  final Widget title;
+  final Widget? title;
 
-  final Widget subtitle;
+  final Widget? subtitle;
 
   final String pref;
 
   final List<DropdownMenuItem<T>> items;
 
-  final ValueChanged<T> onChange;
+  final ValueChanged<T>? onChange;
 
   final bool disabled;
 
@@ -40,7 +37,7 @@ class PrefDropdown<T> extends StatefulWidget {
   _PrefDropdownState<T> createState() => _PrefDropdownState<T>();
 }
 
-class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
+class _PrefDropdownState<T> extends State<PrefDropdown<T?>> {
   @override
   void didChangeDependencies() {
     PrefService.of(context).addKeyListener(widget.pref, _onNotify);
@@ -63,17 +60,17 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
     setState(() {});
   }
 
-  void _onChange(T val) {
+  void _onChange(T? val) {
     PrefService.of(context, listen: false).set(widget.pref, val);
 
     if (widget.onChange != null) {
-      widget.onChange(val);
+      widget.onChange!(val!);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    T value;
+    T? value;
     try {
       value = PrefService.of(context).get(widget.pref);
     } catch (e) {
@@ -98,9 +95,9 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
             : DefaultTextStyle.merge(
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1
+                    .subtitle1!
                     .copyWith(fontSize: 12),
-                child: widget.title,
+                child: widget.title!,
               ),
         isThreeLine: widget.subtitle != null,
         subtitle: Column(
@@ -109,11 +106,12 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
             DropdownButton<T>(
               hint: widget.title,
               isExpanded: true,
-              items: widget.items,
+              // ignore: avoid_as
+              items: widget.items as List<DropdownMenuItem<T>>,
               onChanged: widget.disabled ? null : _onChange,
               value: value,
             ),
-            if (widget.subtitle != null) widget.subtitle
+            if (widget.subtitle != null) widget.subtitle!
           ],
         ),
       );
@@ -123,7 +121,8 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
       title: widget.title,
       subtitle: widget.subtitle,
       trailing: DropdownButton<T>(
-        items: widget.items,
+        // ignore: avoid_as
+        items: widget.items as List<DropdownMenuItem<T>>,
         onChanged: widget.disabled ? null : _onChange,
         value: value,
       ),

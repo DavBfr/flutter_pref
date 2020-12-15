@@ -13,18 +13,17 @@ import 'service/pref_service.dart';
 
 abstract class PrefCache extends StatefulWidget {
   const PrefCache({
-    Key key,
-    @required this.cache,
-  })  : assert(cache != null),
-        super(key: key);
+    Key? key,
+    required this.cache,
+  }) : super(key: key);
 
   final bool cache;
 }
 
 abstract class PrefCacheState<T extends PrefCache> extends State<T> {
-  BasePrefService _cache;
-  BasePrefService _parent;
-  BasePrefService get service => widget.cache ? _cache : _parent;
+  BasePrefService? _cache;
+  BasePrefService? _parent;
+  BasePrefService? get service => widget.cache ? _cache : _parent;
 
   @override
   void didChangeDependencies() {
@@ -44,7 +43,7 @@ abstract class PrefCacheState<T extends PrefCache> extends State<T> {
 
   Future<void> _createCache() async {
     final service = PrefServiceCache();
-    await service.apply(_parent);
+    await service.apply(_parent!);
     setState(() {
       _cache = service;
     });
@@ -61,7 +60,7 @@ abstract class PrefCacheState<T extends PrefCache> extends State<T> {
     }
 
     return PrefService(
-      service: _cache,
+      service: _cache!,
       child: Builder(
         builder: (BuildContext context) => buildChild(context),
       ),
@@ -73,7 +72,7 @@ abstract class PrefCacheState<T extends PrefCache> extends State<T> {
       return;
     }
 
-    await _parent.apply(_cache);
+    await _parent!.apply(_cache!);
   }
 
   Widget buildChild(BuildContext context);

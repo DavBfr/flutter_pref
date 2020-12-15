@@ -11,11 +11,10 @@ import 'base.dart';
 
 class PrefService extends InheritedWidget {
   const PrefService({
-    Key key,
-    @required Widget child,
-    @required this.service,
-  })  : assert(service != null),
-        super(key: key, child: child);
+    Key? key,
+    required Widget child,
+    required this.service,
+  }) : super(key: key, child: child);
 
   final BasePrefService service;
 
@@ -25,9 +24,9 @@ class PrefService extends InheritedWidget {
 
   static BasePrefService of(BuildContext context, {bool listen = true}) {
     if (listen) {
-      return context.dependOnInheritedWidgetOfExactType<PrefService>()?.service;
+      return context.dependOnInheritedWidgetOfExactType<PrefService>()!.service;
     }
 
-    return context.findAncestorWidgetOfExactType<PrefService>()?.service;
+    return context.findAncestorWidgetOfExactType<PrefService>()!.service;
   }
 }

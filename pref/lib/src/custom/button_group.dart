@@ -7,19 +7,17 @@ import 'package:flutter/material.dart';
 
 class ButtonGroup<T> extends StatelessWidget {
   const ButtonGroup({
-    Key key,
+    Key? key,
     this.value,
-    @required this.onChanged,
+    required this.onChanged,
     this.disabled = false,
     this.items,
-  })  : assert(onChanged != null),
-        assert(disabled != null),
-        super(key: key);
+  }) : super(key: key);
 
-  final ValueChanged<T> onChanged;
+  final ValueChanged<T>? onChanged;
   final bool disabled;
-  final T value;
-  final List<ButtonGroupItem<T>> items;
+  final T? value;
+  final List<ButtonGroupItem<T>>? items;
 
   static const _startShape = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
@@ -37,15 +35,14 @@ class ButtonGroup<T> extends StatelessWidget {
     ),
   );
 
-  Color _getTextColor(
+  Color? _getTextColor(
     ThemeData theme,
     ButtonThemeData buttonTheme,
     Color fillColor,
   ) {
     final themeIsDark = theme.brightness == Brightness.dark;
-    final fillIsDark = fillColor != null
-        ? ThemeData.estimateBrightnessForColor(fillColor) == Brightness.dark
-        : themeIsDark;
+    final fillIsDark =
+        ThemeData.estimateBrightnessForColor(fillColor) == Brightness.dark;
 
     switch (buttonTheme.textTheme) {
       case ButtonTextTheme.normal:
@@ -59,12 +56,11 @@ class ButtonGroup<T> extends StatelessWidget {
             ? (themeIsDark ? Colors.white30 : Colors.black38)
             : (fillIsDark ? Colors.white : Colors.black);
     }
-    return null;
   }
 
   Widget _button(
     BuildContext context,
-    VoidCallback onPressed,
+    VoidCallback? onPressed,
     bool selected,
     Widget child,
     ShapeBorder shape,
@@ -77,7 +73,7 @@ class ButtonGroup<T> extends StatelessWidget {
     return RawMaterialButton(
       onPressed: onPressed,
       fillColor: fillColor,
-      textStyle: theme.textTheme.button.copyWith(color: textColor),
+      textStyle: theme.textTheme.button!.copyWith(color: textColor),
       highlightColor: theme.highlightColor,
       splashColor: theme.splashColor,
       elevation: 0,
@@ -97,16 +93,16 @@ class ButtonGroup<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttons = <Widget>[];
 
-    for (final item in items) {
+    for (final item in items!) {
       buttons.add(
         _button(
           context,
-          disabled ? null : () => onChanged(item.value),
+          disabled || onChanged == null ? null : () => onChanged!(item.value),
           value == item.value,
           item.child,
-          item == items.first
+          item == items!.first
               ? _startShape
-              : (item == items.last ? _endShape : _middleShape),
+              : (item == items!.last ? _endShape : _middleShape),
         ),
       );
     }
@@ -119,7 +115,7 @@ class ButtonGroup<T> extends StatelessWidget {
 }
 
 class ButtonGroupItem<T> {
-  const ButtonGroupItem({this.value, this.child});
+  const ButtonGroupItem({required this.value, required this.child});
 
   final T value;
   final Widget child;

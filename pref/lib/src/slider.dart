@@ -11,9 +11,9 @@ import 'service/pref_service.dart';
 
 class PrefSlider<T extends num> extends StatefulWidget {
   const PrefSlider({
-    Key key,
+    Key? key,
     this.title,
-    @required this.pref,
+    required this.pref,
     this.subtitle,
     this.ignoreTileTap = false,
     this.onChange,
@@ -23,12 +23,11 @@ class PrefSlider<T extends num> extends StatefulWidget {
     this.divisions,
     this.label,
     this.trailing,
-  })  : assert(pref != null),
-        super(key: key);
+  }) : super(key: key);
 
-  final Widget title;
+  final Widget? title;
 
-  final Widget subtitle;
+  final Widget? subtitle;
 
   final String pref;
 
@@ -36,17 +35,17 @@ class PrefSlider<T extends num> extends StatefulWidget {
 
   final bool disabled;
 
-  final T min;
+  final T? min;
 
-  final T max;
+  final T? max;
 
-  final int divisions;
+  final int? divisions;
 
-  final ValueChanged<T> onChange;
+  final ValueChanged<T>? onChange;
 
-  final String Function(T value) label;
+  final String Function(T value)? label;
 
-  final Widget Function(T value) trailing;
+  final Widget Function(T value)? trailing;
 
   @override
   _PrefSliderState createState() => _PrefSliderState<T>();
@@ -82,26 +81,26 @@ class _PrefSliderState<T extends num> extends State<PrefSlider> {
       service.set<double>(widget.pref, value);
 
       if (widget.onChange != null) {
-        widget.onChange(value);
+        widget.onChange!(value);
       }
     } else if (T == int) {
       service.set<int>(widget.pref, value.round());
 
       if (widget.onChange != null) {
-        widget.onChange(value.round());
+        widget.onChange!(value.round());
       }
     } else if (T == num) {
       service.set<double>(widget.pref, value);
 
       if (widget.onChange != null) {
-        widget.onChange(value);
+        widget.onChange!(value);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    T value;
+    T? value;
     try {
       value = PrefService.of(context).get<T>(widget.pref);
     } catch (e) {
@@ -110,9 +109,13 @@ class _PrefSliderState<T extends num> extends State<PrefSlider> {
 
     final min = (widget.min ?? 0.0).toDouble();
     final max = (widget.max ?? 1.0).toDouble();
-    final doubleValue = (value ?? min).toDouble();
-    final label = widget.label != null ? widget.label(value) : null;
-    final trailing = widget.trailing != null ? widget.trailing(value) : null;
+    // ignore: unnecessary_cast, avoid_as
+    final doubleValue = (value as num? ?? min).toDouble();
+    final label =
+        widget.label != null && value != null ? widget.label!(value) : null;
+    final trailing = widget.trailing != null && value != null
+        ? widget.trailing!(value)
+        : null;
 
     return ListTile(
       leading: widget.title,

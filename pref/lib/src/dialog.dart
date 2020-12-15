@@ -10,21 +10,19 @@ import 'service_cache.dart';
 
 class PrefDialog extends PrefCache {
   const PrefDialog({
-    Key key,
-    @required this.children,
+    Key? key,
+    required this.children,
     this.title,
     this.submit,
-    bool onlySaveOnSubmit,
+    bool? onlySaveOnSubmit,
     this.dismissOnChange = false,
     this.cancel,
-  })  : assert(children != null),
-        assert(dismissOnChange != null),
-        super(key: key, cache: onlySaveOnSubmit ?? submit != null);
+  }) : super(key: key, cache: onlySaveOnSubmit ?? submit != null);
 
-  final Widget title;
+  final Widget? title;
   final List<Widget> children;
-  final Widget submit;
-  final Widget cancel;
+  final Widget? submit;
+  final Widget? cancel;
 
   final bool dismissOnChange;
 
@@ -40,7 +38,7 @@ class PrefDialogState extends PrefCacheState<PrefDialog> {
     if (widget.cancel != null && widget.cache) {
       actions.add(
         FlatButton(
-          child: widget.cancel,
+          child: widget.cancel!,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -51,7 +49,7 @@ class PrefDialogState extends PrefCacheState<PrefDialog> {
     if (widget.submit != null) {
       actions.add(
         FlatButton(
-          child: widget.submit,
+          child: widget.submit!,
           onPressed: () async {
             await apply();
             Navigator.of(context).pop();
@@ -61,15 +59,15 @@ class PrefDialogState extends PrefCacheState<PrefDialog> {
     }
 
     if (widget.dismissOnChange) {
-      Function f;
+      late Function f;
 
       f = () async {
-        PrefService.of(context).removeListener(f);
+        PrefService.of(context).removeListener(f as void Function());
         await apply();
         Navigator.of(context).pop();
       };
 
-      PrefService.of(context).addListener(f);
+      PrefService.of(context).addListener(f as void Function());
     }
 
     return AlertDialog(

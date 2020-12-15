@@ -10,41 +10,41 @@ import 'package:flutter/material.dart';
 class PrefTitle extends StatelessWidget {
   /// Creates a preference title.
   const PrefTitle({
-    @required this.title,
+    required this.title,
     this.decoration,
     this.leading,
     this.subtitle,
     this.onTap,
     this.margin,
     this.padding,
-  }) : assert(title != null);
+  });
 
   /// The primary content of the Title.
   final Widget title;
 
   /// The decoration applied.
-  final Decoration decoration;
+  final Decoration? decoration;
 
   /// A widget to display before the title.
-  final Widget leading;
+  final Widget? leading;
 
   /// Additional content displayed below the title.
-  final Widget subtitle;
+  final Widget? subtitle;
 
   /// Called when the user taps this title.
-  final Function onTap;
+  final Function? onTap;
 
   /// Empty space to inscribe inside the [decoration]. The title, if any, is
   /// placed inside this padding.
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
 
   /// Empty space to surround the [decoration] and the Title.
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final style = theme.textTheme.headline5.apply(color: theme.accentColor);
+    final style = theme.textTheme.headline5!.apply(color: theme.accentColor);
 
     return Container(
       margin: margin,
@@ -52,7 +52,7 @@ class PrefTitle extends StatelessWidget {
       decoration: decoration,
       child: ListTile(
         leading: leading,
-        onTap: onTap,
+        onTap: onTap as void Function()?,
         title: DefaultTextStyle.merge(
           overflow: TextOverflow.ellipsis,
           style: style,

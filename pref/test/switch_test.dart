@@ -75,7 +75,7 @@ void main() {
     });
 
     testWidgets('onChange', (WidgetTester tester) async {
-      bool value;
+      bool? value;
       final service = PrefServiceCache(defaults: <String, dynamic>{
         'test': false,
       });

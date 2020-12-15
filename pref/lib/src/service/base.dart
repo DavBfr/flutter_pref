@@ -15,15 +15,15 @@ abstract class BasePrefService extends ChangeNotifier {
     if (_keyListeners[key] == null) {
       _keyListeners[key] = <VoidCallback>{};
     }
-    _keyListeners[key].add(f);
+    _keyListeners[key]!.add(f);
   }
 
   void removeKeyListener(String key, VoidCallback f) {
     _keyListeners[key]?.remove(f);
   }
 
-  Stream<T> stream<T>(String key) {
-    StreamController<T> controller;
+  Stream<T?> stream<T>(String key) {
+    late StreamController<T?> controller;
 
     void emit() {
       try {
@@ -42,7 +42,7 @@ abstract class BasePrefService extends ChangeNotifier {
       removeKeyListener(key, emit);
     }
 
-    controller = StreamController<T>(
+    controller = StreamController<T?>(
       onListen: listen,
       onResume: listen,
       onPause: done,
@@ -117,11 +117,11 @@ abstract class BasePrefService extends ChangeNotifier {
     }());
 
     if (_keyListeners[key] != null) {
-      final localListeners = List<VoidCallback>.from(_keyListeners[key]);
+      final localListeners = List<VoidCallback>.from(_keyListeners[key]!);
 
       for (final listener in localListeners) {
         try {
-          if (_keyListeners[key].contains(listener)) {
+          if (_keyListeners[key]!.contains(listener)) {
             listener();
           }
         } catch (exception, stack) {
@@ -144,7 +144,7 @@ abstract class BasePrefService extends ChangeNotifier {
   @override
   String toString() => toMap().toString();
 
-  T get<T>(String key);
+  T? get<T>(String key);
 
   Set<String> getKeys();
 
@@ -156,6 +156,9 @@ abstract class BasePrefService extends ChangeNotifier {
 
   @mustCallSuper
   void clear() {
-    _changed(null, null);
+    assert(() {
+      print('$runtimeType clear');
+      return true;
+    }());
   }
 }

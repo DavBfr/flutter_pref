@@ -13,31 +13,29 @@ import 'service/pref_service.dart';
 class PrefSwitch extends StatefulWidget {
   const PrefSwitch({
     this.title,
-    @required this.pref,
-    Key key,
+    required this.pref,
+    Key? key,
     this.subtitle,
     this.ignoreTileTap = false,
     this.onChange,
     this.disabled = false,
     this.reversed = false,
     this.switchActiveColor,
-  })  : assert(pref != null),
-        assert(reversed != null),
-        super(key: key);
+  }) : super(key: key);
 
-  final Widget title;
+  final Widget? title;
 
-  final Widget subtitle;
+  final Widget? subtitle;
 
   final String pref;
 
   final bool ignoreTileTap;
 
-  final ValueChanged<bool> onChange;
+  final ValueChanged<bool>? onChange;
 
   final bool disabled;
 
-  final Color switchActiveColor;
+  final Color? switchActiveColor;
 
   final bool reversed;
 
@@ -73,13 +71,13 @@ class _PrefSwitchState extends State<PrefSwitch> {
         .set(widget.pref, widget.reversed ? !value : value);
 
     if (widget.onChange != null) {
-      widget.onChange(value);
+      widget.onChange!(value);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    bool value;
+    bool? value;
 
     try {
       value = PrefService.of(context).get(widget.pref);

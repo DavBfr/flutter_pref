@@ -9,13 +9,11 @@ import 'service/pref_service.dart';
 
 class PrefHider extends StatefulWidget {
   const PrefHider({
-    @required this.children,
-    @required this.pref,
+    required this.children,
+    required this.pref,
     this.reversed = false,
     this.nullValue = false,
-  })  : assert(children != null),
-        assert(pref != null),
-        assert(reversed != null);
+  });
 
   final List<Widget> children;
 
@@ -54,7 +52,7 @@ class _PrefHiderState extends State<PrefHider> {
 
   @override
   Widget build(BuildContext context) {
-    bool value;
+    bool? value;
 
     try {
       value = PrefService.of(context).get(widget.pref);

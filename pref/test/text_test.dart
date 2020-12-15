@@ -36,7 +36,7 @@ void main() {
 
     testWidgets('onChange', (WidgetTester tester) async {
       final service = PrefServiceCache();
-      String value;
+      String? value;
 
       await tester.pumpWidget(
         MaterialApp(

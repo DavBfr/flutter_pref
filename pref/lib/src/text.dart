@@ -12,8 +12,8 @@ class PrefText extends StatefulWidget {
   /// Creates a preference text.
   const PrefText({
     this.label,
-    @required this.pref,
-    Key key,
+    required this.pref,
+    Key? key,
     this.onChange,
     this.validator,
     this.padding,
@@ -26,17 +26,16 @@ class PrefText extends StatefulWidget {
     this.labelStyle,
     this.decoration,
     this.disabled = false,
-  })  : assert(pref != null),
-        super(key: key);
+  }) : super(key: key);
 
   /// Text that describes the input field.
-  final String label;
+  final String? label;
 
   /// The preference key used to store the value
   final String pref;
 
   /// The padding for the input decoration's container.
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
 
   /// {@macro flutter.widgets.editableText.autofocus}
   final bool autofocus;
@@ -47,17 +46,17 @@ class PrefText extends StatefulWidget {
 
   final String hintText;
 
-  final TextStyle style;
+  final TextStyle? style;
 
-  final TextInputType keyboardType;
+  final TextInputType? keyboardType;
 
-  final TextStyle labelStyle;
+  final TextStyle? labelStyle;
 
-  final InputDecoration decoration;
+  final InputDecoration? decoration;
 
-  final ValueChanged<String> onChange;
+  final ValueChanged<String>? onChange;
 
-  final String Function(String) validator;
+  final String Function(String?)? validator;
 
   final bool disabled;
 
@@ -87,9 +86,9 @@ class _PrefTextState extends State<PrefText> {
   }
 
   void _onChange(BuildContext context, String val) {
-    if (Form.of(context).validate()) {
+    if (Form.of(context)!.validate()) {
       if (widget.onChange != null) {
-        widget.onChange(val);
+        widget.onChange!(val);
       }
       PrefService.of(context, listen: false).set(widget.pref, val);
     }

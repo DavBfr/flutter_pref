@@ -35,7 +35,7 @@ void main() {
     });
 
     testWidgets('onChange', (WidgetTester tester) async {
-      int value;
+      int? value;
       final service = PrefServiceCache();
 
       await tester.pumpWidget(
@@ -45,7 +45,7 @@ void main() {
               service: service,
               child: PrefSlider<int>(
                 pref: 'test',
-                onChange: (num v) => value = v,
+                onChange: (num v) => value = v.toInt(),
               ),
             ),
           ),

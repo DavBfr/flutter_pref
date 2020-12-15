@@ -75,7 +75,7 @@ void main() {
         'test': 2,
       });
 
-      int value;
+      int? value;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -86,7 +86,7 @@ void main() {
                 fullWidth: true,
                 title: const Text('Hello'),
                 pref: 'test',
-                onChange: (v) => value = v,
+                onChange: (int? v) => value = v,
                 items: const [
                   DropdownMenuItem(value: 1, child: Text('first')),
                   DropdownMenuItem(value: 2, child: Text('second')),

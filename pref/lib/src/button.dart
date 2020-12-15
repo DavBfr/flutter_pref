@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 
 class PrefButton extends StatelessWidget {
   const PrefButton({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.color,
     this.textColor,
     this.decoration,
@@ -16,24 +16,23 @@ class PrefButton extends StatelessWidget {
     this.title,
     this.subtitle,
     this.onTap,
-  })  : assert(child != null),
-        super(key: key);
+  }) : super(key: key);
 
   final Widget child;
 
-  final Color color;
+  final Color? color;
 
-  final Color textColor;
+  final Color? textColor;
 
-  final Decoration decoration;
+  final Decoration? decoration;
 
-  final Widget leading;
+  final Widget? leading;
 
-  final Widget title;
+  final Widget? title;
 
-  final Widget subtitle;
+  final Widget? subtitle;
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

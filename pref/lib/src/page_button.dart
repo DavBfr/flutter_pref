@@ -10,19 +10,19 @@ import 'page.dart';
 class PrefPageButton extends StatelessWidget {
   const PrefPageButton({
     this.title,
-    @required this.page,
+    required this.page,
     this.subtitle,
     this.pageTitle,
     this.leading,
     this.trailing,
   });
 
-  final Widget title;
-  final Widget pageTitle;
-  final Widget subtitle;
+  final Widget? title;
+  final Widget? pageTitle;
+  final Widget? subtitle;
   final PrefPage page;
-  final Widget leading;
-  final Widget trailing;
+  final Widget? leading;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {

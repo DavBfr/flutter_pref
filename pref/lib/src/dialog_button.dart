@@ -11,7 +11,7 @@ import 'service/pref_service.dart';
 class PrefDialogButton extends StatelessWidget {
   const PrefDialogButton({
     this.title,
-    @required this.dialog,
+    required this.dialog,
     this.subtitle,
     this.leading,
     this.trailing,
@@ -19,23 +19,23 @@ class PrefDialogButton extends StatelessWidget {
     this.barrierDismissible = true,
   });
 
-  final Widget title;
+  final Widget? title;
 
-  final Widget subtitle;
+  final Widget? subtitle;
 
   final PrefDialog dialog;
 
-  final Widget leading;
+  final Widget? leading;
 
-  final Widget trailing;
+  final Widget? trailing;
 
   final bool barrierDismissible;
 
-  final VoidCallback onPop;
+  final VoidCallback? onPop;
 
   Future<void> _onTap(BuildContext context) async {
     if (onPop != null) {
-      onPop();
+      onPop!();
     }
 
     // Propagate the current inherited PrefService

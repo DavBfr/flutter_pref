@@ -11,21 +11,19 @@ import 'service/pref_service.dart';
 
 class PrefCheckbox extends StatefulWidget {
   const PrefCheckbox({
-    Key key,
+    Key? key,
     this.title,
-    @required this.pref,
+    required this.pref,
     this.subtitle,
     this.ignoreTileTap = false,
     this.onChange,
     this.disabled = false,
     this.reversed = false,
-  })  : assert(pref != null),
-        assert(reversed != null),
-        super(key: key);
+  }) : super(key: key);
 
-  final Widget title;
+  final Widget? title;
 
-  final Widget subtitle;
+  final Widget? subtitle;
 
   final String pref;
 
@@ -35,7 +33,7 @@ class PrefCheckbox extends StatefulWidget {
 
   final bool reversed;
 
-  final ValueChanged<bool> onChange;
+  final ValueChanged<bool>? onChange;
 
   @override
   _PrefCheckboxState createState() => _PrefCheckboxState();
@@ -69,13 +67,13 @@ class _PrefCheckboxState extends State<PrefCheckbox> {
         .set(widget.pref, widget.reversed ? !value : value);
 
     if (widget.onChange != null) {
-      widget.onChange(value);
+      widget.onChange!(value);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    bool value;
+    bool? value;
     try {
       value = PrefService.of(context).get(widget.pref);
     } catch (e) {
@@ -91,7 +89,7 @@ class _PrefCheckboxState extends State<PrefCheckbox> {
       trailing: Checkbox(
         value: value,
         tristate: value == null,
-        onChanged: widget.disabled ? null : (val) => _onChange(val),
+        onChanged: widget.disabled ? null : (val) => _onChange(val!),
       ),
       onTap: (widget.ignoreTileTap || widget.disabled)
           ? null

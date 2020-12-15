@@ -10,23 +10,23 @@ import 'service/pref_service.dart';
 
 class PrefButtonGroup<T> extends StatefulWidget {
   const PrefButtonGroup({
-    Key key,
+    Key? key,
     this.title,
-    @required this.items,
-    @required this.pref,
+    required this.items,
+    required this.pref,
     this.subtitle,
     this.onChange,
-    this.disabled = false,
-  })  : assert(pref != null),
+    bool disabled = false,
+  })  : disabled = onChange == null || disabled,
         super(key: key);
 
-  final Widget title;
-  final Widget subtitle;
+  final Widget? title;
+  final Widget? subtitle;
   final String pref;
 
   final bool disabled;
 
-  final ValueChanged<T> onChange;
+  final ValueChanged<T>? onChange;
 
   final List<ButtonGroupItem<T>> items;
 
@@ -59,7 +59,7 @@ class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
 
   void _onChange(T value) {
     if (widget.onChange != null) {
-      widget.onChange(value);
+      widget.onChange!(value);
     }
 
     PrefService.of(context, listen: false).set(widget.pref, value);
@@ -70,7 +70,7 @@ class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
 
   @override
   Widget build(BuildContext context) {
-    T value;
+    T? value;
     try {
       value = PrefService.of(context).get(widget.pref);
     } catch (e) {
@@ -84,7 +84,7 @@ class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
         items: widget.items,
         value: value,
         disabled: widget.disabled,
-        onChanged: widget.disabled ? null : _onChange,
+        onChanged: _onChange,
       ),
     );
   }

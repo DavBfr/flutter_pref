@@ -10,8 +10,8 @@ import 'base.dart';
 
 class PrefServiceCache extends BasePrefService {
   PrefServiceCache({
-    Map<String, dynamic> cache,
-    Map<String, dynamic> defaults,
+    Map<String, dynamic>? cache,
+    Map<String, dynamic>? defaults,
   }) : _cache = cache ?? <String, dynamic>{} {
     if (defaults != null) {
       _cache.addAll(defaults);
@@ -27,7 +27,7 @@ class PrefServiceCache extends BasePrefService {
   }
 
   @override
-  T get<T>(String key) => _cache[key];
+  T? get<T>(String key) => _cache[key];
 
   @override
   Set<String> getKeys() {

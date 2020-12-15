@@ -49,7 +49,7 @@ void main() {
         ),
       );
 
-      expect(tester.takeException(), isInstanceOf<FlutterError>());
+      expect(tester.takeException(), isInstanceOf<Error>());
     });
 
     testWidgets('cached', (WidgetTester tester) async {

@@ -10,9 +10,9 @@ import 'service/pref_service.dart';
 class PrefRadio<T> extends StatefulWidget {
   const PrefRadio({
     this.title,
-    @required this.value,
-    @required this.pref,
-    Key key,
+    required this.value,
+    required this.pref,
+    Key? key,
     this.subtitle,
     this.selected = false,
     this.ignoreTileTap = false,
@@ -21,13 +21,11 @@ class PrefRadio<T> extends StatefulWidget {
     this.leading,
     this.radioFirst = false,
   })  : assert(value != null),
-        assert(pref != null),
-        assert(radioFirst != null),
         super(key: key);
 
-  final Widget title;
+  final Widget? title;
 
-  final Widget subtitle;
+  final Widget? subtitle;
 
   final T value;
 
@@ -35,7 +33,7 @@ class PrefRadio<T> extends StatefulWidget {
 
   final bool selected;
 
-  final Function onSelect;
+  final Function? onSelect;
 
   final bool ignoreTileTap;
 
@@ -43,7 +41,7 @@ class PrefRadio<T> extends StatefulWidget {
 
   final bool radioFirst;
 
-  final Widget leading;
+  final Widget? leading;
 
   @override
   _PrefRadioState createState() => _PrefRadioState<T>();
@@ -76,13 +74,13 @@ class _PrefRadioState<T> extends State<PrefRadio<T>> {
     PrefService.of(context, listen: false).set(widget.pref, value);
 
     if (widget.onSelect != null) {
-      widget.onSelect();
+      widget.onSelect!();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    T value;
+    T? value;
     try {
       value = PrefService.of(context).get(widget.pref);
     } catch (e) {
@@ -98,7 +96,7 @@ class _PrefRadioState<T> extends State<PrefRadio<T>> {
           value: widget.value,
           groupValue: value,
           onChanged:
-              widget.disabled ? null : (T val) => _onChange(widget.value),
+              widget.disabled ? null : (T? val) => _onChange(widget.value),
         ),
         onTap: (widget.ignoreTileTap || widget.disabled)
             ? null
@@ -113,7 +111,7 @@ class _PrefRadioState<T> extends State<PrefRadio<T>> {
       trailing: Radio<T>(
         value: widget.value,
         groupValue: value,
-        onChanged: widget.disabled ? null : (T val) => _onChange(widget.value),
+        onChanged: widget.disabled ? null : (T? val) => _onChange(widget.value),
       ),
       onTap: (widget.ignoreTileTap || widget.disabled)
           ? null

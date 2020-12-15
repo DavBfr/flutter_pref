@@ -13,36 +13,33 @@ import 'service/pref_service.dart';
 
 class PrefChoice<T> extends StatefulWidget {
   const PrefChoice({
-    Key key,
+    Key? key,
     this.title,
-    @required this.pref,
+    required this.pref,
     this.subtitle,
-    @required this.items,
+    required this.items,
     this.onChange,
     this.disabled = false,
     this.cancel,
     this.submit,
     this.radioFirst = true,
-  })  : assert(pref != null),
-        assert(items != null),
-        assert(radioFirst != null),
-        super(key: key);
+  }) : super(key: key);
 
-  final Widget title;
+  final Widget? title;
 
-  final Widget subtitle;
+  final Widget? subtitle;
 
   final String pref;
 
   final List<DropdownMenuItem<T>> items;
 
-  final ValueChanged<T> onChange;
+  final ValueChanged<T>? onChange;
 
   final bool disabled;
 
-  final Widget submit;
+  final Widget? submit;
 
-  final Widget cancel;
+  final Widget? cancel;
 
   final bool radioFirst;
 
@@ -75,7 +72,7 @@ class _PrefChoiceState<T> extends State<PrefChoice<T>> {
 
   @override
   Widget build(BuildContext context) {
-    T value;
+    T? value;
     try {
       value = PrefService.of(context).get(widget.pref);
     } catch (e) {
@@ -83,7 +80,7 @@ class _PrefChoiceState<T> extends State<PrefChoice<T>> {
     }
 
     // check if the value is present in the list of choices
-    Widget selected;
+    Widget? selected;
     for (final item in widget.items) {
       if (item.value == value) {
         selected = item.child;
@@ -99,8 +96,8 @@ class _PrefChoiceState<T> extends State<PrefChoice<T>> {
       subtitle: widget.subtitle ?? selected,
       dialog: PrefDialog(
         children: widget.items
-            .map<PrefRadio<T>>(
-              (e) => PrefRadio<T>(
+            .map<PrefRadio<T?>>(
+              (e) => PrefRadio<T?>(
                 title: e.child,
                 value: e.value,
                 disabled: widget.disabled,

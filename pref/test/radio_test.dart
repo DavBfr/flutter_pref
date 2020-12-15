@@ -11,7 +11,7 @@ void main() {
   group('PrefRadio', () {
     testWidgets('basic', (WidgetTester tester) async {
       final service = PrefServiceCache();
-      int value;
+      int? value;
 
       await tester.pumpWidget(
         MaterialApp(

@@ -7,26 +7,26 @@ import 'package:flutter/material.dart';
 
 class PrefLabel extends StatelessWidget {
   const PrefLabel({
-    @required this.title,
+    required this.title,
     this.decoration,
     this.leading,
     this.subtitle,
     this.onTap,
     this.margin,
     this.padding,
-  }) : assert(title != null);
+  });
 
   final Widget title;
 
-  final Decoration decoration;
+  final Decoration? decoration;
 
-  final Widget leading;
-  final Widget subtitle;
+  final Widget? leading;
+  final Widget? subtitle;
 
-  final Function onTap;
+  final Function? onTap;
 
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class PrefLabel extends StatelessWidget {
       decoration: decoration,
       child: ListTile(
         leading: leading,
-        onTap: onTap,
+        onTap: onTap as void Function()?,
         title: DefaultTextStyle.merge(
           overflow: TextOverflow.ellipsis,
           child: title,

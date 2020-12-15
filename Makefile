@@ -14,7 +14,7 @@ format-dart: $(DART_SRC)
 
 pref/example/.metadata:
 	cd pref/example; flutter create -t app --no-overwrite --org net.nfet --project-name example .
-	rm -rf pref/example/test
+	rm -rf pref/example/test pref/example/integration_test
 	cd pref; flutter pub get
 
 clean:
