@@ -16,9 +16,8 @@ class PrefButtonGroup<T> extends StatefulWidget {
     required this.pref,
     this.subtitle,
     this.onChange,
-    bool disabled = false,
-  })  : disabled = onChange == null || disabled,
-        super(key: key);
+    this.disabled = false,
+  }) : super(key: key);
 
   final Widget? title;
   final Widget? subtitle;

@@ -37,7 +37,7 @@ class PrefDropdown<T> extends StatefulWidget {
   _PrefDropdownState<T> createState() => _PrefDropdownState<T>();
 }
 
-class _PrefDropdownState<T> extends State<PrefDropdown<T?>> {
+class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
   @override
   void didChangeDependencies() {
     PrefService.of(context).addKeyListener(widget.pref, _onNotify);
@@ -106,8 +106,7 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T?>> {
             DropdownButton<T>(
               hint: widget.title,
               isExpanded: true,
-              // ignore: avoid_as
-              items: widget.items as List<DropdownMenuItem<T>>,
+              items: widget.items,
               onChanged: widget.disabled ? null : _onChange,
               value: value,
             ),
@@ -121,8 +120,7 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T?>> {
       title: widget.title,
       subtitle: widget.subtitle,
       trailing: DropdownButton<T>(
-        // ignore: avoid_as
-        items: widget.items as List<DropdownMenuItem<T>>,
+        items: widget.items,
         onChanged: widget.disabled ? null : _onChange,
         value: value,
       ),

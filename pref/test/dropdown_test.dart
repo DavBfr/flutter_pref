@@ -86,7 +86,7 @@ void main() {
                 fullWidth: true,
                 title: const Text('Hello'),
                 pref: 'test',
-                onChange: (int? v) => value = v,
+                onChange: (v) => value = v,
                 items: const [
                   DropdownMenuItem(value: 1, child: Text('first')),
                   DropdownMenuItem(value: 2, child: Text('second')),

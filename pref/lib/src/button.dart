@@ -16,7 +16,9 @@ class PrefButton extends StatelessWidget {
     this.title,
     this.subtitle,
     this.onTap,
-  }) : super(key: key);
+  })  : assert(title != child,
+            'Use a title to define your own button or child for the button content'),
+        super(key: key);
 
   final Widget child;
 

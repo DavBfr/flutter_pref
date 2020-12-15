@@ -22,12 +22,15 @@ abstract class BasePrefService extends ChangeNotifier {
     _keyListeners[key]?.remove(f);
   }
 
-  Stream<T?> stream<T>(String key) {
-    late StreamController<T?> controller;
+  Stream<T> stream<T>(String key) {
+    late StreamController<T> controller;
 
     void emit() {
       try {
-        controller.add(get<T>(key));
+        final value = get<T>(key);
+        if (value != null) {
+          controller.add(value);
+        }
       } catch (e) {
         controller.addError(e);
       }
@@ -42,7 +45,7 @@ abstract class BasePrefService extends ChangeNotifier {
       removeKeyListener(key, emit);
     }
 
-    controller = StreamController<T?>(
+    controller = StreamController<T>(
       onListen: listen,
       onResume: listen,
       onPause: done,

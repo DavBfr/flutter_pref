@@ -19,6 +19,10 @@
 - Fix cached Page and Dialog
 - Add more documentation
 
+## 2.0.0-nullsafety
+
+- Opt-in null-safety
+
 ## 1.3.1
 
 - Add stream example
