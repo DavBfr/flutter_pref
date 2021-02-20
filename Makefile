@@ -37,7 +37,7 @@ test-readme:
 publish: format analyze clean
 	test -z "$(shell git status --porcelain)"
 	find pref -name pubspec.yaml -exec sed -i -e 's/^dependency_overrides:/_dependency_overrides:/g' '{}' ';'
-	cd pref; pub publish -f
+	cd pref; $(DART_BIN) pub publish -f
 	find pref -name pubspec.yaml -exec sed -i -e 's/^_dependency_overrides:/dependency_overrides:/g' '{}' ';'
 	git tag $(shell grep version pref/pubspec.yaml | sed 's/version\s*:\s*/v/g')
 
