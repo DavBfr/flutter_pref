@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0-nullsafety
+
+- Opt-in null-safety
+
 ## 1.6.0
 
 - Fix cached dialog
@@ -18,10 +22,6 @@
 - Add listen parameter to PerfService.of()
 - Fix cached Page and Dialog
 - Add more documentation
-
-## 2.0.0-nullsafety
-
-- Opt-in null-safety
 
 ## 1.3.1
 
