@@ -11,111 +11,35 @@ class ButtonGroup<T> extends StatelessWidget {
     this.value,
     required this.onChanged,
     this.disabled = false,
-    this.items,
+    required this.items,
   }) : super(key: key);
 
   final ValueChanged<T>? onChanged;
   final bool disabled;
   final T? value;
-  final List<ButtonGroupItem<T>>? items;
-
-  static const _startShape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(10),
-      bottomLeft: Radius.circular(10),
-    ),
-  );
-
-  static const _middleShape = RoundedRectangleBorder();
-
-  static const _endShape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-      topRight: Radius.circular(10),
-      bottomRight: Radius.circular(10),
-    ),
-  );
-
-  Color? _getTextColor(
-    ThemeData theme,
-    ButtonThemeData buttonTheme,
-    Color fillColor,
-  ) {
-    final themeIsDark = theme.brightness == Brightness.dark;
-    final fillIsDark =
-        ThemeData.estimateBrightnessForColor(fillColor) == Brightness.dark;
-
-    switch (buttonTheme.textTheme) {
-      case ButtonTextTheme.normal:
-        return disabled
-            ? theme.disabledColor
-            : (themeIsDark ? Colors.white : Colors.black87);
-      case ButtonTextTheme.accent:
-        return disabled ? theme.disabledColor : theme.accentColor;
-      case ButtonTextTheme.primary:
-        return disabled
-            ? (themeIsDark ? Colors.white30 : Colors.black38)
-            : (fillIsDark ? Colors.white : Colors.black);
-    }
-  }
-
-  Widget _button(
-    BuildContext context,
-    VoidCallback? onPressed,
-    bool selected,
-    Widget child,
-    ShapeBorder shape,
-  ) {
-    final theme = Theme.of(context);
-    final buttonTheme = ButtonTheme.of(context);
-    final fillColor = selected ? theme.accentColor : theme.buttonColor;
-    final textColor = _getTextColor(theme, buttonTheme, fillColor);
-
-    return RawMaterialButton(
-      onPressed: onPressed,
-      fillColor: fillColor,
-      textStyle: theme.textTheme.button!.copyWith(color: textColor),
-      highlightColor: theme.highlightColor,
-      splashColor: theme.splashColor,
-      elevation: 0,
-      shape: shape,
-      highlightElevation: 0,
-      disabledElevation: 0,
-      padding: const EdgeInsets.all(1),
-      constraints: const BoxConstraints(
-        minWidth: 60,
-        minHeight: 40,
-      ),
-      child: child,
-    );
-  }
+  final List<ButtonGroupItem<T>> items;
 
   @override
   Widget build(BuildContext context) {
-    final buttons = <Widget>[];
-
-    for (final item in items!) {
-      buttons.add(
-        _button(
-          context,
-          disabled || onChanged == null ? null : () => onChanged!(item.value),
-          value == item.value,
-          item.child,
-          item == items!.first
-              ? _startShape
-              : (item == items!.last ? _endShape : _middleShape),
-        ),
-      );
-    }
-
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: buttons,
+    return ToggleButtons(
+      isSelected: items.map((e) => e.value == value).toList(),
+      children: items.map((e) => e.child).toList(),
+      onPressed: disabled
+          ? null
+          : (index) {
+              if (onChanged != null) {
+                onChanged!(items[index].value);
+              }
+            },
     );
   }
 }
 
 class ButtonGroupItem<T> {
-  const ButtonGroupItem({required this.value, required this.child});
+  const ButtonGroupItem({
+    required this.value,
+    required this.child,
+  });
 
   final T value;
   final Widget child;

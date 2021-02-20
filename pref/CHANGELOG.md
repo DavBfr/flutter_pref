@@ -3,6 +3,7 @@
 ## 2.0.0-nullsafety
 
 - Opt-in null-safety
+- ButtonGroup now use ToggleButtons
 
 ## 1.6.0
 
