@@ -80,3 +80,4 @@ tools/readme.dart
 node_modules
 lcov.info
 package-lock.json
+package.json

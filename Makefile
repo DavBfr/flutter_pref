@@ -3,6 +3,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+FLUTTER?=$(realpath $(dir $(realpath $(dir $(shell which flutter)))))
+FLUTTER_BIN=$(FLUTTER)/bin/flutter
+DART_BIN=$(FLUTTER)/bin/dart
 DART_SRC=$(shell find . -name '*.dart')
 
 all: pref/example/.metadata format
@@ -10,12 +13,12 @@ all: pref/example/.metadata format
 format: format-dart
 
 format-dart: $(DART_SRC)
-	dartfmt -w --fix $^
+	$(DART_BIN) format --fix $^
 
 pref/example/.metadata:
-	cd pref/example; flutter create -t app --no-overwrite --org net.nfet --project-name example .
+	cd pref/example; $(FLUTTER_BIN) create -t app --no-overwrite --org net.nfet --project-name example .
 	rm -rf pref/example/test pref/example/integration_test
-	cd pref; flutter pub get
+	cd pref; $(FLUTTER_BIN) pub get
 
 clean:
 	git clean -fdx -e .vscode
@@ -24,12 +27,12 @@ node_modules:
 	npm install lcov-summary
 
 test: node_modules
-	cd pref; flutter test --coverage --coverage-path lcov.info
+	cd pref; $(FLUTTER_BIN) test --coverage --coverage-path lcov.info
 	cat pref/lcov.info | node_modules/.bin/lcov-summary
 
 test-readme:
-	cd tools; flutter pub get
-	cd tools; dart extract_readme.dart
+	cd tools; $(FLUTTER_BIN) pub get
+	cd tools; $(DART_BIN) extract_readme.dart
 
 publish: format analyze clean
 	test -z "$(shell git status --porcelain)"
@@ -38,21 +41,11 @@ publish: format analyze clean
 	find pref -name pubspec.yaml -exec sed -i -e 's/^_dependency_overrides:/dependency_overrides:/g' '{}' ';'
 	git tag $(shell grep version pref/pubspec.yaml | sed 's/version\s*:\s*/v/g')
 
-.dartfix:
-	pub global activate dartfix
-	touch $@
-
 .pana:
-	pub global activate pana
+	$(DART_BIN) pub global activate pana
 	touch $@
 
-fix: .dartfix $(DART_SRC)
-	cd pref; pub global run dartfix --overwrite .
-
-analyze: pref/example/.metadata $(DART_SRC)
-	cd pref; dartanalyzer --fatal-infos --fatal-warnings --fatal-hints --fatal-lints -v .
-
-pana: pref/example/.metadata .pana
-	cd pref; flutter pub global run pana --no-warning --source path .
+analyze: .pana pref/example/.metadata $(DART_SRC)
+	$(DART_BIN) pub global run pana --no-warning --source path pref
 
 .PHONY: format format-dart clean publish test fix analyze
