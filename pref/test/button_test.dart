@@ -20,7 +20,7 @@ void main() {
         ),
       );
 
-      expect(find.byType(FlatButton), findsOneWidget);
+      expect(find.byType(MaterialButton), findsOneWidget);
     });
   });
 }

@@ -40,7 +40,7 @@ class PrefButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final button = FlatButton(
+    final button = MaterialButton(
       child: child,
       color: color ?? theme.buttonTheme.colorScheme?.background,
       textColor: textColor,

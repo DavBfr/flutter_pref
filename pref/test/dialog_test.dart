@@ -75,7 +75,7 @@ void main() {
 
       expect(service.get<dynamic>('test'), isNull);
 
-      await tester.tap(find.byType(FlatButton));
+      await tester.tap(find.byType(TextButton));
       await tester.pump();
 
       expect(service.get<dynamic>('test'), isFalse);

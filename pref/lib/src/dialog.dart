@@ -37,7 +37,7 @@ class PrefDialogState extends PrefCacheState<PrefDialog> {
 
     if (widget.cancel != null && widget.cache) {
       actions.add(
-        FlatButton(
+        TextButton(
           child: widget.cancel!,
           onPressed: () {
             Navigator.of(context).pop();
@@ -48,7 +48,7 @@ class PrefDialogState extends PrefCacheState<PrefDialog> {
 
     if (widget.submit != null) {
       actions.add(
-        FlatButton(
+        TextButton(
           child: widget.submit!,
           onPressed: () async {
             await apply();

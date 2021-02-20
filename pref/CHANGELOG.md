@@ -4,6 +4,7 @@
 
 - Opt-in null-safety
 - ButtonGroup now use ToggleButtons
+- Use new buttons Widgets
 
 ## 1.6.0
 
