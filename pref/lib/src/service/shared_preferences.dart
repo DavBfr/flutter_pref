@@ -6,28 +6,8 @@
 import 'dart:async';
 import 'dart:core';
 
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'base.dart';
-
-class SharedPreferences {
-  static Future<SharedPreferences> getInstance() async => SharedPreferences();
-
-  Future<bool> setBool(String s, bool val) async => true;
-
-  Future<bool> setDouble(String s, double val) async => true;
-
-  Future<bool> setInt(String s, int val) async => true;
-
-  Future<bool> setString(String s, String val) async => true;
-
-  Set<String> getKeys() => {};
-
-  dynamic get(String s) => 123;
-
-  Future<bool> remove(String s) async => true;
-
-  Future<bool> clear() async => true;
-}
 
 class PrefServiceShared extends BasePrefService {
   PrefServiceShared._(this.prefix, this.sharedPreferences);
@@ -72,7 +52,8 @@ class PrefServiceShared extends BasePrefService {
 
   @override
   T? get<T>(String key) {
-    return sharedPreferences.get('$prefix$key');
+    // ignore: avoid_as
+    return sharedPreferences.get('$prefix$key') as T?;
   }
 
   @override
