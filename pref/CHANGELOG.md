@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- Update Readme
+
 ## 2.0.0
 
 - Update dependencies
