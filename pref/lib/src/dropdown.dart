@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 
 import 'service/pref_service.dart';
 
+/// Dropdown selection
 class PrefDropdown<T> extends StatefulWidget {
+  /// create a Dropdown selection
   const PrefDropdown({
     this.title,
     required this.pref,
@@ -19,18 +21,25 @@ class PrefDropdown<T> extends StatefulWidget {
     this.fullWidth = true,
   }) : super(key: key);
 
+  /// The title
   final Widget? title;
 
+  /// The subtitle
   final Widget? subtitle;
 
+  /// The preference key
   final String pref;
 
+  /// The items to display
   final List<DropdownMenuItem<T>> items;
 
+  /// Called when the value changes
   final ValueChanged<T>? onChange;
 
+  /// disable the widget interactions
   final bool disabled;
 
+  /// Use all the available width
   final bool fullWidth;
 
   @override

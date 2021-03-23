@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 
 import 'service/pref_service.dart';
 
+/// Display a boolean value
 class PrefCheckbox extends StatefulWidget {
+  /// Create a PrefCheckbox Widget
   const PrefCheckbox({
     Key? key,
     this.title,
@@ -21,18 +23,25 @@ class PrefCheckbox extends StatefulWidget {
     this.reversed = false,
   }) : super(key: key);
 
+  /// Checkbox title
   final Widget? title;
 
+  /// Checkbox sub-title
   final Widget? subtitle;
 
+  /// Preference key to display
   final String pref;
 
+  /// Ignore taps on the text
   final bool ignoreTileTap;
 
+  /// Disable user interactions
   final bool disabled;
 
+  /// Reverse the checked status (!pref)
   final bool reversed;
 
+  /// Called when the value is changed
   final ValueChanged<bool>? onChange;
 
   @override

@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'dialog.dart';
 import 'service/pref_service.dart';
 
+/// A button to open a preferences dialog
 class PrefDialogButton extends StatelessWidget {
+  /// Create a PrefDialogButton
   const PrefDialogButton({
     this.title,
     required this.dialog,
@@ -19,18 +21,25 @@ class PrefDialogButton extends StatelessWidget {
     this.barrierDismissible = true,
   });
 
+  /// The button title
   final Widget? title;
 
+  /// The button sub-title
   final Widget? subtitle;
 
+  /// The dialog to open
   final PrefDialog dialog;
 
+  /// A leading widget
   final Widget? leading;
 
+  /// A trailing widget
   final Widget? trailing;
 
+  /// Allow the dialog to be closed if clicked outside
   final bool barrierDismissible;
 
+  /// Called when the dialog is closed
   final VoidCallback? onPop;
 
   Future<void> _onTap(BuildContext context) async {

@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'service/pref_service.dart';
 import 'service_cache.dart';
 
+/// Dialog to display sub-preference items
 class PrefDialog extends PrefCache {
+  /// Create a Preference Dialog
   const PrefDialog({
     Key? key,
     required this.children,
@@ -19,17 +21,26 @@ class PrefDialog extends PrefCache {
     this.cancel,
   }) : super(key: key, cache: onlySaveOnSubmit ?? submit != null);
 
+  /// The Dialog title
   final Widget? title;
+
+  /// The elements to display in the dialog
   final List<Widget> children;
+
+  /// The submit button
   final Widget? submit;
+
+  /// The cancel button
   final Widget? cancel;
 
+  /// Automatically close the dialog if the preferences are updated
   final bool dismissOnChange;
 
   @override
   PrefDialogState createState() => PrefDialogState();
 }
 
+/// The Preference Dialog State
 class PrefDialogState extends PrefCacheState<PrefDialog> {
   @override
   Widget buildChild(BuildContext context) {
@@ -38,10 +49,10 @@ class PrefDialogState extends PrefCacheState<PrefDialog> {
     if (widget.cancel != null && widget.cache) {
       actions.add(
         TextButton(
-          child: widget.cancel!,
           onPressed: () {
             Navigator.of(context).pop();
           },
+          child: widget.cancel!,
         ),
       );
     }
@@ -49,11 +60,11 @@ class PrefDialogState extends PrefCacheState<PrefDialog> {
     if (widget.submit != null) {
       actions.add(
         TextButton(
-          child: widget.submit!,
           onPressed: () async {
             await apply();
             Navigator.of(context).pop();
           },
+          child: widget.submit!,
         ),
       );
     }

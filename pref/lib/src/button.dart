@@ -5,7 +5,9 @@
 
 import 'package:flutter/material.dart';
 
+/// Button
 class PrefButton extends StatelessWidget {
+  /// Create a PrefButton Widget
   const PrefButton({
     Key? key,
     required this.child,
@@ -20,20 +22,28 @@ class PrefButton extends StatelessWidget {
             'Use a title to define your own button or child for the button content'),
         super(key: key);
 
+  /// Widget to display inside the button
   final Widget child;
 
+  /// Button color
   final Color? color;
 
+  /// Text color
   final Color? textColor;
 
+  /// Button decoration
   final Decoration? decoration;
 
+  /// Leading Widget
   final Widget? leading;
 
+  /// Text Widget
   final Widget? title;
 
+  /// Button sub-title
   final Widget? subtitle;
 
+  /// Called wien the button is activated
   final VoidCallback? onTap;
 
   @override
@@ -41,10 +51,10 @@ class PrefButton extends StatelessWidget {
     final theme = Theme.of(context);
 
     final button = MaterialButton(
-      child: child,
       color: color ?? theme.buttonTheme.colorScheme?.background,
       textColor: textColor,
       onPressed: onTap,
+      child: child,
     );
 
     return Container(

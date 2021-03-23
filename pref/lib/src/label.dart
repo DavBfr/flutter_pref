@@ -5,7 +5,9 @@
 
 import 'package:flutter/material.dart';
 
+/// A label
 class PrefLabel extends StatelessWidget {
+  /// Create a label
   const PrefLabel({
     required this.title,
     this.decoration,
@@ -16,16 +18,25 @@ class PrefLabel extends StatelessWidget {
     this.padding,
   });
 
+  /// the label's title
   final Widget title;
 
+  /// optional decoration
   final Decoration? decoration;
 
+  /// leading widget
   final Widget? leading;
+
+  /// subtitle widget
   final Widget? subtitle;
 
+  /// called when the user actionate the label
   final Function? onTap;
 
+  /// padding
   final EdgeInsetsGeometry? padding;
+
+  /// margin
   final EdgeInsetsGeometry? margin;
 
   @override

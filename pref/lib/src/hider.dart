@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 
 import 'service/pref_service.dart';
 
+/// A widget that hides its children depending on a preference value
 class PrefHider extends StatefulWidget {
+  /// create a Hider widget
   const PrefHider({
     required this.children,
     required this.pref,
@@ -15,12 +17,16 @@ class PrefHider extends StatefulWidget {
     this.nullValue = false,
   });
 
+  /// The widgets to hide
   final List<Widget> children;
 
+  /// The preference key
   final String pref;
 
+  /// reverse the behavour
   final bool reversed;
 
+  /// the fallback value if the pref value is null
   final bool nullValue;
 
   @override
@@ -62,8 +68,8 @@ class _PrefHiderState extends State<PrefHider> {
 
     if ((value ?? widget.nullValue) != widget.reversed) {
       return Column(
-        children: widget.children,
         crossAxisAlignment: CrossAxisAlignment.start,
+        children: widget.children,
       );
     }
 

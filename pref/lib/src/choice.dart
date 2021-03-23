@@ -11,7 +11,9 @@ import 'dialog_button.dart';
 import 'radio.dart';
 import 'service/pref_service.dart';
 
+/// Display a Dialog with a list of items to choose
 class PrefChoice<T> extends StatefulWidget {
+  /// Create a PrefChoice Widget
   const PrefChoice({
     Key? key,
     this.title,
@@ -25,22 +27,31 @@ class PrefChoice<T> extends StatefulWidget {
     this.radioFirst = true,
   }) : super(key: key);
 
+  /// Button title
   final Widget? title;
 
+  /// Button sub-title
   final Widget? subtitle;
 
+  /// Preference key to update
   final String pref;
 
+  /// List of items to choose from
   final List<DropdownMenuItem<T>> items;
 
+  /// Called when the user selects something
   final ValueChanged<T>? onChange;
 
+  /// Disable user interactions
   final bool disabled;
 
+  /// Submit button
   final Widget? submit;
 
+  /// Cancel button
   final Widget? cancel;
 
+  /// Display the radio buttons on the left
   final bool radioFirst;
 
   @override
@@ -95,6 +106,11 @@ class _PrefChoiceState<T> extends State<PrefChoice<T>> {
       title: widget.title,
       subtitle: widget.subtitle ?? selected,
       dialog: PrefDialog(
+        title: widget.title,
+        onlySaveOnSubmit: true,
+        dismissOnChange: widget.submit == null,
+        cancel: widget.cancel,
+        submit: widget.submit,
         children: widget.items
             .map<PrefRadio<T?>>(
               (e) => PrefRadio<T?>(
@@ -106,11 +122,6 @@ class _PrefChoiceState<T> extends State<PrefChoice<T>> {
               ),
             )
             .toList(),
-        title: widget.title,
-        onlySaveOnSubmit: true,
-        dismissOnChange: widget.submit == null,
-        cancel: widget.cancel,
-        submit: widget.submit,
       ),
     );
   }
