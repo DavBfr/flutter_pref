@@ -57,13 +57,13 @@ class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
   }
 
   void _onChange(T value) {
-    if (widget.onChange != null) {
-      widget.onChange!(value);
-    }
-
     PrefService.of(context, listen: false).set(widget.pref, value);
     if (mounted) {
       setState(() {});
+    }
+    
+    if (widget.onChange != null) {
+      widget.onChange!(value);
     }
   }
 
