@@ -8,17 +8,19 @@ FLUTTER_BIN=$(FLUTTER)/bin/flutter
 DART_BIN=$(FLUTTER)/bin/dart
 DART_SRC=$(shell find . -name '*.dart')
 
-all: pref/example/.metadata format
+all: pref/pubspec.lock pref/example/.metadata format
 
 format: format-dart
 
 format-dart: $(DART_SRC)
 	$(DART_BIN) format --fix $^
 
+pref/pubspec.lock: pref/pubspec.yaml
+	cd pref; $(FLUTTER_BIN) pub get
+
 pref/example/.metadata:
 	cd pref/example; $(FLUTTER_BIN) create -t app --no-overwrite --org net.nfet --project-name example .
 	rm -rf pref/example/test pref/example/integration_test
-	cd pref; $(FLUTTER_BIN) pub get
 
 clean:
 	git clean -fdx -e .vscode
@@ -26,7 +28,7 @@ clean:
 node_modules:
 	npm install lcov-summary
 
-test: node_modules
+test: pref/pubspec.lock node_modules
 	cd pref; $(FLUTTER_BIN) test --coverage --coverage-path lcov.info
 	cat pref/lcov.info | node_modules/.bin/lcov-summary
 
@@ -45,7 +47,7 @@ publish: format analyze clean
 	$(DART_BIN) pub global activate pana
 	touch $@
 
-analyze: .pana pref/example/.metadata $(DART_SRC)
+analyze: .pana pref/pubspec.lock pref/example/.metadata $(DART_SRC)
 	$(DART_BIN) pub global run pana --no-warning --source path pref
 
 .PHONY: format format-dart clean publish test fix analyze

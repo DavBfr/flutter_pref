@@ -61,7 +61,7 @@ class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
     if (mounted) {
       setState(() {});
     }
-    
+
     if (widget.onChange != null) {
       widget.onChange!(value);
     }
