@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- Expose inputFormatters in PrefText [tsonnen]
+
 ## 2.0.2
 
 - Fix: Get old value in onChange of PrefButtonGroup [Joker]

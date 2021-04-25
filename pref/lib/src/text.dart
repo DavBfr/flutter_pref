@@ -4,6 +4,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'service/pref_service.dart';
 
@@ -19,6 +20,7 @@ class PrefText extends StatefulWidget {
     this.padding,
     this.obscureText = false,
     this.autofocus = false,
+    this.inputFormatters,
     this.hintText = '',
     this.maxLines = 1,
     this.style,
@@ -27,6 +29,9 @@ class PrefText extends StatefulWidget {
     this.decoration,
     this.disabled = false,
   }) : super(key: key);
+
+  /// Expose for end users
+  final List<TextInputFormatter>? inputFormatters;
 
   /// Text that describes the input field.
   final String? label;
@@ -113,6 +118,7 @@ class _PrefTextState extends State<PrefText> {
             autofocus: widget.autofocus,
             maxLines: widget.maxLines,
             style: widget.style,
+            inputFormatters: widget.inputFormatters,
             keyboardType: widget.keyboardType,
             obscureText: widget.obscureText,
             validator: widget.validator,
