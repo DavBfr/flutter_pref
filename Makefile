@@ -49,5 +49,6 @@ publish: format analyze clean
 
 analyze: .pana pref/pubspec.lock pref/example/.metadata $(DART_SRC)
 	$(DART_BIN) pub global run pana --no-warning --source path pref
+	rm -f pref/pubspec.lock
 
 .PHONY: format format-dart clean publish test fix analyze

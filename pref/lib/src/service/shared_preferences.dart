@@ -7,6 +7,7 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'base.dart';
 
 class PrefServiceShared extends BasePrefService {
@@ -52,7 +53,6 @@ class PrefServiceShared extends BasePrefService {
 
   @override
   T? get<T>(String key) {
-    // ignore: avoid_as
     return sharedPreferences.get('$prefix$key') as T?;
   }
 

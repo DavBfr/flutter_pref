@@ -109,7 +109,7 @@ class _PrefSliderState<T extends num> extends State<PrefSlider> {
 
     final min = (widget.min ?? 0.0).toDouble();
     final max = (widget.max ?? 1.0).toDouble();
-    // ignore: unnecessary_cast, avoid_as
+    // ignore: unnecessary_cast
     final doubleValue = (value as num? ?? min).toDouble();
     final label =
         widget.label != null && value != null ? widget.label!(value) : null;
