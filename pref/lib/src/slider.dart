@@ -119,16 +119,22 @@ class _PrefSliderState<T extends num> extends State<PrefSlider> {
         : null;
 
     return ListTile(
-      leading: widget.title,
       subtitle: widget.subtitle,
       trailing: trailing,
-      title: Slider(
-        label: label,
-        value: doubleValue,
-        onChanged: _onChange,
-        min: min,
-        max: max,
-        divisions: widget.divisions,
+      title: Row(
+        children: [
+          if (widget.title != null) widget.title!,
+          Expanded(
+            child: Slider(
+              label: label,
+              value: doubleValue,
+              onChanged: _onChange,
+              min: min,
+              max: max,
+              divisions: widget.divisions,
+            ),
+          )
+        ],
       ),
     );
   }

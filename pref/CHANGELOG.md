@@ -3,6 +3,7 @@
 ## 2.2.0
 
 - Log all messages through the logging package
+- Fix PrefSlider font size
 
 ## 2.1.0
 
