@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-
+import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
 
 // ignore_for_file: prefer_const_constructors
@@ -11,9 +11,16 @@ import 'package:pref/pref.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize the logger
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    print('${record.loggerName} ${record.level.name}: ${record.message}');
+  });
+
   // This PrefService is in memory only.
   // Use PrefServiceShared.init() to store the settings permanantly
   final service = PrefServiceCache();
+  service.makeSecret('user_email'); // Prevent the logger to display the value
   await service.setDefaultValues(<String, dynamic>{
     'user_description': 'This is my description!',
     'advanced_enabled': false,

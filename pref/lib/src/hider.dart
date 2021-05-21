@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'log.dart';
 import 'service/pref_service.dart';
 
 /// A widget that hides its children depending on a preference value
@@ -62,8 +63,8 @@ class _PrefHiderState extends State<PrefHider> {
 
     try {
       value = PrefService.of(context).get(widget.pref);
-    } catch (e) {
-      print('Unable to load the value: $e');
+    } catch (e, s) {
+      logger.severe('Unable to load the value', e, s);
     }
 
     if ((value ?? widget.nullValue) != widget.reversed) {

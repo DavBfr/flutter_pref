@@ -7,6 +7,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'log.dart';
 import 'service/pref_service.dart';
 
 /// Display a boolean value
@@ -85,8 +86,8 @@ class _PrefCheckboxState extends State<PrefCheckbox> {
     bool? value;
     try {
       value = PrefService.of(context).get(widget.pref);
-    } catch (e) {
-      print('Unable to load the value: $e');
+    } catch (e, s) {
+      logger.severe('Unable to load the value', e, s);
     }
     if (widget.reversed && value != null) {
       value = !value;

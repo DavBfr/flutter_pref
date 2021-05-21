@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'log.dart';
 import 'service/pref_service.dart';
 
 /// Dropdown selection
@@ -82,8 +83,8 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
     T? value;
     try {
       value = PrefService.of(context).get(widget.pref);
-    } catch (e) {
-      print('Unable to load the value: $e');
+    } catch (e, s) {
+      logger.severe('Unable to load the value', e, s);
     }
 
     // check if the value is present in the list of choices

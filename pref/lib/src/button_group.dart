@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 
 import 'custom/button_group.dart';
+import 'log.dart';
 import 'service/pref_service.dart';
 
 class PrefButtonGroup<T> extends StatefulWidget {
@@ -72,8 +73,8 @@ class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
     T? value;
     try {
       value = PrefService.of(context).get(widget.pref);
-    } catch (e) {
-      print('Unable to load the value: $e');
+    } catch (e, s) {
+      logger.severe('Unable to load the value', e, s);
     }
 
     return ListTile(

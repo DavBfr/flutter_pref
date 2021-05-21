@@ -8,8 +8,11 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 
+import '../log.dart';
+
 abstract class BasePrefService extends ChangeNotifier {
   final _keyListeners = <String, Set<VoidCallback>>{};
+  final _secretKeys = <String>{};
 
   void addKeyListener(String key, VoidCallback f) {
     if (_keyListeners[key] == null) {
@@ -113,11 +116,24 @@ abstract class BasePrefService extends ChangeNotifier {
     return true;
   }
 
+  void makeSecret(String key) {
+    _secretKeys.add(key);
+  }
+
+  void makeAllSecret(Iterable<String> keys) {
+    _secretKeys.addAll(keys);
+  }
+
+  bool isSecret(String key) {
+    return _secretKeys.contains(key);
+  }
+
   void _changed<T>(String key, T val) {
-    assert(() {
-      print('$runtimeType set $key to "$val"');
-      return true;
-    }());
+    if (isSecret(key)) {
+      logger.fine('$runtimeType set $key to <XXXXXXX>');
+    } else {
+      logger.fine('$runtimeType set $key to "$val"');
+    }
 
     if (_keyListeners[key] != null) {
       final localListeners = List<VoidCallback>.from(_keyListeners[key]!);
@@ -159,9 +175,6 @@ abstract class BasePrefService extends ChangeNotifier {
 
   @mustCallSuper
   void clear() {
-    assert(() {
-      print('$runtimeType clear');
-      return true;
-    }());
+    logger.fine('$runtimeType clear');
   }
 }

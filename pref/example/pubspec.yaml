@@ -10,11 +10,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  logging:
   pref:
 
 dependency_overrides:
   pref:
     path: ..
+
+
+dev_dependencies:
+  pedantic:
 
 flutter:
   uses-material-design: true

@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'log.dart';
 import 'service/pref_service.dart';
 
 /// A text input that get and set its value from a [PrefService] widget
@@ -80,8 +81,8 @@ class _PrefTextState extends State<PrefText> {
     if (!_initialized) {
       try {
         controller.text = service.get<String>(widget.pref) ?? '';
-      } catch (e) {
-        print('Unable to load the value: $e');
+      } catch (e, s) {
+        logger.severe('Unable to load the value', e, s);
       }
 
       _initialized = true;

@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'checkbox.dart';
+import 'log.dart';
 import 'service/pref_service.dart';
 
 class PrefSwitch extends StatefulWidget {
@@ -81,8 +82,8 @@ class _PrefSwitchState extends State<PrefSwitch> {
 
     try {
       value = PrefService.of(context).get(widget.pref);
-    } catch (e) {
-      print('Unable to load the value: $e');
+    } catch (e, s) {
+      logger.severe('Unable to load the value', e, s);
     }
 
     if (widget.reversed && value != null) {

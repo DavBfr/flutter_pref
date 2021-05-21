@@ -4,7 +4,7 @@ homepage: https://github.com/DavBfr/flutter_pref/tree/master/pref
 repository: https://github.com/DavBfr/flutter_pref
 issue_tracker: https://github.com/DavBfr/flutter_pref/issues
 author: David PHAM-VAN <dev.nfet.net@gmail.com>
-version: 2.1.0
+version: 2.2.0
 
 environment:
   sdk: ">=2.12.0-0 <3.0.0"
@@ -13,6 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  logging: ^1.0.0
   shared_preferences: ^2.0.0
 
 dev_dependencies:

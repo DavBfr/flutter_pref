@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0
+
+- Log all messages through the logging package
+
 ## 2.1.0
 
 - Expose inputFormatters in PrefText [tsonnen]
@@ -55,7 +59,7 @@
 
 - Fix reversed for null Switch
 - Add defaults to PrefServiceCache
-- Fix PrefText with invalid value
+- Fix PrefText having an invalid value
 - Improve PrefDialogButton
 - Remove useless code from PrefService
 - Remove Page and Dialog fallback to shared_preferences

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../pref.dart';
 import 'dialog.dart';
 import 'dialog_button.dart';
+import 'log.dart';
 import 'radio.dart';
 import 'service/pref_service.dart';
 
@@ -86,8 +87,8 @@ class _PrefChoiceState<T> extends State<PrefChoice<T>> {
     T? value;
     try {
       value = PrefService.of(context).get(widget.pref);
-    } catch (e) {
-      print('Unable to load the value: $e');
+    } catch (e, s) {
+      logger.severe('Unable to load the value', e, s);
     }
 
     // check if the value is present in the list of choices
