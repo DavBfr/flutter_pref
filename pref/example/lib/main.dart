@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
@@ -221,6 +222,9 @@ class _MyHomePageState extends State<MyHomePage> {
           PrefDialogButton(
             title: Text('Edit description'),
             dialog: PrefDialog(
+              title: Text('Edit description'),
+              cancel: Text('Cancel'),
+              submit: Text('Save'),
               children: [
                 PrefText(
                   label: 'Description',
@@ -230,9 +234,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   maxLines: 2,
                 )
               ],
-              title: Text('Edit description'),
-              cancel: Text('Cancel'),
-              submit: Text('Save'),
             ),
             onPop: () => setState(() {}),
           ),
@@ -240,6 +241,9 @@ class _MyHomePageState extends State<MyHomePage> {
           PrefDialogButton(
             title: Text('Content Types'),
             dialog: PrefDialog(
+              title: Text('Enabled Content Types'),
+              cancel: Icon(Icons.cancel),
+              submit: Icon(Icons.save),
               children: [
                 PrefCheckbox(
                   title: Text('Text'),
@@ -254,15 +258,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   pref: 'content_show_audio',
                 )
               ],
-              title: Text('Enabled Content Types'),
-              cancel: Icon(Icons.cancel),
-              submit: Icon(Icons.save),
             ),
           ),
           PrefButton(
-            child: Text('Delete'),
             onTap: () => print('DELETE!'),
             color: Colors.red,
+            child: Text('Delete'),
           ),
           PrefTitle(title: Text('More Dialogs')),
           PrefChoice<String>(
@@ -278,6 +279,8 @@ class _MyHomePageState extends State<MyHomePage> {
           PrefDialogButton(
             title: Text('Android\'s "ListPreference" with autosave'),
             dialog: PrefDialog(
+              title: Text('Select an option'),
+              submit: Text('Close'),
               children: [
                 PrefRadio(
                   title: Text('Select me!'),
@@ -295,13 +298,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   pref: 'android_listpref_auto_selected',
                 ),
               ],
-              title: Text('Select an option'),
-              submit: Text('Close'),
             ),
           ),
           PrefDialogButton(
             title: Text('Android\'s "MultiSelectListPreference"'),
             dialog: PrefDialog(
+              title: Text('Select multiple options'),
+              cancel: Text('Cancel'),
+              submit: Text('Save'),
               children: [
                 PrefCheckbox(
                   title: Text('A enabled'),
@@ -316,9 +320,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   pref: 'android_multilistpref_c',
                 ),
               ],
-              title: Text('Select multiple options'),
-              cancel: Text('Cancel'),
-              submit: Text('Save'),
             ),
           ),
           PrefTitle(title: Text('Advanced')),

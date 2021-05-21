@@ -23,7 +23,6 @@ class ButtonGroup<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return ToggleButtons(
       isSelected: items.map((e) => e.value == value).toList(),
-      children: items.map((e) => e.child).toList(),
       onPressed: disabled
           ? null
           : (index) {
@@ -31,6 +30,7 @@ class ButtonGroup<T> extends StatelessWidget {
                 onChanged!(items[index].value);
               }
             },
+      children: items.map((e) => e.child).toList(),
     );
   }
 }

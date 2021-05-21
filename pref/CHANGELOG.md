@@ -41,7 +41,7 @@
 ## 1.4.0
 
 - Cache() copies the default values
-- Add listen parameter to PerfService.of()
+- Add `listen` parameter to `PerfService.of()`
 - Fix cached Page and Dialog
 - Add more documentation
 
@@ -53,7 +53,7 @@
 
 - Implement Stream on key change
 - Add PrefPage caching
-- Remove text decoration border to follow the theme
+- Remove text-decoration border to follow the theme
 
 ## 1.2.0
 
