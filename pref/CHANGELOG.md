@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0
+
+- Setting a value to `null` will remove it from the backend service
+
 ## 2.2.0
 
 - Log all messages through the logging package

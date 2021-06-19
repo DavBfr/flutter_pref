@@ -10,10 +10,12 @@ import 'package:flutter/material.dart';
 
 import '../log.dart';
 
+/// Base class for the preferences storage
 abstract class BasePrefService extends ChangeNotifier {
   final _keyListeners = <String, Set<VoidCallback>>{};
   final _secretKeys = <String>{};
 
+  /// Add a ChangeNotifier to this key
   void addKeyListener(String key, VoidCallback f) {
     if (_keyListeners[key] == null) {
       _keyListeners[key] = <VoidCallback>{};
@@ -21,10 +23,12 @@ abstract class BasePrefService extends ChangeNotifier {
     _keyListeners[key]!.add(f);
   }
 
+  /// Remove a ChangeNotifier to this key
   void removeKeyListener(String key, VoidCallback f) {
     _keyListeners[key]?.remove(f);
   }
 
+  /// Get a stream on the preference changes
   Stream<T> stream<T>(String key) {
     late StreamController<T> controller;
 
@@ -67,6 +71,7 @@ abstract class BasePrefService extends ChangeNotifier {
     super.dispose();
   }
 
+  /// Set the default preference values
   Future<bool> setDefaultValues(Map<String, dynamic> values) async {
     var result = true;
     final keys = getKeys();
@@ -87,6 +92,7 @@ abstract class BasePrefService extends ChangeNotifier {
     return result;
   }
 
+  /// Merge the preference values from [other]
   Future<void> apply(BasePrefService other) async {
     for (final key in other.getKeys()) {
       final dynamic val = other.get<dynamic>(key);
@@ -96,6 +102,7 @@ abstract class BasePrefService extends ChangeNotifier {
     }
   }
 
+  /// Export the preference values to a [Map]
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
     for (final key in getKeys()) {
@@ -104,26 +111,32 @@ abstract class BasePrefService extends ChangeNotifier {
     return result;
   }
 
+  /// Import the preference values from a [Map]
   Future<void> fromMap(Map<String, dynamic> map) async {
     for (final key in map.keys) {
       await set<dynamic>(key, map[key]);
     }
   }
 
+  /// Set a preference value
   @mustCallSuper
   FutureOr<bool> set<T>(String key, T val) {
     _changed<T>(key, val);
     return true;
   }
 
+  /// Register this preference as secret/confidential and do not log the value
+  /// displays <XXXXXXX> instead
   void makeSecret(String key) {
     _secretKeys.add(key);
   }
 
+  /// Mark all preferences as secret/confidential.
   void makeAllSecret(Iterable<String> keys) {
     _secretKeys.addAll(keys);
   }
 
+  /// Is this preference a secret value?
   bool isSecret(String key) {
     return _secretKeys.contains(key);
   }
@@ -163,16 +176,20 @@ abstract class BasePrefService extends ChangeNotifier {
   @override
   String toString() => toMap().toString();
 
+  /// Get a preference value
   T? get<T>(String key);
 
+  /// Get all preference keys
   Set<String> getKeys();
 
+  /// Remove the value for a preference
   @mustCallSuper
   FutureOr<bool> remove(String key) async {
     _changed(key, null);
     return true;
   }
 
+  /// Clear all values
   @mustCallSuper
   void clear() {
     logger.fine('$runtimeType clear');

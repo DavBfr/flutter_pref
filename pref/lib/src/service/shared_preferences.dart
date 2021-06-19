@@ -31,7 +31,9 @@ class PrefServiceShared extends BasePrefService {
 
   @override
   FutureOr<bool> set<T>(String key, T val) async {
-    if (val is bool) {
+    if (val == null) {
+      return remove(key);
+    } else if (val is bool) {
       if (await sharedPreferences.setBool('$prefix$key', val)) {
         return super.set<T>(key, val);
       }

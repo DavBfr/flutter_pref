@@ -8,7 +8,9 @@ import 'dart:core';
 
 import 'base.dart';
 
+/// Memory preference storage
 class PrefServiceCache extends BasePrefService {
+  /// Create a memory preference storage
   PrefServiceCache({
     Map<String, dynamic>? cache,
     Map<String, dynamic>? defaults,
@@ -22,6 +24,10 @@ class PrefServiceCache extends BasePrefService {
 
   @override
   FutureOr<bool> set<T>(String key, T val) {
+    if (val == null) {
+      return remove(key);
+    }
+
     _cache[key] = val;
     return super.set<T>(key, val);
   }
