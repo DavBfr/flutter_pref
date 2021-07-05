@@ -24,6 +24,7 @@ class PrefSlider<T extends num> extends StatefulWidget {
     this.divisions,
     this.label,
     this.trailing,
+    this.direction = Axis.horizontal,
   }) : super(key: key);
 
   final Widget? title;
@@ -47,6 +48,8 @@ class PrefSlider<T extends num> extends StatefulWidget {
   final String Function(T value)? label;
 
   final Widget Function(T value)? trailing;
+
+  final Axis direction;
 
   @override
   _PrefSliderState createState() => _PrefSliderState<T>();
@@ -117,23 +120,43 @@ class _PrefSliderState<T extends num> extends State<PrefSlider> {
     final trailing = widget.trailing != null && value != null
         ? widget.trailing!(value)
         : null;
+    final slider = Slider(
+      label: label,
+      value: doubleValue,
+      onChanged: _onChange,
+      min: min,
+      max: max,
+      divisions: widget.divisions,
+    );
+
+    if (widget.direction == Axis.horizontal) {
+      return ListTile(
+        subtitle: widget.subtitle,
+        trailing: trailing,
+        title: Row(
+          children: [
+            if (widget.title != null) widget.title!,
+            Expanded(child: slider),
+          ],
+        ),
+      );
+    }
 
     return ListTile(
       subtitle: widget.subtitle,
-      trailing: trailing,
-      title: Row(
+      title: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (widget.title != null) widget.title!,
-          Expanded(
-            child: Slider(
-              label: label,
-              value: doubleValue,
-              onChanged: _onChange,
-              min: min,
-              max: max,
-              divisions: widget.divisions,
+          if (widget.title != null || trailing != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (widget.title != null) widget.title!,
+                if (trailing != null) trailing,
+              ],
             ),
-          )
+          slider,
         ],
       ),
     );
