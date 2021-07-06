@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.4.0
+
+- Option to align slider below the title and trailing for wider control
+[MrCsabaToth](https://github.com/MrCsabaToth)
+
 ## 2.3.0
 
 - Setting a value to `null` will remove it from the backend service
@@ -11,7 +16,7 @@
 
 ## 2.1.0
 
-- Expose inputFormatters in PrefText [tsonnen]
+- Expose inputFormatters in PrefText [tsonnen](https://github.com/tsonnen)
 
 ## 2.0.2
 
