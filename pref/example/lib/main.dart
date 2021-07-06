@@ -42,6 +42,7 @@ Future<void> main() async {
     'android_multilistpref_c': true,
     'exp_showos': false,
     'age': 65,
+    'weight': 60,
   });
 
   runApp(MyApp(service));
@@ -212,6 +213,15 @@ class _MyHomePageState extends State<MyHomePage> {
             trailing: (num v) => SizedBox(width: 50, child: Text('I\'m $v')),
             min: 10,
             max: 90,
+          ),
+          PrefSlider<int>(
+            title: Text('Person weight (metric)'),
+            subtitle: Text('Demonstrating a long title and wide scale slider'),
+            pref: 'weight',
+            trailing: (num v) => Text('Weighs $v kilogram'),
+            min: 10,
+            max: 250,
+            direction: Axis.vertical,
           ),
           PrefLabel(
             title: Text(
