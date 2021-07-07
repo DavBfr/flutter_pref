@@ -2,8 +2,8 @@
 
 ## 2.4.0
 
-- Option to align slider below the title and trailing for wider control
-[MrCsabaToth](https://github.com/MrCsabaToth)
+- Option to align slider below the title and trailing for wider control [MrCsabaToth](https://github.com/MrCsabaToth)
+- Add dialog onSubmit and onDismiss callbacks
 
 ## 2.3.0
 

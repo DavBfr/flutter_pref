@@ -19,6 +19,8 @@ class PrefDialogButton extends StatelessWidget {
     this.trailing,
     this.onPop,
     this.barrierDismissible = true,
+    this.onSubmit,
+    this.onDismiss,
   });
 
   /// The button title
@@ -42,15 +44,19 @@ class PrefDialogButton extends StatelessWidget {
   /// Called when the dialog is closed
   final VoidCallback? onPop;
 
+  /// Called when the dialog has been submitted
+  final VoidCallback? onSubmit;
+
+  /// Called when the dialog has been dismissed
+  final VoidCallback? onDismiss;
+
   Future<void> _onTap(BuildContext context) async {
-    if (onPop != null) {
-      onPop!();
-    }
+    onPop?.call();
 
     // Propagate the current inherited PrefService
     final service = PrefService.of(context);
 
-    await showDialog<bool>(
+    final result = await showDialog<bool>(
       context: context,
       builder: (context) => PrefService(
         service: service,
@@ -58,6 +64,12 @@ class PrefDialogButton extends StatelessWidget {
       ),
       barrierDismissible: barrierDismissible,
     );
+
+    if (result ?? false) {
+      onSubmit?.call();
+    } else {
+      onDismiss?.call();
+    }
   }
 
   @override
