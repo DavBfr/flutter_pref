@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'disabler.dart';
 import 'log.dart';
 import 'service/pref_service.dart';
 
@@ -18,7 +19,7 @@ class PrefDropdown<T> extends StatefulWidget {
     this.subtitle,
     required this.items,
     this.onChange,
-    this.disabled = false,
+    this.disabled,
     this.fullWidth = true,
   }) : super(key: key);
 
@@ -38,7 +39,7 @@ class PrefDropdown<T> extends StatefulWidget {
   final ValueChanged<T>? onChange;
 
   /// disable the widget interactions
-  final bool disabled;
+  final bool? disabled;
 
   /// Use all the available width
   final bool fullWidth;
@@ -98,15 +99,16 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
       value = null;
     }
 
+    final disabled =
+        widget.disabled ?? PrefDisableState.of(context)?.disabled ?? false;
+
     if (widget.fullWidth) {
       return ListTile(
+        enabled: !disabled,
         title: value == null
             ? null
             : DefaultTextStyle.merge(
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .copyWith(fontSize: 12),
+                style: const TextStyle(fontSize: 12),
                 child: widget.title!,
               ),
         isThreeLine: widget.subtitle != null,
@@ -117,7 +119,7 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
               hint: widget.title,
               isExpanded: true,
               items: widget.items,
-              onChanged: widget.disabled ? null : _onChange,
+              onChanged: disabled ? null : _onChange,
               value: value,
             ),
             if (widget.subtitle != null) widget.subtitle!
@@ -127,11 +129,12 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
     }
 
     return ListTile(
+      enabled: !disabled,
       title: widget.title,
       subtitle: widget.subtitle,
       trailing: DropdownButton<T>(
         items: widget.items,
-        onChanged: widget.disabled ? null : _onChange,
+        onChanged: disabled ? null : _onChange,
         value: value,
       ),
     );

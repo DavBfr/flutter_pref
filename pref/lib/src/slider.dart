@@ -7,6 +7,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'disabler.dart';
 import 'log.dart';
 import 'service/pref_service.dart';
 
@@ -18,7 +19,7 @@ class PrefSlider<T extends num> extends StatefulWidget {
     this.subtitle,
     this.ignoreTileTap = false,
     this.onChange,
-    this.disabled = false,
+    this.disabled,
     this.min,
     this.max,
     this.divisions,
@@ -35,7 +36,7 @@ class PrefSlider<T extends num> extends StatefulWidget {
 
   final bool ignoreTileTap;
 
-  final bool disabled;
+  final bool? disabled;
 
   final T? min;
 
@@ -111,6 +112,9 @@ class _PrefSliderState<T extends num> extends State<PrefSlider> {
       logger.severe('Unable to load the value', e, s);
     }
 
+    final disabled =
+        widget.disabled ?? PrefDisableState.of(context)?.disabled ?? false;
+
     final min = (widget.min ?? 0.0).toDouble();
     final max = (widget.max ?? 1.0).toDouble();
     // ignore: unnecessary_cast
@@ -123,7 +127,7 @@ class _PrefSliderState<T extends num> extends State<PrefSlider> {
     final slider = Slider(
       label: label,
       value: doubleValue,
-      onChanged: _onChange,
+      onChanged: disabled ? null : _onChange,
       min: min,
       max: max,
       divisions: widget.divisions,
@@ -131,6 +135,7 @@ class _PrefSliderState<T extends num> extends State<PrefSlider> {
 
     if (widget.direction == Axis.horizontal) {
       return ListTile(
+        enabled: !disabled,
         subtitle: widget.subtitle,
         trailing: trailing,
         title: Row(
@@ -143,6 +148,7 @@ class _PrefSliderState<T extends num> extends State<PrefSlider> {
     }
 
     return ListTile(
+      enabled: !disabled,
       subtitle: widget.subtitle,
       title: Column(
         mainAxisSize: MainAxisSize.min,

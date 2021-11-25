@@ -5,6 +5,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'disabler.dart';
+
 /// A single fixed-height row that typically contains some text as well as
 /// an optional leading icon.
 class PrefTitle extends StatelessWidget {
@@ -44,9 +46,11 @@ class PrefTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final disabled = PrefDisableState.of(context)?.disabled ?? false;
+
     final theme = Theme.of(context);
     final style = theme.textTheme.headline5!.apply(
-      color: theme.colorScheme.secondary,
+      color: disabled ? theme.disabledColor : theme.colorScheme.secondary,
     );
 
     return Container(
@@ -54,6 +58,7 @@ class PrefTitle extends StatelessWidget {
       padding: padding ?? const EdgeInsets.only(left: 10, bottom: 0, top: 20),
       decoration: decoration,
       child: ListTile(
+        enabled: !disabled,
         leading: leading,
         onTap: onTap as void Function()?,
         title: DefaultTextStyle.merge(

@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 
 import 'custom/button_group.dart';
+import 'disabler.dart';
 import 'log.dart';
 import 'service/pref_service.dart';
 
@@ -17,14 +18,14 @@ class PrefButtonGroup<T> extends StatefulWidget {
     required this.pref,
     this.subtitle,
     this.onChange,
-    this.disabled = false,
+    this.disabled,
   }) : super(key: key);
 
   final Widget? title;
   final Widget? subtitle;
   final String pref;
 
-  final bool disabled;
+  final bool? disabled;
 
   final ValueChanged<T>? onChange;
 
@@ -77,13 +78,17 @@ class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
       logger.severe('Unable to load the value', e, s);
     }
 
+    final disabled =
+        widget.disabled ?? PrefDisableState.of(context)?.disabled ?? false;
+
     return ListTile(
+      enabled: !disabled,
       title: widget.title,
       subtitle: widget.subtitle,
       trailing: ButtonGroup<T>(
         items: widget.items,
         value: value,
-        disabled: widget.disabled,
+        disabled: disabled,
         onChanged: _onChange,
       ),
     );

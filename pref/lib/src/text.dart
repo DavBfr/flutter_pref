@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'disabler.dart';
 import 'log.dart';
 import 'service/pref_service.dart';
 
@@ -28,7 +29,7 @@ class PrefText extends StatefulWidget {
     this.keyboardType,
     this.labelStyle,
     this.decoration,
-    this.disabled = false,
+    this.disabled,
   }) : super(key: key);
 
   /// Expose for end users
@@ -64,7 +65,7 @@ class PrefText extends StatefulWidget {
 
   final FormFieldValidator<String>? validator;
 
-  final bool disabled;
+  final bool? disabled;
 
   @override
   _PrefTextState createState() => _PrefTextState();
@@ -102,6 +103,9 @@ class _PrefTextState extends State<PrefText> {
 
   @override
   Widget build(BuildContext context) {
+    final disabled =
+        widget.disabled ?? PrefDisableState.of(context)?.disabled ?? false;
+
     return Padding(
       padding: widget.padding ??
           const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
@@ -123,7 +127,7 @@ class _PrefTextState extends State<PrefText> {
             keyboardType: widget.keyboardType,
             obscureText: widget.obscureText,
             validator: widget.validator,
-            enabled: !widget.disabled,
+            enabled: !disabled,
           ),
         ),
       ),

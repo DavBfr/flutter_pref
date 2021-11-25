@@ -10,6 +10,7 @@ export 'src/choice.dart';
 export 'src/custom/button_group.dart' show ButtonGroupItem;
 export 'src/dialog.dart';
 export 'src/dialog_button.dart';
+export 'src/disabler.dart';
 export 'src/dropdown.dart';
 export 'src/hider.dart';
 export 'src/label.dart';

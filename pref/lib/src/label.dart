@@ -5,6 +5,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'disabler.dart';
+
 /// A label
 class PrefLabel extends StatelessWidget {
   /// Create a label
@@ -42,11 +44,14 @@ class PrefLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final disabled = PrefDisableState.of(context)?.disabled ?? false;
+
     return Container(
       margin: margin,
       padding: padding,
       decoration: decoration,
       child: ListTile(
+        enabled: !disabled,
         leading: leading,
         onTap: onTap as void Function()?,
         title: DefaultTextStyle.merge(

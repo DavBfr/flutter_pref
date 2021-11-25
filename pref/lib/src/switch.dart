@@ -6,6 +6,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:pref/pref.dart';
 
 import 'checkbox.dart';
 import 'log.dart';
@@ -19,7 +20,7 @@ class PrefSwitch extends StatefulWidget {
     this.subtitle,
     this.ignoreTileTap = false,
     this.onChange,
-    this.disabled = false,
+    this.disabled,
     this.reversed = false,
     this.switchActiveColor,
   }) : super(key: key);
@@ -34,7 +35,7 @@ class PrefSwitch extends StatefulWidget {
 
   final ValueChanged<bool>? onChange;
 
-  final bool disabled;
+  final bool? disabled;
 
   final Color? switchActiveColor;
 
@@ -80,6 +81,9 @@ class _PrefSwitchState extends State<PrefSwitch> {
   Widget build(BuildContext context) {
     bool? value;
 
+    final disabled =
+        widget.disabled ?? PrefDisableState.of(context)?.disabled ?? false;
+
     try {
       value = PrefService.of(context).get(widget.pref);
     } catch (e, s) {
@@ -97,20 +101,21 @@ class _PrefSwitchState extends State<PrefSwitch> {
         subtitle: widget.subtitle,
         ignoreTileTap: widget.ignoreTileTap,
         onChange: widget.onChange,
-        disabled: widget.disabled,
+        disabled: disabled,
         reversed: widget.reversed,
       );
     }
 
     return ListTile(
+      enabled: !disabled,
       title: widget.title,
       subtitle: widget.subtitle,
       trailing: Switch.adaptive(
         value: value,
         activeColor: widget.switchActiveColor,
-        onChanged: widget.disabled ? null : (value) => _onChange(value),
+        onChanged: disabled ? null : (value) => _onChange(value),
       ),
-      onTap: (widget.disabled || widget.ignoreTileTap)
+      onTap: (disabled || widget.ignoreTileTap)
           ? null
           : () => _onChange(!(value ?? true)),
     );

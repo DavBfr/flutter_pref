@@ -5,6 +5,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'disabler.dart';
+
 /// Button
 class PrefButton extends StatelessWidget {
   /// Create a PrefButton Widget
@@ -50,16 +52,19 @@ class PrefButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final disabled = PrefDisableState.of(context)?.disabled ?? false;
+
     final button = MaterialButton(
       color: color ?? theme.buttonTheme.colorScheme?.background,
       textColor: textColor,
-      onPressed: onTap,
+      onPressed: disabled ? null : onTap,
       child: child,
     );
 
     return Container(
       decoration: decoration,
       child: ListTile(
+        enabled: !disabled,
         leading: leading,
         title: title ?? button,
         trailing: title == null ? null : button,

@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'disabler.dart';
 import 'log.dart';
 import 'service/pref_service.dart';
 
@@ -18,7 +19,7 @@ class PrefRadio<T> extends StatefulWidget {
     this.selected = false,
     this.ignoreTileTap = false,
     this.onSelect,
-    this.disabled = false,
+    this.disabled,
     this.leading,
     this.radioFirst = false,
   })  : assert(value != null),
@@ -38,7 +39,7 @@ class PrefRadio<T> extends StatefulWidget {
 
   final bool ignoreTileTap;
 
-  final bool disabled;
+  final bool? disabled;
 
   final bool radioFirst;
 
@@ -88,33 +89,37 @@ class _PrefRadioState<T> extends State<PrefRadio<T>> {
       logger.severe('Unable to load the value', e, s);
     }
 
+    final disabled =
+        widget.disabled ?? PrefDisableState.of(context)?.disabled ?? false;
+
     if (widget.radioFirst) {
       return ListTile(
+        enabled: !disabled,
         title: widget.title,
         trailing: widget.leading,
         subtitle: widget.subtitle,
         leading: Radio<T>(
           value: widget.value,
           groupValue: value,
-          onChanged:
-              widget.disabled ? null : (T? val) => _onChange(widget.value),
+          onChanged: disabled ? null : (T? val) => _onChange(widget.value),
         ),
-        onTap: (widget.ignoreTileTap || widget.disabled)
+        onTap: (widget.ignoreTileTap || disabled)
             ? null
             : () => _onChange(widget.value),
       );
     }
 
     return ListTile(
+      enabled: !disabled,
       title: widget.title,
       leading: widget.leading,
       subtitle: widget.subtitle,
       trailing: Radio<T>(
         value: widget.value,
         groupValue: value,
-        onChanged: widget.disabled ? null : (T? val) => _onChange(widget.value),
+        onChanged: disabled ? null : (T? val) => _onChange(widget.value),
       ),
-      onTap: (widget.ignoreTileTap || widget.disabled)
+      onTap: (widget.ignoreTileTap || disabled)
           ? null
           : () => _onChange(widget.value),
     );

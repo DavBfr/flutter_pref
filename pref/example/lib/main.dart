@@ -168,17 +168,24 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: Text('New Posts from Friends'),
                   pref: 'notification_newpost_friend',
                 ),
-                PrefTitle(title: Text('Private Messages')),
-                PrefSwitch(
-                  title: Text('Private Messages from Friends'),
-                  pref: 'notification_pm_friend',
-                ),
-                PrefSwitch(
-                  title: Text('Private Messages from Strangers'),
-                  pref: 'notification_pm_stranger',
-                  onChange: (value) async {
-                    debugPrint('notification_pm_stranger changed to: $value');
-                  },
+                PrefDisabler(
+                  pref: 'notification_newpost_friend',
+                  reversed: true,
+                  children: [
+                    PrefTitle(title: Text('Private Messages')),
+                    PrefSwitch(
+                      title: Text('Private Messages from Friends'),
+                      pref: 'notification_pm_friend',
+                    ),
+                    PrefSwitch(
+                      title: Text('Private Messages from Strangers'),
+                      pref: 'notification_pm_stranger',
+                      onChange: (value) async {
+                        debugPrint(
+                            'notification_pm_stranger changed to: $value');
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

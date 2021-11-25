@@ -5,6 +5,7 @@
 - Add ProxyPrefService
 - Use flutter_lints
 - Actually update the state when a preference is changed
+- Add PrefDisabler
 
 ## 2.4.0
 

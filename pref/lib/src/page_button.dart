@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'disabler.dart';
 import 'page.dart';
 
 class PrefPageButton extends StatelessWidget {
@@ -27,7 +28,10 @@ class PrefPageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final disabled = PrefDisableState.of(context)?.disabled ?? false;
+
     return ListTile(
+      enabled: !disabled,
       onTap: () => Navigator.of(context).push<void>(
         MaterialPageRoute(
           builder: (context) => Scaffold(

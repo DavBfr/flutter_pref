@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 
 import 'dialog.dart';
+import 'disabler.dart';
 import 'service/pref_service.dart';
 
 /// A button to open a preferences dialog
@@ -18,6 +19,7 @@ class PrefDialogButton extends StatelessWidget {
     this.subtitle,
     this.leading,
     this.trailing,
+    this.disabled,
     this.onPop,
     this.barrierDismissible = true,
     this.onSubmit,
@@ -38,6 +40,9 @@ class PrefDialogButton extends StatelessWidget {
 
   /// A trailing widget
   final Widget? trailing;
+
+  /// Disable user interactions
+  final bool? disabled;
 
   /// Allow the dialog to be closed if clicked outside
   final bool barrierDismissible;
@@ -75,7 +80,11 @@ class PrefDialogButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _disabled =
+        disabled ?? PrefDisableState.of(context)?.disabled ?? false;
+
     return ListTile(
+      enabled: !_disabled,
       onTap: () => _onTap(context),
       title: title,
       subtitle: subtitle,

@@ -7,6 +7,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'disabler.dart';
 import 'log.dart';
 import 'service/pref_service.dart';
 
@@ -20,7 +21,7 @@ class PrefCheckbox extends StatefulWidget {
     this.subtitle,
     this.ignoreTileTap = false,
     this.onChange,
-    this.disabled = false,
+    this.disabled,
     this.reversed = false,
   }) : super(key: key);
 
@@ -37,7 +38,7 @@ class PrefCheckbox extends StatefulWidget {
   final bool ignoreTileTap;
 
   /// Disable user interactions
-  final bool disabled;
+  final bool? disabled;
 
   /// Reverse the checked status (!pref)
   final bool reversed;
@@ -93,15 +94,19 @@ class _PrefCheckboxState extends State<PrefCheckbox> {
       value = !value;
     }
 
+    final disabled =
+        widget.disabled ?? PrefDisableState.of(context)?.disabled ?? false;
+
     return ListTile(
+      enabled: !disabled,
       title: widget.title,
       subtitle: widget.subtitle,
       trailing: Checkbox(
         value: value,
         tristate: value == null,
-        onChanged: widget.disabled ? null : (val) => _onChange(val!),
+        onChanged: disabled ? null : (val) => _onChange(val!),
       ),
-      onTap: (widget.ignoreTileTap || widget.disabled)
+      onTap: (widget.ignoreTileTap || disabled)
           ? null
           : () => _onChange(!(value ?? true)),
     );

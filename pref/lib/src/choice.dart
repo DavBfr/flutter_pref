@@ -22,7 +22,7 @@ class PrefChoice<T> extends StatefulWidget {
     this.subtitle,
     required this.items,
     this.onChange,
-    this.disabled = false,
+    this.disabled,
     this.cancel,
     this.submit,
     this.radioFirst = true,
@@ -44,7 +44,7 @@ class PrefChoice<T> extends StatefulWidget {
   final ValueChanged<T>? onChange;
 
   /// Disable user interactions
-  final bool disabled;
+  final bool? disabled;
 
   /// Submit button
   final Widget? submit;
@@ -103,7 +103,11 @@ class _PrefChoiceState<T> extends State<PrefChoice<T>> {
       value = null;
     }
 
+    final disabled =
+        widget.disabled ?? PrefDisableState.of(context)?.disabled ?? false;
+
     return PrefDialogButton(
+      disabled: disabled,
       title: widget.title,
       subtitle: widget.subtitle ?? selected,
       dialog: PrefDialog(
@@ -117,7 +121,6 @@ class _PrefChoiceState<T> extends State<PrefChoice<T>> {
               (e) => PrefRadio<T?>(
                 title: e.child,
                 value: e.value,
-                disabled: widget.disabled,
                 pref: widget.pref,
                 radioFirst: widget.radioFirst,
               ),
