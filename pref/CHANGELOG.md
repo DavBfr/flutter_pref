@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.0
+
+- Add ProxyPrefService
+
 ## 2.4.0
 
 - Option to align slider below the title and trailing for wider control [MrCsabaToth](https://github.com/MrCsabaToth)
