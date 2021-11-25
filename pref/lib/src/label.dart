@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 class PrefLabel extends StatelessWidget {
   /// Create a label
   const PrefLabel({
+    Key? key,
     required this.title,
     this.decoration,
     this.leading,
@@ -16,7 +17,7 @@ class PrefLabel extends StatelessWidget {
     this.onTap,
     this.margin,
     this.padding,
-  });
+  }) : super(key: key);
 
   /// the label's title
   final Widget title;

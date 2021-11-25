@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 class PrefTitle extends StatelessWidget {
   /// Creates a preference title.
   const PrefTitle({
+    Key? key,
     required this.title,
     this.decoration,
     this.leading,
@@ -17,7 +18,7 @@ class PrefTitle extends StatelessWidget {
     this.onTap,
     this.margin,
     this.padding,
-  });
+  }) : super(key: key);
 
   /// The primary content of the Title.
   final Widget title;
@@ -44,7 +45,9 @@ class PrefTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final style = theme.textTheme.headline5!.apply(color: theme.accentColor);
+    final style = theme.textTheme.headline5!.apply(
+      color: theme.colorScheme.secondary,
+    );
 
     return Container(
       margin: margin,

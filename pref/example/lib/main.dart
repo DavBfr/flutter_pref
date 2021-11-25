@@ -15,7 +15,7 @@ Future<void> main() async {
   // Initialize the logger
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
-    print('${record.loggerName} ${record.level.name}: ${record.message}');
+    debugPrint('${record.loggerName} ${record.level.name}: ${record.message}');
   });
 
   // This PrefService is in memory only.
@@ -49,7 +49,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatefulWidget {
-  MyApp(this.service);
+  const MyApp(this.service, {Key? key}) : super(key: key);
 
   final BasePrefService service;
 
@@ -177,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: Text('Private Messages from Strangers'),
                   pref: 'notification_pm_stranger',
                   onChange: (value) async {
-                    print('notification_pm_stranger changed to: $value');
+                    debugPrint('notification_pm_stranger changed to: $value');
                   },
                 ),
               ],
@@ -271,7 +271,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           PrefButton(
-            onTap: () => print('DELETE!'),
+            onTap: () => debugPrint('DELETE!'),
             color: Colors.red,
             child: Text('Delete'),
           ),

@@ -3,6 +3,7 @@
 ## 2.5.0
 
 - Add ProxyPrefService
+- Use flutter_lints
 
 ## 2.4.0
 
