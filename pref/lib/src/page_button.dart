@@ -4,6 +4,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:pref/src/chevron.dart';
 
 import 'disabler.dart';
 import 'page.dart';
@@ -30,18 +31,19 @@ class PrefPageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final disabled = PrefDisableState.of(context)?.disabled ?? false;
 
-    return ListTile(
-      enabled: !disabled,
-      onTap: () => Navigator.of(context).push<void>(
-        MaterialPageRoute(
-          builder: (context) => Scaffold(
-            appBar: AppBar(
-              title: pageTitle ?? title,
-            ),
-            body: page,
-          ),
-        ),
-      ),
+    return PrefChevron(
+      onTap: disabled
+          ? null
+          : () => Navigator.of(context).push<void>(
+                MaterialPageRoute(
+                  builder: (context) => Scaffold(
+                    appBar: AppBar(
+                      title: pageTitle ?? title,
+                    ),
+                    body: page,
+                  ),
+                ),
+              ),
       title: title,
       subtitle: subtitle,
       leading: leading,

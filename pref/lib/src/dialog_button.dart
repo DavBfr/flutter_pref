@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'chevron.dart';
 import 'dialog.dart';
 import 'disabler.dart';
 import 'service/pref_service.dart';
@@ -83,9 +84,8 @@ class PrefDialogButton extends StatelessWidget {
     final _disabled =
         disabled ?? PrefDisableState.of(context)?.disabled ?? false;
 
-    return ListTile(
-      enabled: !_disabled,
-      onTap: () => _onTap(context),
+    return PrefChevron(
+      onTap: () => _disabled ? null : _onTap(context),
       title: title,
       subtitle: subtitle,
       leading: leading,
