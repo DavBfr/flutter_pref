@@ -9,12 +9,12 @@ import 'package:flutter/material.dart';
 
 import 'base.dart';
 
-class PrefService extends InheritedWidget {
+class PrefService extends InheritedNotifier {
   const PrefService({
     Key? key,
     required Widget child,
     required this.service,
-  }) : super(key: key, child: child);
+  }) : super(key: key, child: child, notifier: service);
 
   final BasePrefService service;
 
