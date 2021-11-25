@@ -34,7 +34,7 @@ class PrefLabel extends StatelessWidget {
   final Widget? subtitle;
 
   /// called when the user actionate the label
-  final Function? onTap;
+  final VoidCallback? onTap;
 
   /// padding
   final EdgeInsetsGeometry? padding;
@@ -53,7 +53,7 @@ class PrefLabel extends StatelessWidget {
       child: ListTile(
         enabled: !disabled,
         leading: leading,
-        onTap: onTap as void Function()?,
+        onTap: onTap,
         title: DefaultTextStyle.merge(
           overflow: TextOverflow.ellipsis,
           child: title,

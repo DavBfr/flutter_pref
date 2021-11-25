@@ -159,7 +159,6 @@ class _MyHomePageState extends State<MyHomePage> {
           PrefPageButton(
             title: Text('Notifications'),
             leading: Icon(Icons.message),
-            trailing: Icon(Icons.keyboard_arrow_right),
             page: PrefPage(
               cache: true,
               children: [
@@ -233,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
           PrefLabel(
             title: Text(
               PrefService.of(context).get<String>('user_description') ?? '',
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(color: Colors.pink),
             ),
           ),
           PrefDialogButton(
