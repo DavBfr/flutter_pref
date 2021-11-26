@@ -6,8 +6,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pref/pref.dart';
 
+import '../pref.dart';
 import 'checkbox.dart';
 import 'log.dart';
 import 'service/pref_service.dart';

@@ -4,8 +4,8 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:pref/src/chevron.dart';
 
+import 'chevron.dart';
 import 'disabler.dart';
 import 'page.dart';
 
