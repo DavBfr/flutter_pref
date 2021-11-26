@@ -7,6 +7,7 @@
 - Actually update the state when a preference is changed
 - Add PrefDisabler
 - Add PrefChevron button
+- Fix PrefSlider layout
 
 ## 2.4.0
 

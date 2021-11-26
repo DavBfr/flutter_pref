@@ -158,7 +158,7 @@ class _PrefSliderState<T extends num> extends State<PrefSlider> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (widget.title != null) widget.title!,
+                if (widget.title != null) Expanded(child: widget.title!),
                 if (trailing != null) trailing,
               ],
             ),
