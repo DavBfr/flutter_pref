@@ -5,6 +5,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../pref.dart';
@@ -75,6 +76,18 @@ class _PrefSwitchState extends State<PrefSwitch> {
     if (widget.onChange != null) {
       widget.onChange!(value);
     }
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    final dynamic value = PrefService.of(context).get<dynamic>(widget.pref);
+    properties.add(DiagnosticsProperty(
+      'pref',
+      value,
+      description: '${widget.pref} = $value',
+    ));
   }
 
   @override

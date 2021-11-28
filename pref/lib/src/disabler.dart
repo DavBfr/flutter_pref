@@ -3,6 +3,7 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'log.dart';
@@ -22,6 +23,12 @@ class PrefDisableState extends InheritedWidget {
 
   static PrefDisableState? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<PrefDisableState>();
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('disabled', disabled));
   }
 
   @override
@@ -78,6 +85,18 @@ class _PrefDisablerState extends State<PrefDisabler> {
 
   void _onNotify() {
     setState(() {});
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    final dynamic value = PrefService.of(context).get<dynamic>(widget.pref);
+    properties.add(DiagnosticsProperty(
+      'pref',
+      value,
+      description: '${widget.pref} = $value',
+    ));
   }
 
   @override

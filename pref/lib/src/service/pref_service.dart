@@ -5,6 +5,7 @@
 
 import 'dart:core';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'base.dart';
@@ -28,5 +29,12 @@ class PrefService extends InheritedNotifier {
     }
 
     return context.findAncestorWidgetOfExactType<PrefService>()!.service;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('service', service));
+    service.debugFillProperties(properties);
   }
 }

@@ -8,6 +8,7 @@
 - Add PrefDisabler
 - Add PrefChevron button
 - Fix PrefSlider layout
+- Add DevTools support
 
 ## 2.4.0
 

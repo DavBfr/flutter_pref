@@ -3,6 +3,7 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'custom/button_group.dart';
@@ -67,6 +68,18 @@ class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
     if (widget.onChange != null) {
       widget.onChange!(value);
     }
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    final dynamic value = PrefService.of(context).get<dynamic>(widget.pref);
+    properties.add(DiagnosticsProperty(
+      'pref',
+      value,
+      description: '${widget.pref} = $value',
+    ));
   }
 
   @override

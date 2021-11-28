@@ -6,6 +6,7 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'base.dart';
@@ -99,5 +100,11 @@ class PrefServiceShared extends BasePrefService {
 
     super.clear();
     return result;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(StringProperty('prefix', prefix));
   }
 }

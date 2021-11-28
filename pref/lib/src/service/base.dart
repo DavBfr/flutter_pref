@@ -6,12 +6,14 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../log.dart';
 
 /// Base class for the preferences storage
-abstract class BasePrefService extends ChangeNotifier {
+abstract class BasePrefService extends ChangeNotifier
+    with DiagnosticableTreeMixin {
   final _keyListeners = <String, Set<VoidCallback>>{};
   final _secretKeys = <String>{};
 
@@ -174,7 +176,24 @@ abstract class BasePrefService extends ChangeNotifier {
   }
 
   @override
-  String toString() => toMap().toString();
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    for (final key in getKeys().toList()..sort()) {
+      final dynamic value = get<dynamic>(key);
+      if (value is int) {
+        properties.add(IntProperty(key, value));
+      } else if (value is double) {
+        properties.add(DoubleProperty(key, value));
+      } else if (value is String) {
+        properties.add(StringProperty(key, value));
+      } else if (value is Enum) {
+        properties.add(EnumProperty(key, value));
+      } else {
+        properties.add(DiagnosticsProperty(key, value));
+      }
+    }
+  }
 
   /// Get a preference value
   T? get<T>(String key);

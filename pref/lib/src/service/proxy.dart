@@ -6,9 +6,11 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
+
 import 'base.dart';
 
-class ProxyPrefService implements BasePrefService {
+class ProxyPrefService with DiagnosticableTreeMixin implements BasePrefService {
   const ProxyPrefService(this._proxy);
 
   final BasePrefService _proxy;
@@ -109,5 +111,11 @@ class ProxyPrefService implements BasePrefService {
   @override
   Map<String, dynamic> toMap() {
     return _proxy.toMap();
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _proxy.debugFillProperties(properties);
   }
 }
