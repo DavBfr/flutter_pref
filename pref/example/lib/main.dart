@@ -19,7 +19,8 @@ Future<void> main() async {
   });
 
   // This PrefService is in memory only.
-  // Use PrefServiceShared.init() to store the settings permanantly
+  // Use PrefServiceShared.init() to store the settings permanantly:
+  //   final service = await PrefServiceShared.init();
   final service = PrefServiceCache();
   service.makeSecret('user_email'); // Prevent the logger to display the value
   await service.setDefaultValues(<String, dynamic>{
