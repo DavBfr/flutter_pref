@@ -7,11 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../pref.dart';
-import 'dialog.dart';
-import 'dialog_button.dart';
 import 'log.dart';
-import 'radio.dart';
-import 'service/pref_service.dart';
 
 /// Display a Dialog with a list of items to choose
 class PrefChoice<T> extends StatefulWidget {

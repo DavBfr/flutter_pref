@@ -9,9 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../pref.dart';
-import 'checkbox.dart';
 import 'log.dart';
-import 'service/pref_service.dart';
 
 class PrefSwitch extends StatefulWidget {
   const PrefSwitch({
