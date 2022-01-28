@@ -9,6 +9,7 @@
 - Add PrefChevron button
 - Fix PrefSlider layout
 - Add DevTools support
+- Add adaptive property to Switch
 
 ## 2.4.0
 

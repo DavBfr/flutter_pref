@@ -24,6 +24,7 @@ class PrefSwitch extends StatefulWidget {
     this.disabled,
     this.reversed = false,
     this.switchActiveColor,
+    this.adaptive = true,
   }) : super(key: key);
 
   final Widget? title;
@@ -41,6 +42,8 @@ class PrefSwitch extends StatefulWidget {
   final Color? switchActiveColor;
 
   final bool reversed;
+
+  final bool adaptive;
 
   @override
   _PrefSwitchState createState() => _PrefSwitchState();
@@ -123,11 +126,17 @@ class _PrefSwitchState extends State<PrefSwitch> {
       enabled: !disabled,
       title: widget.title,
       subtitle: widget.subtitle,
-      trailing: Switch.adaptive(
-        value: value,
-        activeColor: widget.switchActiveColor,
-        onChanged: disabled ? null : (value) => _onChange(value),
-      ),
+      trailing: widget.adaptive
+          ? Switch.adaptive(
+              value: value,
+              activeColor: widget.switchActiveColor,
+              onChanged: disabled ? null : (value) => _onChange(value),
+            )
+          : Switch(
+              value: value,
+              activeColor: widget.switchActiveColor,
+              onChanged: disabled ? null : (value) => _onChange(value),
+            ),
       onTap: (disabled || widget.ignoreTileTap)
           ? null
           : () => _onChange(!(value ?? true)),
