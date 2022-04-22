@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.0
+
+- Add PrefCustom and a PrefColor example
+
 ## 2.5.0
 
 - Add ProxyPrefService

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:example/custom.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
@@ -31,6 +32,7 @@ Future<void> main() async {
     'notification_newpost_friend': true,
     'notification_pm_stranger': false,
     'ui_theme': 'light',
+    'ui_color': Colors.blue.value,
     'user_email': 'email@gmail.com',
     'gender': 2,
     'content_show_text': false,
@@ -60,12 +62,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ThemeMode? _brightness;
+  Color? _uiColor;
 
   StreamSubscription<String>? _stream;
+  StreamSubscription<int?>? _streamColor;
 
   @override
   void dispose() {
     _stream?.cancel();
+    _streamColor?.cancel();
 
     super.dispose();
   }
@@ -88,13 +93,22 @@ class _MyAppState extends State<MyApp> {
       });
     });
 
+    _streamColor ??= widget.service.stream<int?>('ui_color').listen((event) {
+      setState(() {
+        _uiColor = event == null ? null : Color(event);
+      });
+    });
+
     return PrefService(
       service: widget.service,
       child: MaterialApp(
         title: 'Pref Demo',
         themeMode: _brightness,
-        theme: ThemeData.light(),
-        darkTheme: ThemeData.dark(),
+        theme: ThemeData.light()
+            .copyWith(colorScheme: ColorScheme.fromSeed(seedColor: _uiColor!)),
+        darkTheme: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.fromSeed(
+                seedColor: _uiColor!, brightness: Brightness.dark)),
         home: MyHomePage(title: 'Pref Demo'),
       ),
     );
@@ -155,6 +169,10 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text('Dark Theme'),
             value: 'dark',
             pref: 'ui_theme',
+          ),
+          PrefColor(
+            title: Text('Preferred color'),
+            pref: 'ui_color',
           ),
           PrefTitle(title: Text('Messaging')),
           PrefPageButton(
