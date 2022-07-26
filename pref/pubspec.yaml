@@ -3,7 +3,7 @@ description: Create Preference Screens easily with advanced features and sub-pag
 homepage: https://github.com/DavBfr/flutter_pref/tree/master/pref
 repository: https://github.com/DavBfr/flutter_pref
 issue_tracker: https://github.com/DavBfr/flutter_pref/issues
-version: 2.6.0
+version: 2.6.1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -16,7 +16,7 @@ dependencies:
   shared_preferences: ^2.0.0
 
 dev_dependencies:
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
 
