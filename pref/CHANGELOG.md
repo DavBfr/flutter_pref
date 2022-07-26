@@ -1,9 +1,10 @@
 # Changelog
 
-## 2.6.1
+## 2.7.0
 
 - Update dependencies
 - Fix flutter_lints 2.0 warnings
+- Add custom actions to PrefDialog
 
 ## 2.6.0
 

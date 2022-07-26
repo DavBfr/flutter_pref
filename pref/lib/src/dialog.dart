@@ -19,6 +19,7 @@ class PrefDialog extends PrefCache {
     bool? onlySaveOnSubmit,
     this.dismissOnChange = false,
     this.cancel,
+    this.actions = const [],
   }) : super(key: key, cache: onlySaveOnSubmit ?? submit != null);
 
   /// The Dialog title
@@ -33,6 +34,9 @@ class PrefDialog extends PrefCache {
   /// The cancel button
   final Widget? cancel;
 
+  /// Some additional actions
+  final List<Widget> actions;
+
   /// Automatically close the dialog if the preferences are updated
   final bool dismissOnChange;
 
@@ -44,7 +48,7 @@ class PrefDialog extends PrefCache {
 class PrefDialogState extends PrefCacheState<PrefDialog> {
   @override
   Widget buildChild(BuildContext context) {
-    final actions = <Widget>[];
+    final actions = <Widget>[...widget.actions];
 
     if (widget.cancel != null && widget.cache) {
       actions.add(
