@@ -48,10 +48,10 @@ class PrefCustom<T> extends StatefulWidget {
   final Widget Function(BuildContext context, T? value)? builder;
 
   @override
-  _PrefCustomState<T> createState() => _PrefCustomState<T>();
+  PrefCustomState<T> createState() => PrefCustomState<T>();
 }
 
-class _PrefCustomState<T> extends State<PrefCustom<T>> {
+class PrefCustomState<T> extends State<PrefCustom<T>> {
   @override
   void didChangeDependencies() {
     PrefService.of(context).addKeyListener(widget.pref, _onNotify);

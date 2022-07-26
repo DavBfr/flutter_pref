@@ -10,9 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_colorpicker:
   logging:
   pref:
-  flutter_colorpicker:
 
 dependency_overrides:
   pref:

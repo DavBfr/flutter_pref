@@ -53,10 +53,10 @@ class PrefChoice<T> extends StatefulWidget {
   final bool radioFirst;
 
   @override
-  _PrefChoiceState<T> createState() => _PrefChoiceState<T>();
+  PrefChoiceState<T> createState() => PrefChoiceState<T>();
 }
 
-class _PrefChoiceState<T> extends State<PrefChoice<T>> {
+class PrefChoiceState<T> extends State<PrefChoice<T>> {
   @override
   void didChangeDependencies() {
     PrefService.of(context).addKeyListener(widget.pref, _onNotify);

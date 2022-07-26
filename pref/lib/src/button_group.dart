@@ -33,10 +33,10 @@ class PrefButtonGroup<T> extends StatefulWidget {
   final List<ButtonGroupItem<T>> items;
 
   @override
-  _PrefButtonGroupState createState() => _PrefButtonGroupState<T>();
+  PrefButtonGroupState createState() => PrefButtonGroupState<T>();
 }
 
-class _PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
+class PrefButtonGroupState<T> extends State<PrefButtonGroup<T>> {
   @override
   void didChangeDependencies() {
     PrefService.of(context).addKeyListener(widget.pref, _onNotify);

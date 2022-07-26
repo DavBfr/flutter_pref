@@ -48,10 +48,10 @@ class PrefCheckbox extends StatefulWidget {
   final ValueChanged<bool>? onChange;
 
   @override
-  _PrefCheckboxState createState() => _PrefCheckboxState();
+  PrefCheckboxState createState() => PrefCheckboxState();
 }
 
-class _PrefCheckboxState extends State<PrefCheckbox> {
+class PrefCheckboxState extends State<PrefCheckbox> {
   @override
   void didChangeDependencies() {
     PrefService.of(context).addKeyListener(widget.pref, _onNotify);

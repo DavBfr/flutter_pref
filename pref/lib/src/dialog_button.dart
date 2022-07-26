@@ -81,11 +81,11 @@ class PrefDialogButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _disabled =
+    final localDisabled =
         disabled ?? PrefDisableState.of(context)?.disabled ?? false;
 
     return PrefChevron(
-      onTap: () => _disabled ? null : _onTap(context),
+      onTap: () => localDisabled ? null : _onTap(context),
       title: title,
       subtitle: subtitle,
       leading: leading,

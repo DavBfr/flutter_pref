@@ -54,17 +54,17 @@ class PrefDisabler extends StatefulWidget {
   /// The preference key
   final String pref;
 
-  /// reverse the behavour
+  /// reverse the behavior
   final bool reversed;
 
   /// the fallback value if the pref value is null
   final bool nullValue;
 
   @override
-  _PrefDisablerState createState() => _PrefDisablerState();
+  PrefDisablerState createState() => PrefDisablerState();
 }
 
-class _PrefDisablerState extends State<PrefDisabler> {
+class PrefDisablerState extends State<PrefDisabler> {
   @override
   void didChangeDependencies() {
     PrefService.of(context).addKeyListener(widget.pref, _onNotify);

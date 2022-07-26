@@ -61,8 +61,9 @@ class PrefDialogState extends PrefCacheState<PrefDialog> {
       actions.add(
         TextButton(
           onPressed: () async {
+            final navigator = Navigator.of(context);
             await apply();
-            Navigator.of(context).pop(true);
+            navigator.pop(true);
           },
           child: widget.submit!,
         ),
@@ -70,15 +71,16 @@ class PrefDialogState extends PrefCacheState<PrefDialog> {
     }
 
     if (widget.dismissOnChange) {
-      late Function f;
+      late final void Function() f;
 
       f = () async {
-        PrefService.of(context).removeListener(f as void Function());
+        final navigator = Navigator.of(context);
+        PrefService.of(context).removeListener(f);
         await apply();
-        Navigator.of(context).pop(true);
+        navigator.pop(true);
       };
 
-      PrefService.of(context).addListener(f as void Function());
+      PrefService.of(context).addListener(f);
     }
 
     return AlertDialog(

@@ -68,10 +68,10 @@ class PrefText extends StatefulWidget {
   final bool? disabled;
 
   @override
-  _PrefTextState createState() => _PrefTextState();
+  PrefTextState createState() => PrefTextState();
 }
 
-class _PrefTextState extends State<PrefText> {
+class PrefTextState extends State<PrefText> {
   TextEditingController controller = TextEditingController();
   bool _initialized = false;
 

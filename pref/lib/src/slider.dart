@@ -54,10 +54,10 @@ class PrefSlider<T extends num> extends StatefulWidget {
   final Axis direction;
 
   @override
-  _PrefSliderState createState() => _PrefSliderState<T>();
+  PrefSliderState createState() => PrefSliderState<T>();
 }
 
-class _PrefSliderState<T extends num> extends State<PrefSlider> {
+class PrefSliderState<T extends num> extends State<PrefSlider> {
   @override
   void didChangeDependencies() {
     PrefService.of(context).addKeyListener(widget.pref, _onNotify);

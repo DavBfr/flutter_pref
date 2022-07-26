@@ -3,6 +3,7 @@
 ## 2.6.1
 
 - Update dependencies
+- Fix flutter_lints 2.0 warnings
 
 ## 2.6.0
 

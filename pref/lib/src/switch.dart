@@ -44,10 +44,10 @@ class PrefSwitch extends StatefulWidget {
   final bool adaptive;
 
   @override
-  _PrefSwitchState createState() => _PrefSwitchState();
+  PrefSwitchState createState() => PrefSwitchState();
 }
 
-class _PrefSwitchState extends State<PrefSwitch> {
+class PrefSwitchState extends State<PrefSwitch> {
   @override
   void didChangeDependencies() {
     PrefService.of(context).addKeyListener(widget.pref, _onNotify);

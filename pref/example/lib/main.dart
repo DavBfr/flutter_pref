@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:example/custom.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:pref/pref.dart';
+
+import 'custom.dart';
 
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_constructors_in_immutables

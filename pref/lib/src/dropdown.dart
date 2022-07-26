@@ -37,7 +37,7 @@ class PrefDropdown<T> extends StatefulWidget {
   final List<DropdownMenuItem<T>> items;
 
   /// Called when the value changes
-  final ValueChanged<T>? onChange;
+  final ValueChanged<T?>? onChange;
 
   /// disable the widget interactions
   final bool? disabled;
@@ -46,10 +46,10 @@ class PrefDropdown<T> extends StatefulWidget {
   final bool fullWidth;
 
   @override
-  _PrefDropdownState<T> createState() => _PrefDropdownState<T>();
+  PrefDropdownState<T> createState() => PrefDropdownState<T>();
 }
 
-class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
+class PrefDropdownState<T> extends State<PrefDropdown<T>> {
   @override
   void didChangeDependencies() {
     PrefService.of(context).addKeyListener(widget.pref, _onNotify);
@@ -76,7 +76,7 @@ class _PrefDropdownState<T> extends State<PrefDropdown<T>> {
     PrefService.of(context, listen: false).set(widget.pref, val);
 
     if (widget.onChange != null) {
-      widget.onChange!(val!);
+      widget.onChange!(val);
     }
   }
 

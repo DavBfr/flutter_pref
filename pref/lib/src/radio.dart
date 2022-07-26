@@ -47,10 +47,10 @@ class PrefRadio<T> extends StatefulWidget {
   final Widget? leading;
 
   @override
-  _PrefRadioState createState() => _PrefRadioState<T>();
+  PrefRadioState createState() => PrefRadioState<T>();
 }
 
-class _PrefRadioState<T> extends State<PrefRadio<T>> {
+class PrefRadioState<T> extends State<PrefRadio<T>> {
   @override
   void didChangeDependencies() {
     PrefService.of(context).addKeyListener(widget.pref, _onNotify);
