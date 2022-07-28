@@ -78,12 +78,12 @@ abstract class BasePrefService extends ChangeNotifier
     final keys = getKeys();
     for (final key in values.keys) {
       if (!keys.contains(key)) {
-        if (!await set<dynamic>(key, values[key])) {
+        if (!await put<dynamic>(key, values[key])) {
           result = false;
         }
       } else {
         if (get<dynamic>(key).runtimeType != values[key].runtimeType) {
-          if (!await set<dynamic>(key, values[key])) {
+          if (!await put<dynamic>(key, values[key])) {
             result = false;
           }
         }
@@ -97,9 +97,7 @@ abstract class BasePrefService extends ChangeNotifier
   Future<void> apply(BasePrefService other) async {
     for (final key in other.getKeys()) {
       final dynamic val = other.get<dynamic>(key);
-      if (val != get<dynamic>(key)) {
-        await set<dynamic>(key, val);
-      }
+      await set<dynamic>(key, val);
     }
   }
 
@@ -119,11 +117,20 @@ abstract class BasePrefService extends ChangeNotifier
     }
   }
 
-  /// Set a preference value
+  /// Set a preference value, always trigger a change
   @mustCallSuper
-  FutureOr<bool> set<T>(String key, T val) {
+  FutureOr<bool> put<T>(String key, T val) {
     _changed<T>(key, val);
     return true;
+  }
+
+  /// Set a preference value if it has changed
+  @nonVirtual
+  FutureOr<bool> set<T>(String key, T val) {
+    if (get<dynamic>(key) == val) {
+      return true;
+    }
+    return put(key, val);
   }
 
   /// Register this preference as secret/confidential and do not log the value

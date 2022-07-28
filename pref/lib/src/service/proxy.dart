@@ -93,6 +93,11 @@ class ProxyPrefService with DiagnosticableTreeMixin implements BasePrefService {
   }
 
   @override
+  FutureOr<bool> put<T>(String key, T val) {
+    return _proxy.put<T>(key, val);
+  }
+
+  @override
   FutureOr<bool> set<T>(String key, T val) {
     return _proxy.set<T>(key, val);
   }

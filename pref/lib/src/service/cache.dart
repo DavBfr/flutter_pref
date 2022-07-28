@@ -23,13 +23,13 @@ class PrefServiceCache extends BasePrefService {
   final Map<String, dynamic> _cache;
 
   @override
-  FutureOr<bool> set<T>(String key, T val) {
+  FutureOr<bool> put<T>(String key, T val) {
     if (val == null) {
       return remove(key);
     }
 
     _cache[key] = val;
-    return super.set<T>(key, val);
+    return super.put<T>(key, val);
   }
 
   @override

@@ -5,6 +5,7 @@
 - Update dependencies
 - Fix flutter_lints 2.0 warnings
 - Add custom actions to PrefDialog
+- BasePrefService.set() only trigger event if the value changed
 
 ## 2.6.0
 

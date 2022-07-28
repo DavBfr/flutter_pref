@@ -31,24 +31,24 @@ class PrefServiceShared extends BasePrefService {
   final String prefix;
 
   @override
-  FutureOr<bool> set<T>(String key, T val) async {
+  FutureOr<bool> put<T>(String key, T val) async {
     if (val == null) {
       return remove(key);
     } else if (val is bool) {
       if (await sharedPreferences.setBool('$prefix$key', val)) {
-        return super.set<T>(key, val);
+        return super.put<T>(key, val);
       }
     } else if (val is double) {
       if (await sharedPreferences.setDouble('$prefix$key', val)) {
-        return super.set<T>(key, val);
+        return super.put<T>(key, val);
       }
     } else if (val is int) {
       if (await sharedPreferences.setInt('$prefix$key', val)) {
-        return super.set<T>(key, val);
+        return super.put<T>(key, val);
       }
     } else if (val is String) {
       if (await sharedPreferences.setString('$prefix$key', val)) {
-        return super.set<T>(key, val);
+        return super.put<T>(key, val);
       }
     }
     return false;
