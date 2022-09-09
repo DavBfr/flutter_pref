@@ -36,6 +36,9 @@ class PrefServiceCache extends BasePrefService {
   T? get<T>(String key) => _cache[key];
 
   @override
+  List<String>? getStringList(String key) => _cache[key];
+
+  @override
   Set<String> getKeys() {
     return Set<String>.from(_cache.keys);
   }

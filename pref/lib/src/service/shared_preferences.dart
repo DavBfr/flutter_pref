@@ -50,6 +50,10 @@ class PrefServiceShared extends BasePrefService {
       if (await sharedPreferences.setString('$prefix$key', val)) {
         return super.set<T>(key, val);
       }
+    } else if (val is List<String>) {
+      if (await sharedPreferences.setStringList('$prefix$key', val)) {
+        return super.set<T>(key, val);
+      }
     }
     return false;
   }
@@ -57,6 +61,11 @@ class PrefServiceShared extends BasePrefService {
   @override
   T? get<T>(String key) {
     return sharedPreferences.get('$prefix$key') as T?;
+  }
+
+  @override
+  List<String>? getStringList(String key) {
+    return sharedPreferences.getStringList('$prefix$key');
   }
 
   @override

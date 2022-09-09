@@ -50,6 +50,11 @@ class ProxyPrefService with DiagnosticableTreeMixin implements BasePrefService {
   }
 
   @override
+  List<String>? getStringList(String key) {
+    return _proxy.getStringList(key);
+  }
+
+  @override
   Set<String> getKeys() {
     return _proxy.getKeys();
   }
