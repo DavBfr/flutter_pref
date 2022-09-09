@@ -82,7 +82,15 @@ abstract class BasePrefService extends ChangeNotifier
           result = false;
         }
       } else {
-        if (get<dynamic>(key).runtimeType != values[key].runtimeType) {
+        final dynamic value = get<dynamic>(key);
+
+        if (value is List) {
+          if (!(values[key] != List)) {
+            if (!await put<dynamic>(key, values[key])) {
+              result = false;
+            }
+          }
+        } else if (value.runtimeType != values[key].runtimeType) {
           if (!await put<dynamic>(key, values[key])) {
             result = false;
           }
@@ -203,6 +211,9 @@ abstract class BasePrefService extends ChangeNotifier
 
   /// Get a preference value
   T? get<T>(String key);
+
+  /// Get a set of string values
+  List<String>? getStringList(String key);
 
   /// Get all preference keys
   Set<String> getKeys();
