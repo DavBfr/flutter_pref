@@ -6,6 +6,7 @@
 - Fix flutter_lints 2.0 warnings
 - Add custom actions to PrefDialog
 - BasePrefService.set() only trigger event if the value changed
+- Added support for storing string lists
 
 ## 2.6.0
 

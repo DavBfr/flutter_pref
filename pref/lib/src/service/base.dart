@@ -85,7 +85,7 @@ abstract class BasePrefService extends ChangeNotifier
         final dynamic value = get<dynamic>(key);
 
         if (value is List) {
-          if (!(values[key] != List)) {
+          if (values[key] is! List) {
             if (!await put<dynamic>(key, values[key])) {
               result = false;
             }
