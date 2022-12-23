@@ -52,7 +52,7 @@ class PrefServiceShared extends BasePrefService {
       }
     } else if (val is List<String>) {
       if (await sharedPreferences.setStringList('$prefix$key', val)) {
-        return super.set<T>(key, val);
+        return super.put<T>(key, val);
       }
     }
     return false;
