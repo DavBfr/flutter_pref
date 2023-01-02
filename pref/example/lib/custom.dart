@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:number_selector/number_selector.dart';
 import 'package:pref/pref.dart';
 
 class PrefColor extends StatelessWidget {
@@ -65,5 +66,51 @@ class PrefColor extends StatelessWidget {
     );
 
     return result == true ? newValue : value;
+  }
+}
+
+class PrefInteger extends StatelessWidget {
+  const PrefInteger({
+    Key? key,
+    this.title,
+    required this.pref,
+    this.subtitle,
+    this.onChange,
+    this.disabled,
+    required this.min,
+    required this.max,
+  }) : super(key: key);
+
+  final Widget? title;
+
+  final Widget? subtitle;
+
+  final String pref;
+
+  final bool? disabled;
+
+  final ValueChanged<int?>? onChange;
+
+  final int min;
+
+  final int max;
+
+  @override
+  Widget build(BuildContext context) {
+    return PrefCustom<int>.widget(
+      pref: pref,
+      title: title,
+      subtitle: subtitle,
+      onChange: onChange,
+      disabled: disabled,
+      builder: (context, value, onChange) => NumberSelector(
+        current: value ?? 0,
+        min: min,
+        max: max,
+        showMinMax: false,
+        showSuffix: false,
+        onUpdate: onChange,
+      ),
+    );
   }
 }

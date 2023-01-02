@@ -23,8 +23,23 @@ class PrefCustom<T> extends StatefulWidget {
     this.onChange,
     this.disabled,
     required this.onTap,
-    this.builder,
-  }) : super(key: key);
+    Widget Function(BuildContext context, T? value)? builder,
+  })  : _builder = builder,
+        builder = null,
+        super(key: key);
+
+  /// Create a PrefCustom Widget that embeds an interactive child
+  const PrefCustom.widget({
+    Key? key,
+    this.title,
+    required this.pref,
+    this.subtitle,
+    this.onChange,
+    this.disabled,
+    required this.builder,
+  })  : onTap = null,
+        _builder = null,
+        super(key: key);
 
   /// Checkbox title
   final Widget? title;
@@ -42,10 +57,13 @@ class PrefCustom<T> extends StatefulWidget {
   final ValueChanged<T?>? onChange;
 
   /// Callback that returns the new value
-  final FutureOr<T?> Function(BuildContext context, T? value) onTap;
+  final FutureOr<T?> Function(BuildContext context, T? value)? onTap;
 
   /// Build the current value
-  final Widget Function(BuildContext context, T? value)? builder;
+  final Widget Function(
+      BuildContext context, T? value, ValueChanged<T?> onChanged)? builder;
+
+  final Widget Function(BuildContext context, T? value)? _builder;
 
   @override
   PrefCustomState<T> createState() => PrefCustomState<T>();
@@ -103,20 +121,26 @@ class PrefCustomState<T> extends State<PrefCustom<T>> {
     final disabled =
         widget.disabled ?? PrefDisableState.of(context)?.disabled ?? false;
 
-    final child =
-        widget.builder?.call(context, value) ?? Text(value.toString());
+    final Widget child;
+    if (widget.builder == null && widget._builder == null) {
+      child = Text(value.toString());
+    } else if (widget.builder == null) {
+      child = widget._builder!.call(context, value);
+    } else {
+      child = widget.builder!.call(context, value, _onChange);
+    }
 
     return ListTile(
       enabled: !disabled,
       title: widget.title ?? child,
       subtitle: widget.subtitle,
       trailing: widget.title == null ? null : child,
-      onTap: disabled ? null : () => _tap(value),
+      onTap: disabled || widget.onTap == null ? null : () => _tap(value),
     );
   }
 
   Future<void> _tap(T? value) async {
-    final result = await widget.onTap(context, value);
+    final result = await widget.onTap?.call(context, value);
     if (value != result) {
       await _onChange(result);
     }

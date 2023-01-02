@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   flutter_colorpicker:
   logging:
+  number_selector:
   pref:
 
 dependency_overrides:

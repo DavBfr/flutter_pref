@@ -105,8 +105,9 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: 'Pref Demo',
         themeMode: _brightness,
-        theme: ThemeData.light()
-            .copyWith(colorScheme: ColorScheme.fromSeed(seedColor: _uiColor!)),
+        theme: ThemeData.light().copyWith(
+            colorScheme:
+                ColorScheme.fromSeed(seedColor: _uiColor ?? Colors.blue)),
         darkTheme: ThemeData.dark().copyWith(
             colorScheme: ColorScheme.fromSeed(
                 seedColor: _uiColor!, brightness: Brightness.dark)),
@@ -248,6 +249,13 @@ class _MyHomePageState extends State<MyHomePage> {
             min: 10,
             max: 250,
             direction: Axis.vertical,
+          ),
+          PrefInteger(
+            title: Text('Person weight (metric)'),
+            subtitle: Text('Custom spinner widget'),
+            pref: 'weight',
+            min: 10,
+            max: 120,
           ),
           PrefLabel(
             title: Text(

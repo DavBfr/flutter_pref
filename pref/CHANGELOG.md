@@ -11,6 +11,7 @@
 - Add more properties to PrefDropdown
 - Fix tests
 - Update minimum Dart SDK to 2.17
+- Add PrefCustom.widget that embedds a child widget
 
 ## 2.6.0
 
