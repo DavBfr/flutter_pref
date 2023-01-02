@@ -14,14 +14,31 @@ import 'service/pref_service.dart';
 class PrefDropdown<T> extends StatefulWidget {
   /// create a Dropdown selection
   const PrefDropdown({
-    this.title,
-    required this.pref,
     Key? key,
-    this.subtitle,
     required this.items,
-    this.onChange,
+    required this.pref,
+    this.alignment = AlignmentDirectional.centerStart,
+    this.autofocus = false,
+    this.borderRadius,
     this.disabled,
+    this.dropdownColor,
+    this.elevation = 8,
+    this.enableFeedback,
+    this.focusColor,
+    this.focusNode,
     this.fullWidth = true,
+    this.icon,
+    this.iconDisabledColor,
+    this.iconEnabledColor,
+    this.iconSize = 24.0,
+    this.isDense = false,
+    this.itemHeight = kMinInteractiveDimension,
+    this.menuMaxHeight,
+    this.onChange,
+    this.style,
+    this.subtitle,
+    this.title,
+    this.underline,
   }) : super(key: key);
 
   /// The title
@@ -44,6 +61,59 @@ class PrefDropdown<T> extends StatefulWidget {
 
   /// Use all the available width
   final bool fullWidth;
+
+  /// The z-coordinate at which to place the menu when open.
+  final int elevation;
+
+  /// The text style to use for text in the dropdown button and the dropdown
+  /// menu that appears when you tap the button.
+  final TextStyle? style;
+
+  /// The widget to use for drawing the drop-down button's underline.
+  final Widget? underline;
+
+  /// The widget to use for the drop-down button's icon.
+  final Widget? icon;
+
+  /// The color of any [Icon] descendant of [icon] if this button is disabled,
+  final Color? iconDisabledColor;
+
+  /// The color of any [Icon] descendant of [icon] if this button is enabled,
+  final Color? iconEnabledColor;
+
+  /// The size to use for the drop-down button's down arrow icon button.
+  final double iconSize;
+
+  /// Reduce the button's height.
+  final bool isDense;
+
+  /// If null, then the menu item heights will vary according to each menu item's
+  /// intrinsic height.
+  final double? itemHeight;
+
+  /// The color for the button's [Material] when it has the input focus.
+  final Color? focusColor;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
+
+  /// The background color of the dropdown.
+  final Color? dropdownColor;
+
+  /// The maximum height of the menu.
+  final double? menuMaxHeight;
+
+  /// Whether detected gestures should provide acoustic and/or haptic feedback.
+  final bool? enableFeedback;
+
+  /// Defines how the hint or the selected item is positioned within the button.
+  final AlignmentGeometry alignment;
+
+  /// Defines the corner radii of the menu's rounded rectangle shape.
+  final BorderRadius? borderRadius;
 
   @override
   PrefDropdownState<T> createState() => PrefDropdownState<T>();
@@ -129,10 +199,27 @@ class PrefDropdownState<T> extends State<PrefDropdown<T>> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DropdownButton<T>(
+              alignment: widget.alignment,
+              autofocus: widget.autofocus,
+              borderRadius: widget.borderRadius,
+              dropdownColor: widget.dropdownColor,
+              elevation: widget.elevation,
+              enableFeedback: widget.enableFeedback,
+              focusColor: widget.focusColor,
+              focusNode: widget.focusNode,
               hint: widget.title,
+              icon: widget.icon,
+              iconDisabledColor: widget.iconDisabledColor,
+              iconEnabledColor: widget.iconEnabledColor,
+              iconSize: widget.iconSize,
+              isDense: widget.isDense,
               isExpanded: true,
+              itemHeight: widget.itemHeight,
               items: widget.items,
+              menuMaxHeight: widget.menuMaxHeight,
               onChanged: disabled ? null : _onChange,
+              style: widget.style,
+              underline: widget.underline,
               value: value,
             ),
             if (widget.subtitle != null) widget.subtitle!
@@ -146,8 +233,25 @@ class PrefDropdownState<T> extends State<PrefDropdown<T>> {
       title: widget.title,
       subtitle: widget.subtitle,
       trailing: DropdownButton<T>(
+        alignment: widget.alignment,
+        autofocus: widget.autofocus,
+        borderRadius: widget.borderRadius,
+        dropdownColor: widget.dropdownColor,
+        elevation: widget.elevation,
+        enableFeedback: widget.enableFeedback,
+        focusColor: widget.focusColor,
+        focusNode: widget.focusNode,
+        icon: widget.icon,
+        iconDisabledColor: widget.iconDisabledColor,
+        iconEnabledColor: widget.iconEnabledColor,
+        iconSize: widget.iconSize,
+        isDense: widget.isDense,
+        itemHeight: widget.itemHeight,
         items: widget.items,
+        menuMaxHeight: widget.menuMaxHeight,
         onChanged: disabled ? null : _onChange,
+        style: widget.style,
+        underline: widget.underline,
         value: value,
       ),
     );

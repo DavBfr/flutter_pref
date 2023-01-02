@@ -8,6 +8,7 @@
 - BasePrefService.set() only trigger event if the value changed
 - Added support for storing string lists
 - Fix incorrect method being used to store string lists [Jonjo McKay]
+- Add more properties to PrefDropdown
 
 ## 2.6.0
 
