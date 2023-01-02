@@ -57,15 +57,15 @@ void main() {
 
       expect(value, isNull);
       expect(service.get<dynamic>('test'), isNull);
-      expect(find.byType(RawMaterialButton), findsNWidgets(3));
+      expect(find.byType(TextButton), findsNWidgets(3));
 
-      await tester.tap(find.byType(RawMaterialButton).first);
+      await tester.tap(find.byType(TextButton).first);
       await tester.pump();
 
       expect(value, equals(1));
       expect(service.get<int>('test'), equals(1));
 
-      await tester.tap(find.byType(RawMaterialButton).last);
+      await tester.tap(find.byType(TextButton).last);
       await tester.pump();
 
       expect(value, equals(3));
@@ -99,15 +99,15 @@ void main() {
 
       expect(value, isNull);
       expect(service.get<dynamic>('test'), equals('2'));
-      expect(find.byType(RawMaterialButton), findsNWidgets(3));
+      expect(find.byType(TextButton), findsNWidgets(3));
 
-      await tester.tap(find.byType(RawMaterialButton).first);
+      await tester.tap(find.byType(TextButton).first);
       await tester.pump();
 
       expect(value, equals(1));
       expect(service.get<int>('test'), equals(1));
 
-      await tester.tap(find.byType(RawMaterialButton).last);
+      await tester.tap(find.byType(TextButton).last);
       await tester.pump();
 
       expect(value, equals(3));

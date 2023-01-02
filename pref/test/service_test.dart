@@ -18,7 +18,7 @@ void main() {
 
     service.set('c', ['aa', 'bb']);
 
-    print(service.getStringList('b'));
+    expect(service.getStringList('b'), ['1', '2', '3']);
   });
 
   test('Service Shared', () async {
@@ -33,6 +33,6 @@ void main() {
       'b': ['1', '2', '3'],
     });
 
-    print(service.get('b'));
+    expect(service.get<List<String>>('b'), ['d1', 'd2', 'd3']);
   });
 }
