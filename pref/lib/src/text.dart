@@ -93,7 +93,7 @@ class PrefTextState extends State<PrefText> {
   }
 
   void _onChange(BuildContext context, String val) {
-    if (Form.of(context)!.validate()) {
+    if (Form.of(context).validate()) {
       if (widget.onChange != null) {
         widget.onChange!(val);
       }

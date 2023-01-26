@@ -3,6 +3,7 @@
 ## 2.7.1
 
 - Fix lints
+- Migrate to Flutter 3.7
 
 ## 2.7.0
 
