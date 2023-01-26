@@ -18,7 +18,7 @@ import 'dart:io';
 
 import 'package:markdown/markdown.dart' as md;
 
-Iterable<String> getCode(List<md.Node> nodes, [bool isCode = false]) sync* {
+Iterable<String> getCode(List<md.Node>? nodes, [bool isCode = false]) sync* {
   if (nodes == null) {
     return;
   }
@@ -27,7 +27,7 @@ Iterable<String> getCode(List<md.Node> nodes, [bool isCode = false]) sync* {
     if (node is md.Element) {
       // print(node.tag);
       // print(node.attributes);
-      yield* getCode(node.children,
+      yield* getCode(node.children!,
           node.tag == 'code' && node.attributes['class'] == 'language-dart');
     } else if (node is md.Text) {
       if (isCode && !node.text.startsWith('import')) {

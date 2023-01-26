@@ -49,7 +49,7 @@ class PrefTitle extends StatelessWidget {
     final disabled = PrefDisableState.of(context)?.disabled ?? false;
 
     final theme = Theme.of(context);
-    final style = theme.textTheme.headline5!.apply(
+    final style = theme.textTheme.headlineSmall!.apply(
       color: disabled ? theme.disabledColor : theme.colorScheme.secondary,
     );
 

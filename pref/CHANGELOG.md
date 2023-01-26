@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.1
+
+- Fix lints
+
 ## 2.7.0
 
 - Update dependencies
