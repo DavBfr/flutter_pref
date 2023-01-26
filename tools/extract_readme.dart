@@ -27,7 +27,7 @@ Iterable<String> getCode(List<md.Node>? nodes, [bool isCode = false]) sync* {
     if (node is md.Element) {
       // print(node.tag);
       // print(node.attributes);
-      yield* getCode(node.children!,
+      yield* getCode(node.children,
           node.tag == 'code' && node.attributes['class'] == 'language-dart');
     } else if (node is md.Text) {
       if (isCode && !node.text.startsWith('import')) {
@@ -51,7 +51,7 @@ void buildFile(String src, String dest, bool flutter) {
   st.writeln('import \'package:flutter/material.dart\';');
   st.writeln('import \'package:pref/pref.dart\';');
   st.writeln('class MyApp extends SizedBox {}');
-  st.writeln('BuildContext context;');
+  st.writeln('late BuildContext context;');
 
   final data = File(src).readAsStringSync();
   final lines = data.replaceAll('\r\n', '\n').split('\n');
