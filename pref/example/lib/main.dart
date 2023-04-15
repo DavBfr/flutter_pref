@@ -156,6 +156,10 @@ class _MyHomePageState extends State<MyHomePage> {
               DropdownMenuItem(value: 4, child: Text('Four')),
             ],
           ),
+          PrefIntegerText(
+            label: 'Number of items',
+            pref: 'items_count_integer',
+          ),
           PrefTitle(title: Text('Personalization')),
           PrefRadio<String>(
             title: Text('System Theme'),
