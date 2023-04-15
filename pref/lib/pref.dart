@@ -15,6 +15,7 @@ export 'src/dialog_button.dart';
 export 'src/disabler.dart';
 export 'src/dropdown.dart';
 export 'src/hider.dart';
+export 'src/integer_text.dart';
 export 'src/label.dart';
 export 'src/page.dart';
 export 'src/page_button.dart';
