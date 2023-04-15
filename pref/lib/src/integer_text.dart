@@ -88,15 +88,15 @@ class PrefIntegerTextState extends State<PrefIntegerText> {
 
   void _onChange(BuildContext context, String val) {
     if (Form.of(context).validate()) {
-      if (widget.onChange != null) {
-        widget.onChange!(val);
-      }
       final newVal = int.tryParse(val);
 
       if (newVal == null) {
         logger.severe('Unable to convert value [$val] to number');
       }
+
       PrefService.of(context, listen: false).set<int>(widget.pref, newVal ?? 0);
+
+      widget.onChange?.call(val);
     }
   }
 
