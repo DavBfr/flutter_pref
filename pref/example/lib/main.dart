@@ -110,7 +110,8 @@ class _MyAppState extends State<MyApp> {
                 ColorScheme.fromSeed(seedColor: _uiColor ?? Colors.blue)),
         darkTheme: ThemeData.dark().copyWith(
             colorScheme: ColorScheme.fromSeed(
-                seedColor: _uiColor!, brightness: Brightness.dark)),
+                seedColor: _uiColor ?? Colors.blue,
+                brightness: Brightness.dark)),
         home: MyHomePage(title: 'Pref Demo'),
       ),
     );
@@ -156,6 +157,13 @@ class _MyHomePageState extends State<MyHomePage> {
               DropdownMenuItem(value: 4, child: Text('Four')),
             ],
           ),
+          PrefHiderGeneric<int>(
+              pref: 'items_count',
+              nullValue: 4,
+              reversed: true,
+              children: [
+                PrefLabel(title: Text('Four items selected')),
+              ]),
           PrefIntegerText(
             label: 'Number of items',
             pref: 'items_count_integer',
