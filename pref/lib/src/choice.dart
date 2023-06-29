@@ -79,6 +79,11 @@ class PrefChoiceState<T> extends State<PrefChoice<T>> {
     setState(() {});
   }
 
+  Future<void> _onChange(dynamic value) async {
+    PrefService.of(context, listen: false).set(widget.pref, value);
+    widget.onChange?.call(value);
+  }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -132,9 +137,23 @@ class PrefChoiceState<T> extends State<PrefChoice<T>> {
                 value: e.value,
                 pref: widget.pref,
                 radioFirst: widget.radioFirst,
+                onSelect: () => {
+                  if (widget.submit == null) {_onChange(e.value)}
+                },
               ),
             )
             .toList(),
+        onSubmit: () {
+          if (widget.submit != null) {
+            T? submittedValue;
+            try {
+              submittedValue = PrefService.of(context).get(widget.pref);
+            } catch (e, s) {
+              logger.severe('Unable to load the value', e, s);
+            }
+            _onChange(submittedValue);
+          }
+        },
       ),
     );
   }
