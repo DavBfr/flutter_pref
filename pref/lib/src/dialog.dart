@@ -20,6 +20,7 @@ class PrefDialog extends PrefCache {
     this.dismissOnChange = false,
     this.cancel,
     this.actions = const [],
+    this.onSubmit,
   }) : super(key: key, cache: onlySaveOnSubmit ?? submit != null);
 
   /// The Dialog title
@@ -39,6 +40,9 @@ class PrefDialog extends PrefCache {
 
   /// Automatically close the dialog if the preferences are updated
   final bool dismissOnChange;
+
+  /// Called when the submit button is pressed
+  final Function? onSubmit;
 
   @override
   PrefDialogState createState() => PrefDialogState();
@@ -68,6 +72,9 @@ class PrefDialogState extends PrefCacheState<PrefDialog> {
             final navigator = Navigator.of(context);
             await apply();
             navigator.pop(true);
+            if (widget.onSubmit != null) {
+              widget.onSubmit!();
+            }
           },
           child: widget.submit!,
         ),
