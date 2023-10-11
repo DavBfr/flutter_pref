@@ -127,9 +127,4 @@ class ProxyPrefService with DiagnosticableTreeMixin implements BasePrefService {
     super.debugFillProperties(properties);
     _proxy.debugFillProperties(properties);
   }
-
-  @override
-  void maybeDispatchObjectCreation() {
-    _proxy.maybeDispatchObjectCreation();
-  }
 }
