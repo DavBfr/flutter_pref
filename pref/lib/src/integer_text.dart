@@ -123,7 +123,7 @@ class PrefIntegerTextState extends State<PrefIntegerText> {
             maxLines: widget.maxLines,
             style: widget.style,
             inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
+              FilteringTextInputFormatter.digitsOnly
             ],
             keyboardType: TextInputType.number,
             obscureText: widget.obscureText,
