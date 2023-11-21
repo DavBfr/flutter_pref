@@ -24,6 +24,14 @@ class PrefPageState extends PrefCacheState<PrefPage> {
   @override
   Widget buildChild(BuildContext context) {
     if (widget.cache) {
+      // Flutter 3.12
+      // return PopScope(
+      //   onPopInvoked: (bool didPop) async {
+      //     // Save the settings
+      //     await apply();
+      //   },
+      //   child: ListView(children: widget.children),
+      // );
       return WillPopScope(
         onWillPop: () async {
           // Save the settings
