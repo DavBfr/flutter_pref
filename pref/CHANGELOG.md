@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.7.2
+
+- Added PrefIntegerText [bernd70]
+- Call onChange in PrefChoice [Simon Steinmann]
+- Add generic disabler and hider [Simon Steinmann]
+
 ## 2.7.1
 
 - Fix lints

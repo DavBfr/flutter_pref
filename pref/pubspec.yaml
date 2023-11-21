@@ -6,7 +6,13 @@ issue_tracker: https://github.com/DavBfr/flutter_pref/issues
 screenshots:
   - description: 'Example pref panel for a mobile phone'
     path: example.jpg
-version: 2.7.1
+topics:
+  - persistence
+  - shared-preferences
+  - storage
+  - settings
+  - preferences
+version: 2.7.2
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
