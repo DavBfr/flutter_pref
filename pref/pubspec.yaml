@@ -12,7 +12,7 @@ topics:
   - storage
   - settings
   - preferences
-version: 2.7.2
+version: 2.7.3
 
 environment:
   sdk: ">=2.18.0 <3.0.0"

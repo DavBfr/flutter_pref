@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.3
+
+- Add scrollable property to PerfPage
+
 ## 2.7.2
 
 - Added PrefIntegerText [bernd70]

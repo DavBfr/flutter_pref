@@ -12,9 +12,13 @@ class PrefPage extends PrefCache {
     Key? key,
     required this.children,
     bool cache = false,
+    this.scrollable = true,
   }) : super(key: key, cache: cache);
 
   final List<Widget> children;
+
+  // Enables ListView if enabled, a Column is used otherwise.
+  final bool scrollable;
 
   @override
   PrefPageState createState() => PrefPageState();
@@ -23,6 +27,13 @@ class PrefPage extends PrefCache {
 class PrefPageState extends PrefCacheState<PrefPage> {
   @override
   Widget buildChild(BuildContext context) {
+    final child = widget.scrollable
+        ? ListView(children: widget.children)
+        : Column(
+            mainAxisSize: MainAxisSize.min,
+            children: widget.children,
+          );
+
     if (widget.cache) {
       // Flutter 3.12
       // return PopScope(
@@ -38,10 +49,10 @@ class PrefPageState extends PrefCacheState<PrefPage> {
           await apply();
           return true;
         },
-        child: ListView(children: widget.children),
+        child: child,
       );
     }
 
-    return ListView(children: widget.children);
+    return child;
   }
 }
