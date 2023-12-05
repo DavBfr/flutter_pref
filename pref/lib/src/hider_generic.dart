@@ -81,7 +81,7 @@ class PrefHiderGenericState<T> extends State<PrefHiderGeneric<T>> {
       logger.severe('Unable to load the value', e, s);
     }
 
-    if ((value == widget.nullValue) == widget.reversed) {
+    if ((value == widget.nullValue) != widget.reversed) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: widget.children,
