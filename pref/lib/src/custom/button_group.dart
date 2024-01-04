@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 
 class ButtonGroup<T> extends StatelessWidget {
   const ButtonGroup({
-    Key? key,
+    super.key,
     this.value,
     required this.onChanged,
     this.disabled = false,
     required this.items,
-  }) : super(key: key);
+  });
 
   final ValueChanged<T>? onChanged;
   final bool disabled;

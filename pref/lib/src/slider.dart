@@ -14,7 +14,7 @@ import 'service/pref_service.dart';
 
 class PrefSlider<T extends num> extends StatefulWidget {
   const PrefSlider({
-    Key? key,
+    super.key,
     this.title,
     required this.pref,
     this.subtitle,
@@ -27,7 +27,7 @@ class PrefSlider<T extends num> extends StatefulWidget {
     this.label,
     this.trailing,
     this.direction = Axis.horizontal,
-  }) : super(key: key);
+  });
 
   final Widget? title;
 

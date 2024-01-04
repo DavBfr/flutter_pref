@@ -13,9 +13,9 @@ import 'service/pref_service.dart';
 
 abstract class PrefCache extends StatefulWidget {
   const PrefCache({
-    Key? key,
+    super.key,
     required this.cache,
-  }) : super(key: key);
+  });
 
   final bool cache;
 }

@@ -13,7 +13,7 @@ import 'log.dart';
 class PrefChoice<T> extends StatefulWidget {
   /// Create a PrefChoice Widget
   const PrefChoice({
-    Key? key,
+    super.key,
     this.title,
     required this.pref,
     this.subtitle,
@@ -23,7 +23,7 @@ class PrefChoice<T> extends StatefulWidget {
     this.cancel,
     this.submit,
     this.radioFirst = true,
-  }) : super(key: key);
+  });
 
   /// Button title
   final Widget? title;

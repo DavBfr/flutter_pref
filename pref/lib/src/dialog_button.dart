@@ -14,7 +14,7 @@ import 'service/pref_service.dart';
 class PrefDialogButton extends StatelessWidget {
   /// Create a PrefDialogButton
   const PrefDialogButton({
-    Key? key,
+    super.key,
     this.title,
     required this.dialog,
     this.subtitle,
@@ -25,7 +25,7 @@ class PrefDialogButton extends StatelessWidget {
     this.barrierDismissible = true,
     this.onSubmit,
     this.onDismiss,
-  }) : super(key: key);
+  });
 
   /// The button title
   final Widget? title;

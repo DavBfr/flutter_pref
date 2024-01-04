@@ -16,7 +16,7 @@ import 'service/pref_service.dart';
 class PrefCheckbox extends StatefulWidget {
   /// Create a PrefCheckbox Widget
   const PrefCheckbox({
-    Key? key,
+    super.key,
     this.title,
     required this.pref,
     this.subtitle,
@@ -24,7 +24,7 @@ class PrefCheckbox extends StatefulWidget {
     this.onChange,
     this.disabled,
     this.reversed = false,
-  }) : super(key: key);
+  });
 
   /// Checkbox title
   final Widget? title;

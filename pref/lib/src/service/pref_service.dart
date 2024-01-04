@@ -12,10 +12,10 @@ import 'base.dart';
 
 class PrefService extends InheritedNotifier {
   const PrefService({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.service,
-  }) : super(key: key, child: child, notifier: service);
+  }) : super(notifier: service);
 
   final BasePrefService service;
 

@@ -14,7 +14,7 @@ import 'service/pref_service.dart';
 class PrefDropdown<T> extends StatefulWidget {
   /// create a Dropdown selection
   const PrefDropdown({
-    Key? key,
+    super.key,
     required this.items,
     required this.pref,
     this.alignment = AlignmentDirectional.centerStart,
@@ -39,7 +39,7 @@ class PrefDropdown<T> extends StatefulWidget {
     this.subtitle,
     this.title,
     this.underline,
-  }) : super(key: key);
+  });
 
   /// The title
   final Widget? title;

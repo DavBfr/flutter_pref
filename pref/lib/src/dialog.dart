@@ -12,7 +12,7 @@ import 'service_cache.dart';
 class PrefDialog extends PrefCache {
   /// Create a Preference Dialog
   const PrefDialog({
-    Key? key,
+    super.key,
     required this.children,
     this.title,
     this.submit,
@@ -21,7 +21,7 @@ class PrefDialog extends PrefCache {
     this.cancel,
     this.actions = const [],
     this.onSubmit,
-  }) : super(key: key, cache: onlySaveOnSubmit ?? submit != null);
+  }) : super(cache: onlySaveOnSubmit ?? submit != null);
 
   /// The Dialog title
   final Widget? title;

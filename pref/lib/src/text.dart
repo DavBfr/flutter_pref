@@ -16,7 +16,7 @@ class PrefText extends StatefulWidget {
   const PrefText({
     this.label,
     required this.pref,
-    Key? key,
+    super.key,
     this.onChange,
     this.validator,
     this.padding,
@@ -30,7 +30,7 @@ class PrefText extends StatefulWidget {
     this.labelStyle,
     this.decoration,
     this.disabled,
-  }) : super(key: key);
+  });
 
   /// Expose for end users
   final List<TextInputFormatter>? inputFormatters;

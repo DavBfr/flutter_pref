@@ -16,7 +16,7 @@ import 'service/pref_service.dart';
 class PrefCustom<T> extends StatefulWidget {
   /// Create a PrefCustom Widget
   const PrefCustom({
-    Key? key,
+    super.key,
     this.title,
     required this.pref,
     this.subtitle,
@@ -25,12 +25,11 @@ class PrefCustom<T> extends StatefulWidget {
     required this.onTap,
     Widget Function(BuildContext context, T? value)? builder,
   })  : _builder = builder,
-        builder = null,
-        super(key: key);
+        builder = null;
 
   /// Create a PrefCustom Widget that embeds an interactive child
   const PrefCustom.widget({
-    Key? key,
+    super.key,
     this.title,
     required this.pref,
     this.subtitle,
@@ -38,8 +37,7 @@ class PrefCustom<T> extends StatefulWidget {
     this.disabled,
     required this.builder,
   })  : onTap = null,
-        _builder = null,
-        super(key: key);
+        _builder = null;
 
   /// Checkbox title
   final Widget? title;

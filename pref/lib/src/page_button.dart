@@ -11,14 +11,14 @@ import 'page.dart';
 
 class PrefPageButton extends StatelessWidget {
   const PrefPageButton({
-    Key? key,
+    super.key,
     this.title,
     required this.page,
     this.subtitle,
     this.pageTitle,
     this.leading,
     this.trailing,
-  }) : super(key: key);
+  });
 
   final Widget? title;
   final Widget? pageTitle;

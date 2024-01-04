@@ -13,14 +13,14 @@ import 'service/pref_service.dart';
 
 class PrefButtonGroup<T> extends StatefulWidget {
   const PrefButtonGroup({
-    Key? key,
+    super.key,
     this.title,
     required this.items,
     required this.pref,
     this.subtitle,
     this.onChange,
     this.disabled,
-  }) : super(key: key);
+  });
 
   final Widget? title;
   final Widget? subtitle;

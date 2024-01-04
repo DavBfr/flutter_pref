@@ -12,7 +12,7 @@ import 'disabler.dart';
 class PrefTitle extends StatelessWidget {
   /// Creates a preference title.
   const PrefTitle({
-    Key? key,
+    super.key,
     required this.title,
     this.decoration,
     this.leading,
@@ -20,7 +20,7 @@ class PrefTitle extends StatelessWidget {
     this.onTap,
     this.margin,
     this.padding,
-  }) : super(key: key);
+  });
 
   /// The primary content of the Title.
   final Widget title;

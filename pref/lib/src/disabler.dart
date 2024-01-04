@@ -13,10 +13,10 @@ import 'service/pref_service.dart';
 class PrefDisableState extends InheritedWidget {
   /// create a Hider widget
   const PrefDisableState({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.disabled,
-  }) : super(key: key, child: child);
+  });
 
   /// Disable the children
   final bool disabled;
@@ -41,12 +41,12 @@ class PrefDisableState extends InheritedWidget {
 class PrefDisabler extends StatefulWidget {
   /// create a Disabler widget
   const PrefDisabler({
-    Key? key,
+    super.key,
     required this.children,
     required this.pref,
     this.reversed = false,
     this.nullValue = false,
-  }) : super(key: key);
+  });
 
   /// The widgets to hide
   final List<Widget> children;

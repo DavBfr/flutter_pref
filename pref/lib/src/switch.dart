@@ -15,7 +15,7 @@ class PrefSwitch extends StatefulWidget {
   const PrefSwitch({
     this.title,
     required this.pref,
-    Key? key,
+    super.key,
     this.subtitle,
     this.ignoreTileTap = false,
     this.onChange,
@@ -23,7 +23,7 @@ class PrefSwitch extends StatefulWidget {
     this.reversed = false,
     this.switchActiveColor,
     this.adaptive = true,
-  }) : super(key: key);
+  });
 
   final Widget? title;
 

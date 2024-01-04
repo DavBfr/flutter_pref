@@ -13,12 +13,12 @@ import 'service/pref_service.dart';
 class PrefDisablerGeneric<T> extends StatefulWidget {
   /// create a Disabler widget
   const PrefDisablerGeneric({
-    Key? key,
+    super.key,
     required this.children,
     required this.pref,
     required this.nullValue,
     this.reversed = false,
-  }) : super(key: key);
+  });
 
   /// The widgets to hide
   final List<Widget> children;

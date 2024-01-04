@@ -15,7 +15,7 @@ class PrefRadio<T> extends StatefulWidget {
     this.title,
     required this.value,
     required this.pref,
-    Key? key,
+    super.key,
     this.subtitle,
     this.selected = false,
     this.ignoreTileTap = false,
@@ -23,8 +23,7 @@ class PrefRadio<T> extends StatefulWidget {
     this.disabled,
     this.leading,
     this.radioFirst = false,
-  })  : assert(value != null),
-        super(key: key);
+  })  : assert(value != null);
 
   final Widget? title;
 

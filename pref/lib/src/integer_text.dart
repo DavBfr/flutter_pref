@@ -16,7 +16,7 @@ class PrefIntegerText extends StatefulWidget {
   const PrefIntegerText({
     this.label,
     required this.pref,
-    Key? key,
+    super.key,
     this.onChange,
     this.validator,
     this.padding,
@@ -28,7 +28,7 @@ class PrefIntegerText extends StatefulWidget {
     this.labelStyle,
     this.decoration,
     this.disabled,
-  }) : super(key: key);
+  });
 
   /// Text that describes the input field.
   final String? label;

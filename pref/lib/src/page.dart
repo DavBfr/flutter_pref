@@ -9,11 +9,11 @@ import 'service_cache.dart';
 
 class PrefPage extends PrefCache {
   const PrefPage({
-    Key? key,
+    super.key,
     required this.children,
-    bool cache = false,
+    super.cache = false,
     this.scrollable = true,
-  }) : super(key: key, cache: cache);
+  });
 
   final List<Widget> children;
 

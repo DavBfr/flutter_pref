@@ -13,12 +13,12 @@ import 'service/pref_service.dart';
 class PrefHiderGeneric<T> extends StatefulWidget {
   /// create a Hider widget
   const PrefHiderGeneric({
-    Key? key,
+    super.key,
     required this.children,
     required this.pref,
     required this.nullValue,
     this.reversed = false,
-  }) : super(key: key);
+  });
 
   /// The widgets to hide
   final List<Widget> children;

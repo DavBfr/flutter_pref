@@ -11,7 +11,7 @@ import 'disabler.dart';
 class PrefLabel extends StatelessWidget {
   /// Create a label
   const PrefLabel({
-    Key? key,
+    super.key,
     required this.title,
     this.decoration,
     this.leading,
@@ -19,7 +19,7 @@ class PrefLabel extends StatelessWidget {
     this.onTap,
     this.margin,
     this.padding,
-  }) : super(key: key);
+  });
 
   /// the label's title
   final Widget title;
@@ -33,7 +33,7 @@ class PrefLabel extends StatelessWidget {
   /// subtitle widget
   final Widget? subtitle;
 
-  /// called when the user actionate the label
+  /// called when the user clicks the label
   final VoidCallback? onTap;
 
   /// padding

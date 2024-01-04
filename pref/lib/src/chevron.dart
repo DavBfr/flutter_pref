@@ -11,13 +11,13 @@ import 'disabler.dart';
 class PrefChevron extends StatelessWidget {
   /// Create a PrefButton Widget
   const PrefChevron({
-    Key? key,
+    super.key,
     this.leading,
     this.title,
     this.subtitle,
     this.trailing,
     this.onTap,
-  }) : super(key: key);
+  });
 
   /// Leading Widget
   final Widget? leading;
@@ -30,7 +30,7 @@ class PrefChevron extends StatelessWidget {
 
   final Widget? trailing;
 
-  /// Called wien the button is activated
+  /// Called when the button is activated
   final VoidCallback? onTap;
 
   @override

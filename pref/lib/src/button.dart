@@ -11,7 +11,7 @@ import 'disabler.dart';
 class PrefButton extends StatelessWidget {
   /// Create a PrefButton Widget
   const PrefButton({
-    Key? key,
+    super.key,
     required this.child,
     this.color,
     this.textColor,
@@ -20,9 +20,8 @@ class PrefButton extends StatelessWidget {
     this.title,
     this.subtitle,
     this.onTap,
-  })  : assert(title != child,
-            'Use a title to define your own button or child for the button content'),
-        super(key: key);
+  }) : assert(title != child,
+            'Use a title to define your own button or child for the button content');
 
   /// Widget to display inside the button
   final Widget child;
@@ -45,7 +44,7 @@ class PrefButton extends StatelessWidget {
   /// Button sub-title
   final Widget? subtitle;
 
-  /// Called wien the button is activated
+  /// Called when the button is activated
   final VoidCallback? onTap;
 
   @override
