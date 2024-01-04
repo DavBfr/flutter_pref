@@ -1,9 +1,10 @@
 # Changelog
 
-## 2.7.3
+## 2.8.0
 
 - Add scrollable property to PerfPage
 - Fix issue with removing shared preferences keys
+- Update Flutter version to 3.12.0 and remove deprecated code
 
 ## 2.7.2
 
