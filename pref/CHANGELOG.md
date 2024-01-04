@@ -3,6 +3,7 @@
 ## 2.7.3
 
 - Add scrollable property to PerfPage
+- Fix issue with removing shared preferences keys
 
 ## 2.7.2
 

@@ -100,7 +100,7 @@ class PrefServiceShared extends BasePrefService {
     } else {
       for (final key in sharedPreferences.getKeys()) {
         if (key.startsWith(prefix)) {
-          if (!await sharedPreferences.remove('$prefix$key')) {
+          if (!await sharedPreferences.remove(key)) {
             result = false;
           }
         }
