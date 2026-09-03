@@ -5,6 +5,8 @@ analyzer:
     missing_required_param: error
     missing_return: error
     public_member_api_docs: ignore
+  exclude:
+    - build/**
 
 linter:
   rules:

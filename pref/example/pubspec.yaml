@@ -15,6 +15,7 @@ dependencies:
   number_selector:
   pref:
 
+  material_ui: any
 dependency_overrides:
   pref:
     path: ..
