@@ -89,11 +89,13 @@ class PrefChoiceState<T> extends State<PrefChoice<T>> {
     super.debugFillProperties(properties);
 
     final dynamic value = PrefService.of(context).get<dynamic>(widget.pref);
-    properties.add(DiagnosticsProperty(
-      'pref',
-      value,
-      description: '${widget.pref} = $value',
-    ));
+    properties.add(
+      DiagnosticsProperty(
+        'pref',
+        value,
+        description: '${widget.pref} = $value',
+      ),
+    );
   }
 
   @override
@@ -138,7 +140,7 @@ class PrefChoiceState<T> extends State<PrefChoice<T>> {
                 pref: widget.pref,
                 radioFirst: widget.radioFirst,
                 onSelect: () => {
-                  if (widget.submit == null) {_onChange(e.value)}
+                  if (widget.submit == null) {_onChange(e.value)},
                 },
               ),
             )

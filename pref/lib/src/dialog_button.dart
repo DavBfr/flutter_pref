@@ -65,10 +65,7 @@ class PrefDialogButton extends StatelessWidget {
 
     final result = await showDialog<bool>(
       context: context,
-      builder: (context) => PrefService(
-        service: service,
-        child: dialog,
-      ),
+      builder: (context) => PrefService(service: service, child: dialog),
       barrierDismissible: barrierDismissible,
     );
 

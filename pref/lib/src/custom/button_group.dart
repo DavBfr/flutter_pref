@@ -36,10 +36,7 @@ class ButtonGroup<T> extends StatelessWidget {
 }
 
 class ButtonGroupItem<T> {
-  const ButtonGroupItem({
-    required this.value,
-    required this.child,
-  });
+  const ButtonGroupItem({required this.value, required this.child});
 
   final T value;
   final Widget child;

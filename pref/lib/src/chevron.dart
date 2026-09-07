@@ -42,7 +42,8 @@ class PrefChevron extends StatelessWidget {
       enabled: !disabled,
       leading: leading,
       title: title,
-      trailing: trailing ??
+      trailing:
+          trailing ??
           Icon(
             Directionality.of(context) == TextDirection.ltr
                 ? Icons.chevron_right

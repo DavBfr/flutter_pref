@@ -13,7 +13,7 @@ all: pref/pubspec.lock pref/example/.metadata format
 format: format-dart
 
 format-dart: $(DART_SRC)
-	$(DART_BIN) format --fix $^
+	$(DART_BIN) format $^
 
 pref/pubspec.lock: pref/pubspec.yaml
 	cd pref; $(FLUTTER_BIN) pub get

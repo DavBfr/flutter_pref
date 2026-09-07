@@ -12,10 +12,7 @@ import 'service/cache.dart';
 import 'service/pref_service.dart';
 
 abstract class PrefCache extends StatefulWidget {
-  const PrefCache({
-    super.key,
-    required this.cache,
-  });
+  const PrefCache({super.key, required this.cache});
 
   final bool cache;
 }
@@ -32,7 +29,8 @@ abstract class PrefCacheState<T extends PrefCache> extends State<T> {
     // Check if we already have a BasePrefService
     if (_parent == null) {
       throw FlutterError(
-          'No PrefService widget found in the tree. Unable to load settings');
+        'No PrefService widget found in the tree. Unable to load settings',
+      );
     }
 
     if (widget.cache && _cache == null) {
@@ -61,9 +59,7 @@ abstract class PrefCacheState<T extends PrefCache> extends State<T> {
 
     return PrefService(
       service: _cache!,
-      child: Builder(
-        builder: (BuildContext context) => buildChild(context),
-      ),
+      child: Builder(builder: (BuildContext context) => buildChild(context)),
     );
   }
 

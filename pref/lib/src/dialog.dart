@@ -96,11 +96,7 @@ class PrefDialogState extends PrefCacheState<PrefDialog> {
 
     return AlertDialog(
       title: widget.title,
-      content: SingleChildScrollView(
-        child: Column(
-          children: widget.children,
-        ),
-      ),
+      content: SingleChildScrollView(child: Column(children: widget.children)),
       actions: actions,
     );
   }

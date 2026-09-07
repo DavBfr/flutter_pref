@@ -35,15 +35,13 @@ class PrefPageButton extends StatelessWidget {
       onTap: disabled
           ? null
           : () => Navigator.of(context).push<void>(
-                MaterialPageRoute(
-                  builder: (context) => Scaffold(
-                    appBar: AppBar(
-                      title: pageTitle ?? title,
-                    ),
-                    body: page,
-                  ),
+              MaterialPageRoute(
+                builder: (context) => Scaffold(
+                  appBar: AppBar(title: pageTitle ?? title),
+                  body: page,
                 ),
               ),
+            ),
       title: title,
       subtitle: subtitle,
       leading: leading,

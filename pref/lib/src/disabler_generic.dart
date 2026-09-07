@@ -64,11 +64,13 @@ class PrefDisablerGenericState<T> extends State<PrefDisablerGeneric<T>> {
     super.debugFillProperties(properties);
 
     final dynamic value = PrefService.of(context).get<dynamic>(widget.pref);
-    properties.add(DiagnosticsProperty(
-      'pref',
-      value,
-      description: '${widget.pref} = $value',
-    ));
+    properties.add(
+      DiagnosticsProperty(
+        'pref',
+        value,
+        description: '${widget.pref} = $value',
+      ),
+    );
   }
 
   @override

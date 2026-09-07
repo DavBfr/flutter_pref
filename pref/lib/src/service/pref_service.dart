@@ -11,11 +11,8 @@ import 'package:material_ui/material_ui.dart';
 import 'base.dart';
 
 class PrefService extends InheritedNotifier {
-  const PrefService({
-    super.key,
-    required super.child,
-    required this.service,
-  }) : super(notifier: service);
+  const PrefService({super.key, required super.child, required this.service})
+    : super(notifier: service);
 
   final BasePrefService service;
 
