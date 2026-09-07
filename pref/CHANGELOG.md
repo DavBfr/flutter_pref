@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.0
+
+- Migrated to material_ui.
+- Fix compatibility with flutter 3.47.0
+
 ## 2.8.0
 
 - Add scrollable property to PerfPage
