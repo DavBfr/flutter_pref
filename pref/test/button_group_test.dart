@@ -3,8 +3,8 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 import 'package:pref/src/custom/button_group.dart';
 
@@ -18,10 +18,7 @@ void main() {
           home: Scaffold(
             body: PrefService(
               service: service,
-              child: const PrefButtonGroup<int>(
-                pref: 'test',
-                items: [],
-              ),
+              child: const PrefButtonGroup<int>(pref: 'test', items: []),
             ),
           ),
         ),
@@ -29,7 +26,9 @@ void main() {
 
       expect(service.get<dynamic>('test'), isNull);
       expect(
-          find.byWidgetPredicate((w) => w is ButtonGroup<int>), findsOneWidget);
+        find.byWidgetPredicate((w) => w is ButtonGroup<int>),
+        findsOneWidget,
+      );
     });
 
     testWidgets('basic', (WidgetTester tester) async {
@@ -73,9 +72,9 @@ void main() {
     });
 
     testWidgets('invalid', (WidgetTester tester) async {
-      final service = PrefServiceCache(defaults: <String, dynamic>{
-        'test': '2',
-      });
+      final service = PrefServiceCache(
+        defaults: <String, dynamic>{'test': '2'},
+      );
       int? value;
 
       await tester.pumpWidget(
@@ -134,7 +133,9 @@ void main() {
       );
 
       expect(
-          find.byWidgetPredicate((w) => w is ButtonGroup<int>), findsOneWidget);
+        find.byWidgetPredicate((w) => w is ButtonGroup<int>),
+        findsOneWidget,
+      );
     });
   });
 }

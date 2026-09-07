@@ -3,8 +3,8 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 
 void main() {
@@ -17,9 +17,7 @@ void main() {
           home: Scaffold(
             body: PrefService(
               service: service,
-              child: const PrefCheckbox(
-                pref: 'test',
-              ),
+              child: const PrefCheckbox(pref: 'test'),
             ),
           ),
         ),
@@ -47,10 +45,7 @@ void main() {
           home: Scaffold(
             body: PrefService(
               service: service,
-              child: const PrefCheckbox(
-                pref: 'test',
-                reversed: true,
-              ),
+              child: const PrefCheckbox(pref: 'test', reversed: true),
             ),
           ),
         ),
@@ -79,10 +74,7 @@ void main() {
           home: Scaffold(
             body: PrefService(
               service: service,
-              child: PrefCheckbox(
-                pref: 'test',
-                onChange: (v) => value = v,
-              ),
+              child: PrefCheckbox(pref: 'test', onChange: (v) => value = v),
             ),
           ),
         ),
@@ -106,18 +98,16 @@ void main() {
     });
 
     testWidgets('default valid', (WidgetTester tester) async {
-      final service = PrefServiceCache(defaults: <String, dynamic>{
-        'test': true,
-      });
+      final service = PrefServiceCache(
+        defaults: <String, dynamic>{'test': true},
+      );
 
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: PrefService(
               service: service,
-              child: const PrefCheckbox(
-                pref: 'test',
-              ),
+              child: const PrefCheckbox(pref: 'test'),
             ),
           ),
         ),
@@ -139,18 +129,16 @@ void main() {
     });
 
     testWidgets('default invalid', (WidgetTester tester) async {
-      final service = PrefServiceCache(defaults: <String, dynamic>{
-        'test': '123',
-      });
+      final service = PrefServiceCache(
+        defaults: <String, dynamic>{'test': '123'},
+      );
 
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: PrefService(
               service: service,
-              child: const PrefCheckbox(
-                pref: 'test',
-              ),
+              child: const PrefCheckbox(pref: 'test'),
             ),
           ),
         ),

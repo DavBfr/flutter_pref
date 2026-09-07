@@ -3,8 +3,8 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 
 void main() {
@@ -17,11 +17,7 @@ void main() {
           home: Scaffold(
             body: PrefService(
               service: service,
-              child: const PrefDialog(
-                children: [
-                  Text('Hello'),
-                ],
-              ),
+              child: const PrefDialog(children: [Text('Hello')]),
             ),
           ),
         ),
@@ -33,13 +29,7 @@ void main() {
     testWidgets('no service', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: PrefDialog(
-              children: [
-                Text('Hello'),
-              ],
-            ),
-          ),
+          home: Scaffold(body: PrefDialog(children: [Text('Hello')])),
         ),
       );
 
@@ -57,9 +47,7 @@ void main() {
               child: const PrefDialog(
                 submit: Text('OK'),
                 onlySaveOnSubmit: true,
-                children: [
-                  PrefCheckbox(pref: 'test'),
-                ],
+                children: [PrefCheckbox(pref: 'test')],
               ),
             ),
           ),
@@ -92,11 +80,7 @@ void main() {
             body: PrefService(
               service: service,
               child: const PrefDialogButton(
-                dialog: PrefDialog(
-                  children: [
-                    Text('Hello'),
-                  ],
-                ),
+                dialog: PrefDialog(children: [Text('Hello')]),
               ),
             ),
           ),

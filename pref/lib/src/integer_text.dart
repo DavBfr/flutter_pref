@@ -3,8 +3,9 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
+import 'package:flutter/services.dart'
+    show TextInputFormatter, FilteringTextInputFormatter;
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter/services.dart';
 
 import 'disabler.dart';
 import 'log.dart';
@@ -106,12 +107,14 @@ class PrefIntegerTextState extends State<PrefIntegerText> {
         widget.disabled ?? PrefDisableState.of(context)?.disabled ?? false;
 
     return Padding(
-      padding: widget.padding ??
+      padding:
+          widget.padding ??
           const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
       child: Form(
         child: Builder(
           builder: (BuildContext context) => TextFormField(
-            decoration: widget.decoration ??
+            decoration:
+                widget.decoration ??
                 InputDecoration(
                   hintText: widget.hintText,
                   labelText: widget.label,
@@ -123,7 +126,7 @@ class PrefIntegerTextState extends State<PrefIntegerText> {
             maxLines: widget.maxLines,
             style: widget.style,
             inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.digitsOnly
+              FilteringTextInputFormatter.digitsOnly,
             ],
             keyboardType: TextInputType.number,
             obscureText: widget.obscureText,

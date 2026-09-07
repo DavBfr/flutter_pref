@@ -20,8 +20,10 @@ class PrefButton extends StatelessWidget {
     this.title,
     this.subtitle,
     this.onTap,
-  }) : assert(title != child,
-            'Use a title to define your own button or child for the button content');
+  }) : assert(
+         title != child,
+         'Use a title to define your own button or child for the button content',
+       );
 
   /// Widget to display inside the button
   final Widget child;
@@ -54,7 +56,7 @@ class PrefButton extends StatelessWidget {
     final disabled = PrefDisableState.of(context)?.disabled ?? false;
 
     final button = MaterialButton(
-      color: color ?? theme.buttonTheme.colorScheme?.background,
+      color: color ?? theme.buttonTheme.colorScheme?.surface,
       textColor: textColor,
       onPressed: disabled ? null : onTap,
       child: child,

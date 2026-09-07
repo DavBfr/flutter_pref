@@ -1,7 +1,8 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:number_selector/number_selector.dart';
 import 'package:pref/pref.dart';
+
+import 'color_picker.dart';
+import 'number_selector.dart';
 
 class PrefColor extends StatelessWidget {
   const PrefColor({
@@ -49,9 +50,16 @@ class PrefColor extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: const Text('Pick a color!'),
         content: SingleChildScrollView(
-          child: ColorPicker(
-            pickerColor: Color(newValue),
-            onColorChanged: (v) => newValue = v.value,
+          child: StatefulBuilder(
+            builder: (context, state) {
+              return ColorPicker(
+                pickerColor: Color(newValue),
+                onColorChanged: (v) {
+                  newValue = v.toARGB32();
+                  state(() {});
+                },
+              );
+            },
           ),
         ),
         actions: <Widget>[

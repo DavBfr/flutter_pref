@@ -21,12 +21,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  material_ui: ^1.1.1
   logging: ^1.1.1
+  material_ui: ^1.1.1
   shared_preferences: ^2.0.0
 
 dev_dependencies:
-  flutter_lints: ^3.0.0
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
 

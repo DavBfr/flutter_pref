@@ -3,8 +3,8 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 
 void main() {
@@ -17,9 +17,7 @@ void main() {
           home: Scaffold(
             body: PrefService(
               service: service,
-              child: const PrefSlider<double>(
-                pref: 'test',
-              ),
+              child: const PrefSlider<double>(pref: 'test'),
             ),
           ),
         ),
@@ -64,18 +62,16 @@ void main() {
     });
 
     testWidgets('invalid', (WidgetTester tester) async {
-      final service = PrefServiceCache(defaults: <String, dynamic>{
-        'test': '123',
-      });
+      final service = PrefServiceCache(
+        defaults: <String, dynamic>{'test': '123'},
+      );
 
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: PrefService(
               service: service,
-              child: const PrefSlider(
-                pref: 'test',
-              ),
+              child: const PrefSlider(pref: 'test'),
             ),
           ),
         ),

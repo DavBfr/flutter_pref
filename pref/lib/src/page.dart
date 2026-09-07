@@ -29,14 +29,11 @@ class PrefPageState extends PrefCacheState<PrefPage> {
   Widget buildChild(BuildContext context) {
     final child = widget.scrollable
         ? ListView(children: widget.children)
-        : Column(
-            mainAxisSize: MainAxisSize.min,
-            children: widget.children,
-          );
+        : Column(mainAxisSize: MainAxisSize.min, children: widget.children);
 
     if (widget.cache) {
       return PopScope(
-        onPopInvoked: (bool didPop) async {
+        onPopInvokedWithResult: (bool didPop, result) async {
           // Save the settings
           await apply();
         },

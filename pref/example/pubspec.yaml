@@ -10,9 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_colorpicker:
   logging:
-  number_selector:
   pref:
 
   material_ui: any

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:material_ui/material_ui.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 
 import 'custom.dart';
@@ -33,7 +33,7 @@ Future<void> main() async {
     'notification_newpost_friend': true,
     'notification_pm_stranger': false,
     'ui_theme': 'light',
-    'ui_color': Colors.blue.value,
+    'ui_color': Colors.blue.toARGB32(),
     'user_email': 'email@gmail.com',
     'gender': 2,
     'content_show_text': false,

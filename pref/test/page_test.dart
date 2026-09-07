@@ -3,8 +3,8 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 
 void main() {
@@ -17,11 +17,7 @@ void main() {
           home: Scaffold(
             body: PrefService(
               service: service,
-              child: const PrefPage(
-                children: [
-                  PrefCheckbox(pref: 'test'),
-                ],
-              ),
+              child: const PrefPage(children: [PrefCheckbox(pref: 'test')]),
             ),
           ),
         ),
@@ -39,13 +35,7 @@ void main() {
     testWidgets('no service', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: PrefPage(
-              children: [
-                Text('Hello'),
-              ],
-            ),
-          ),
+          home: Scaffold(body: PrefPage(children: [Text('Hello')])),
         ),
       );
 
@@ -62,9 +52,7 @@ void main() {
               service: service,
               child: const PrefPage(
                 cache: true,
-                children: [
-                  PrefCheckbox(pref: 'test'),
-                ],
+                children: [PrefCheckbox(pref: 'test')],
               ),
             ),
           ),
@@ -91,14 +79,11 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: PrefService(
-                service: service,
-                child: const PrefPageButton(
-                  page: PrefPage(
-                    children: [
-                      Text('Hello'),
-                    ],
-                  ),
-                )),
+              service: service,
+              child: const PrefPageButton(
+                page: PrefPage(children: [Text('Hello')]),
+              ),
+            ),
           ),
         ),
       );

@@ -109,11 +109,13 @@ class PrefSliderState<T extends num> extends State<PrefSlider> {
     super.debugFillProperties(properties);
 
     final dynamic value = PrefService.of(context).get<dynamic>(widget.pref);
-    properties.add(DiagnosticsProperty(
-      'pref',
-      value,
-      description: '${widget.pref} = $value',
-    ));
+    properties.add(
+      DiagnosticsProperty(
+        'pref',
+        value,
+        description: '${widget.pref} = $value',
+      ),
+    );
   }
 
   @override
@@ -132,8 +134,9 @@ class PrefSliderState<T extends num> extends State<PrefSlider> {
     final max = (widget.max ?? 1.0).toDouble();
     // ignore: unnecessary_cast
     final doubleValue = (value as num? ?? min).toDouble();
-    final label =
-        widget.label != null && value != null ? widget.label!(value) : null;
+    final label = widget.label != null && value != null
+        ? widget.label!(value)
+        : null;
     final trailing = widget.trailing != null && value != null
         ? widget.trailing!(value)
         : null;
@@ -172,7 +175,7 @@ class PrefSliderState<T extends num> extends State<PrefSlider> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 if (widget.title != null) Expanded(child: widget.title!),
-                if (trailing != null) trailing,
+                ?trailing,
               ],
             ),
           slider,

@@ -142,7 +142,7 @@ abstract class BasePrefService extends ChangeNotifier
   }
 
   /// Register this preference as secret/confidential and do not log the value
-  /// displays <XXXXXXX> instead
+  /// displays &lt;XXXXXXX&gt; instead
   void makeSecret(String key) {
     _secretKeys.add(key);
   }
@@ -179,7 +179,8 @@ abstract class BasePrefService extends ChangeNotifier
               stack: stack,
               library: 'pref',
               context: ErrorDescription(
-                  'while dispatching notifications for $runtimeType'),
+                'while dispatching notifications for $runtimeType',
+              ),
             ),
           );
         }

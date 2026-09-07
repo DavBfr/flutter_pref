@@ -71,8 +71,10 @@ class PrefSwitchState extends State<PrefSwitch> {
   }
 
   Future<void> _onChange(bool value) async {
-    PrefService.of(context, listen: false)
-        .set(widget.pref, widget.reversed ? !value : value);
+    PrefService.of(
+      context,
+      listen: false,
+    ).set(widget.pref, widget.reversed ? !value : value);
 
     if (widget.onChange != null) {
       widget.onChange!(value);
@@ -84,11 +86,13 @@ class PrefSwitchState extends State<PrefSwitch> {
     super.debugFillProperties(properties);
 
     final dynamic value = PrefService.of(context).get<dynamic>(widget.pref);
-    properties.add(DiagnosticsProperty(
-      'pref',
-      value,
-      description: '${widget.pref} = $value',
-    ));
+    properties.add(
+      DiagnosticsProperty(
+        'pref',
+        value,
+        description: '${widget.pref} = $value',
+      ),
+    );
   }
 
   @override
@@ -127,12 +131,12 @@ class PrefSwitchState extends State<PrefSwitch> {
       trailing: widget.adaptive
           ? Switch.adaptive(
               value: value,
-              activeColor: widget.switchActiveColor,
+              activeThumbColor: widget.switchActiveColor,
               onChanged: disabled ? null : (value) => _onChange(value),
             )
           : Switch(
               value: value,
-              activeColor: widget.switchActiveColor,
+              activeThumbColor: widget.switchActiveColor,
               onChanged: disabled ? null : (value) => _onChange(value),
             ),
       onTap: (disabled || widget.ignoreTileTap)

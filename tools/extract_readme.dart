@@ -48,7 +48,7 @@ void buildFile(String src, String dest, bool flutter) {
 
   final output = File(dest);
   final st = output.openWrite();
-  st.writeln('import \'package:flutter/material.dart\';');
+  st.writeln('import \'package:material_ui/material_ui.dart\';');
   st.writeln('import \'package:pref/pref.dart\';');
   st.writeln('class MyApp extends SizedBox {}');
   st.writeln('late BuildContext context;');

@@ -23,9 +23,8 @@ class PrefCustom<T> extends StatefulWidget {
     this.onChange,
     this.disabled,
     required this.onTap,
-    Widget Function(BuildContext context, T? value)? builder,
-  })  : _builder = builder,
-        builder = null;
+    this._builder,
+  }) : builder = null;
 
   /// Create a PrefCustom Widget that embeds an interactive child
   const PrefCustom.widget({
@@ -36,8 +35,8 @@ class PrefCustom<T> extends StatefulWidget {
     this.onChange,
     this.disabled,
     required this.builder,
-  })  : onTap = null,
-        _builder = null;
+  }) : onTap = null,
+       _builder = null;
 
   /// Checkbox title
   final Widget? title;
@@ -59,7 +58,11 @@ class PrefCustom<T> extends StatefulWidget {
 
   /// Build the current value
   final Widget Function(
-      BuildContext context, T? value, ValueChanged<T?> onChanged)? builder;
+    BuildContext context,
+    T? value,
+    ValueChanged<T?> onChanged,
+  )?
+  builder;
 
   final Widget Function(BuildContext context, T? value)? _builder;
 
@@ -100,11 +103,13 @@ class PrefCustomState<T> extends State<PrefCustom<T>> {
     super.debugFillProperties(properties);
 
     final dynamic value = PrefService.of(context).get<dynamic>(widget.pref);
-    properties.add(DiagnosticsProperty(
-      'pref',
-      value,
-      description: '${widget.pref} = $value',
-    ));
+    properties.add(
+      DiagnosticsProperty(
+        'pref',
+        value,
+        description: '${widget.pref} = $value',
+      ),
+    );
   }
 
   @override

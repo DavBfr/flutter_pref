@@ -3,8 +3,8 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 
 void main() {
@@ -29,14 +29,14 @@ void main() {
       );
 
       expect(service.get<int>('test'), isNull);
-      expect(find.byWidgetPredicate((w) => w is DropdownButton<int>),
-          findsOneWidget);
+      expect(
+        find.byWidgetPredicate((w) => w is DropdownButton<int>),
+        findsOneWidget,
+      );
     });
 
     testWidgets('fullWidth', (WidgetTester tester) async {
-      final service = PrefServiceCache(defaults: <String, dynamic>{
-        'test': 2,
-      });
+      final service = PrefServiceCache(defaults: <String, dynamic>{'test': 2});
 
       await tester.pumpWidget(
         MaterialApp(
@@ -59,21 +59,22 @@ void main() {
 
       expect(service.get<int>('test'), 2);
 
-      expect(find.byWidgetPredicate((w) => w is DropdownButton<int>),
-          findsOneWidget);
+      expect(
+        find.byWidgetPredicate((w) => w is DropdownButton<int>),
+        findsOneWidget,
+      );
 
       await tester.tap(find.byWidgetPredicate((w) => w is DropdownButton<int>));
       await tester.pump();
-      await tester
-          .tap(find.byWidgetPredicate((w) => w is DropdownMenuItem<int>).first);
+      await tester.tap(
+        find.byWidgetPredicate((w) => w is DropdownMenuItem<int>).first,
+      );
 
       expect(service.get<int>('test'), 1);
     });
 
     testWidgets('fullWidth onChange', (WidgetTester tester) async {
-      final service = PrefServiceCache(defaults: <String, dynamic>{
-        'test': 2,
-      });
+      final service = PrefServiceCache(defaults: <String, dynamic>{'test': 2});
 
       int? value;
 
@@ -100,13 +101,16 @@ void main() {
       expect(service.get<int>('test'), 2);
       expect(value, isNull);
 
-      expect(find.byWidgetPredicate((w) => w is DropdownButton<int>),
-          findsOneWidget);
+      expect(
+        find.byWidgetPredicate((w) => w is DropdownButton<int>),
+        findsOneWidget,
+      );
 
       await tester.tap(find.byWidgetPredicate((w) => w is DropdownButton<int>));
       await tester.pump();
-      await tester
-          .tap(find.byWidgetPredicate((w) => w is DropdownMenuItem<int>).first);
+      await tester.tap(
+        find.byWidgetPredicate((w) => w is DropdownMenuItem<int>).first,
+      );
       await tester.pump();
 
       expect(service.get<int>('test'), 1);
@@ -132,14 +136,16 @@ void main() {
       );
 
       expect(service.get<int>('test'), isNull);
-      expect(find.byWidgetPredicate((w) => w is DropdownButton<int>),
-          findsOneWidget);
+      expect(
+        find.byWidgetPredicate((w) => w is DropdownButton<int>),
+        findsOneWidget,
+      );
     });
 
     testWidgets('smallWidth invalid', (WidgetTester tester) async {
-      final service = PrefServiceCache(defaults: <String, dynamic>{
-        'test': '2',
-      });
+      final service = PrefServiceCache(
+        defaults: <String, dynamic>{'test': '2'},
+      );
 
       await tester.pumpWidget(
         MaterialApp(
@@ -160,13 +166,16 @@ void main() {
       );
 
       expect(service.get<dynamic>('test'), equals('2'));
-      expect(find.byWidgetPredicate((w) => w is DropdownButton<int>),
-          findsOneWidget);
+      expect(
+        find.byWidgetPredicate((w) => w is DropdownButton<int>),
+        findsOneWidget,
+      );
 
       await tester.tap(find.byWidgetPredicate((w) => w is DropdownButton<int>));
       await tester.pump();
-      await tester
-          .tap(find.byWidgetPredicate((w) => w is DropdownMenuItem<int>).first);
+      await tester.tap(
+        find.byWidgetPredicate((w) => w is DropdownMenuItem<int>).first,
+      );
       await tester.pump();
 
       expect(service.get<int>('test'), 1);

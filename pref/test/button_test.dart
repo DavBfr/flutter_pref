@@ -3,8 +3,8 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 
 void main() {
@@ -12,11 +12,7 @@ void main() {
     testWidgets('basic', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: PrefButton(
-              child: Text('Push Me!'),
-            ),
-          ),
+          home: Scaffold(body: PrefButton(child: Text('Push Me!'))),
         ),
       );
 
