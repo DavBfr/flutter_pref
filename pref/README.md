@@ -11,7 +11,7 @@ In your main method, add:
 ```dart
 WidgetsFlutterBinding.ensureInitialized();
 
-final service = await PrefServiceShared.init(
+final service = await PrefServiceSharedWithCache.init(
   defaults: {
     'start_page': 'posts',
     'ui_theme': 'light',

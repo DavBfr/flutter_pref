@@ -21,8 +21,8 @@ Future<void> main() async {
   });
 
   // This PrefService is in memory only.
-  // Use PrefServiceShared.init() to store the settings permanently:
-  //   final service = await PrefServiceShared.init();
+  // Use PrefServiceSharedWithCache.init() to store the settings permanently:
+  //   final service = await PrefServiceSharedWithCache.init();
   final service = PrefServiceCache();
   service.makeSecret('user_email'); // Prevent the logger to display the value
   await service.setDefaultValues(<String, dynamic>{
@@ -53,12 +53,12 @@ Future<void> main() async {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp(this.service, {Key? key}) : super(key: key);
+  const MyApp(this.service, {super.key});
 
   final BasePrefService service;
 
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -119,12 +119,12 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {

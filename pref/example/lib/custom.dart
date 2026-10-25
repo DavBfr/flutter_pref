@@ -6,13 +6,13 @@ import 'number_selector.dart';
 
 class PrefColor extends StatelessWidget {
   const PrefColor({
-    Key? key,
+    super.key,
     this.title,
     required this.pref,
     this.subtitle,
     this.onChange,
     this.disabled,
-  }) : super(key: key);
+  });
 
   final Widget? title;
 
@@ -79,7 +79,7 @@ class PrefColor extends StatelessWidget {
 
 class PrefInteger extends StatelessWidget {
   const PrefInteger({
-    Key? key,
+    super.key,
     this.title,
     required this.pref,
     this.subtitle,
@@ -87,7 +87,7 @@ class PrefInteger extends StatelessWidget {
     this.disabled,
     required this.min,
     required this.max,
-  }) : super(key: key);
+  });
 
   final Widget? title;
 
