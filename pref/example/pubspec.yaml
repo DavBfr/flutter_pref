@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   logging:
+  material_ui: any
   pref:
 
-  material_ui: any
 dependency_overrides:
   pref:
     path: ..

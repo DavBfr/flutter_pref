@@ -2,14 +2,14 @@ import 'package:material_ui/material_ui.dart';
 
 class ColorPicker extends StatelessWidget {
   const ColorPicker({
-    Key? key,
+    super.key,
     required this.pickerColor,
     required this.onColorChanged,
     this.colors = Colors.primaries,
     this.itemSize = 44.0,
     this.spacing = 8.0,
     this.runSpacing = 8.0,
-  }) : super(key: key);
+  });
 
   final Color pickerColor;
 
@@ -44,12 +44,11 @@ class ColorPicker extends StatelessWidget {
 
 class _ColorSquare extends StatelessWidget {
   const _ColorSquare({
-    Key? key,
     required this.color,
     required this.isSelected,
     required this.size,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final Color color;
   final bool isSelected;
